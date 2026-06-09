@@ -2,19 +2,12 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Navbar } from '@/components/Navbar';
-import Hero from '@/components/Hero/Hero';
-import Vision from '@/components/Vision/Vision';
-import Growth from '@/components/Growth/Growth';
-import Integrated from '@/components/Integrated/Integrated';
-import Results from '@/components/Results/Results';
-import FAQ from '@/components/FAQ/FAQ';
-import { Footer } from '@/components/Footer';
 import { SectionTracker } from '@/components/SectionTracker';
 import { SkipLink } from '@/components/SkipLink';
 import { applyBlockExperiments } from '@/lib/ab-testing';
 import { personalize } from '@/lib/personalization';
 import { initTracker } from '@/lib/tracker';
+import { getEntry } from '@/registry';
 
 interface Block {
   id: string;
@@ -258,29 +251,17 @@ export function DynamicPage({
 }
 
 function BlockRenderer({ block }: { block: Block }) {
-  switch (block.type) {
-    case 'navbar':
-      return <Navbar />;
-    case 'hero': {
-      const pos = block.config?.assetPosition;
-      const heroData = pos
-        ? { ...block.data, variant: pos === 'right' ? 'image-right' : 'image-left' }
-        : block.data;
-      return <Hero data={heroData} />;
-    }
-    case 'vision':
-      return <Vision data={block.data} />;
-    case 'growth':
-      return <Growth data={block.data} />;
-    case 'integrated':
-      return <Integrated data={block.data} />;
-    case 'results':
-      return <Results data={block.data} />;
-    case 'faq':
-      return <FAQ data={block.data} />;
-    case 'footer':
-      return <Footer data={block.data} />;
-    default:
-      return null;
+  const entry = getEntry(block.type);
+  if (!entry) return null;
+
+  const Component = entry.component;
+
+  // Render parcial: assetPosition (config) → variante do Hero
+  let data = block.data;
+  if (block.type === 'hero' && block.config?.assetPosition) {
+    const pos = block.config.assetPosition;
+    data = { ...data, variant: pos === 'right' ? 'image-right' : 'image-left' };
   }
+
+  return <Component data={data} />;
 }
