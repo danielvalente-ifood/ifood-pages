@@ -1,346 +1,495 @@
+/* ============================================================
+   Hero — 5 variantes (full, slider, centered, split-image, split-form)
+   Tokens iFood: bg #272727 · título 64/500 iFood RC Textos ·
+   desc 18/400 #BFBFBF · botão fill branco / stroke 8% branco
+   ============================================================ */
+
 .hero {
   position: relative;
-  width: calc(100% - 8px);
-  height: 900px;
-  background-color: #eb0033;
-  border-radius: 20px;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0;
-  margin: 4px;
-}
-
-.backgroundContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  overflow: hidden;
-}
-
-.backgroundImage {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  animation: fadeIn 1s ease-out;
+  background: #272727;
+  color: #fff;
+  overflow: hidden;
+
+  /* ---- Escala tipográfica (REM, tokens do Figma) ----
+     Tamanhos iguais em TODAS as variantes. --hero-scale reduz tudo
+     proporcionalmente nos breakpoints (1 = tamanho do Figma). */
+  --hero-scale: 1;
+  --fs-title: calc(4rem * var(--hero-scale));        /* T4 — 64px */
+  --fs-desc: calc(1.125rem * var(--hero-scale));     /* H3 — 18px */
+  --fs-cta: calc(1rem * var(--hero-scale));          /* P1 — 16px */
+  --fs-form-title: calc(1.25rem * var(--hero-scale));    /* H2 — 20px */
+  --fs-form-subtitle: calc(0.875rem * var(--hero-scale)); /* P2 — 14px */
+  --fs-form-label: calc(1.125rem * var(--hero-scale));   /* H3 — 18px */
+  --fs-form-input: calc(1.125rem * var(--hero-scale));   /* H3 — 18px */
+  --fs-form-legal: calc(0.75rem * var(--hero-scale));    /* P3 — 12px */
 }
 
-/* Decorative Logo */
-.logoDecor {
-  width: 209px;
-  height: 105px;
-  flex-shrink: 0;
-  object-fit: contain;
-  object-position: center;
-  animation: fadeIn 0.8s ease-out 0.3s both;
-}
-
-/* Main Content Wrapper - 1600px centered */
-.contentWrapper {
+.inner {
   position: relative;
-  z-index: 3;
-  width: 100%;
+  z-index: 2;
   max-width: 1600px;
-  height: 100%;
-  padding: 80px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 40px;
-}
-
-/* Title */
-.title {
-  margin: 0;
-  padding: 0;
-  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, sans-serif;
-  font-size: 62px;
-  font-weight: 500;
-  line-height: 1.1;
-  color: #f3f9ef;
-  letter-spacing: -0.03em;
-  white-space: normal;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 180px 80px 80px;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  max-width: 750px;
-  animation: slideUpIn 0.8s ease-out 0.2s both;
 }
 
+/* ---- bloco de texto + CTAs ---- */
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 100%;
+  max-width: 829px;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.textGroupCenter {
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  /* tamanho padrão do Figma (T4) em todas as variantes */
+  font-size: var(--fs-title);
+  line-height: 1.125;
+  letter-spacing: 0;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+/* cada linha do array é uma quebra manual — não quebrar dentro da linha */
 .title span {
-  display: block;
+  white-space: nowrap;
 }
 
-/* Description */
 .description {
   margin: 0;
-  padding: 0;
-  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.8);
-  letter-spacing: normal;
-  max-width: 557px;
-  text-align: left;
-  animation: slideUpIn 0.8s ease-out 0.4s both;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-desc);
+  line-height: 1.333;
+  color: #bfbfbf;
+  max-width: 496px;
 }
 
-/* CTA Button */
-.ctaButton {
+.textGroupCenter .description {
+  max-width: 640px;
+}
+
+/* ---- CTAs ---- */
+
+.ctaRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.ctaRowCenter {
+  justify-content: center;
+}
+
+.cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: 150px;
-  height: 50px;
-  background-color: #f3f9ef;
-  border: none;
-  border-radius: 70px;
+  gap: 16px;
+  padding: 14px 24px;
+  border-radius: 100px;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-cta);
+  line-height: 1.5;
+  text-decoration: none;
   cursor: pointer;
-  transition: all 0.5s ease-out;
+  border: 2px solid transparent;
+  transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
   white-space: nowrap;
-  padding: 0;
-  animation: slideUpIn 0.6s ease-out;
 }
 
-.ctaButton span {
-  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: #514c46;
-  line-height: 1.4;
-  transition: color 0.5s ease-out;
-}
-
-.ctaButton:hover {
-  background-color: #eb0033;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(235, 0, 51, 0.25);
-}
-
-.ctaButton:hover span {
-  color: #ffffff;
-}
-
-.ctaButton:active {
-  background-color: #c70029;
+.cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(235, 0, 51, 0.2);
 }
 
-.chevronIcon {
-  width: 12px;
-  height: 12px;
+.ctaPrimary {
+  background: #fff;
+  color: #141414;
+}
+
+.ctaPrimary:hover {
+  background: #f0f0f0;
+}
+
+.ctaSecondary {
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.ctaSecondary:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.chevron {
   flex-shrink: 0;
-  filter: brightness(0) saturate(100%) invert(12%) sepia(96%) saturate(3976%) hue-rotate(354deg) brightness(100%) contrast(107%);
-  transition: filter 0.5s ease-out;
 }
 
-.ctaButton:hover .chevronIcon {
-  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%);
+/* ============================================================
+   Variante FULL — imagem full-bleed, conteúdo embaixo à esquerda
+   ============================================================ */
+
+.heroFull {
+  min-height: 90vh;
 }
 
-/* Text Content Wrapper */
-.textContent {
-  display: flex;
-  flex-direction: column;
-  gap: 48px;
-  align-items: flex-start;
-  position: relative;
-  flex: 1;
-  max-width: 640px;
-  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, sans-serif;
-  font-weight: 500;
+.heroFull .inner {
+  justify-content: flex-end;
+  min-height: 90vh;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .hero {
-    height: 700px;
-  }
+/* ============================================================
+   Variante SLIDER — altura média, conteúdo centralizado vertical
+   ============================================================ */
 
-  .contentWrapper {
-    padding: 60px;
-  }
-
-  .title {
-    font-size: 48px;
-  }
-
-  .description {
-    font-size: 14px;
-    max-width: 450px;
-  }
+.heroSlider {
+  min-height: 640px;
 }
 
-@media (max-width: 768px) {
-  .hero {
-    min-height: 520px;
-    height: auto;
-  }
-
-  .contentWrapper {
-    padding: 40px 20px;
-    flex-direction: column;
-  }
-
-  .title {
-    font-size: 32px;
-    line-height: 1.2;
-  }
-
-  .description {
-    font-size: 14px;
-    max-width: 100%;
-    line-height: 1.5;
-  }
-
-  .ctaButton {
-    width: 140px;
-    height: 44px;
-    font-size: 13px;
-    gap: 8px;
-    margin-top: auto;
-  }
-
-  .chevronIcon {
-    width: 10px;
-    height: 10px;
-  }
-
-  .logoDecor {
-    width: 120px;
-    height: 60px;
-    display: none;
-  }
-
-  .textContent {
-    gap: 32px;
-    max-width: 100%;
-  }
-}
-
-/* ---- VARIANTS ---- */
-
-.variantImageLeft {
-  /* Default — image on left, text on left */
-}
-
-.variantImageRight {
-  /* Image on right, text on left */
-}
-
-.variantImageOverlay {
-  /* Image as overlay with text centered on top */
-  display: flex;
-  align-items: center;
+.heroSlider .inner {
   justify-content: center;
+  min-height: 640px;
+  padding-top: 120px;
+  padding-bottom: 80px;
 }
 
-.overlayGradient {
+/* ---- camada de fundo (full / slider) ---- */
+
+.bgLayer {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.5) 100%);
-  z-index: 2;
+  inset: 0;
+  z-index: 1;
 }
 
-.overlayContent {
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.bgImageActive {
+  opacity: 1;
+}
+
+.bgScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(20, 20, 20, 0.85) 0%,
+    rgba(20, 20, 20, 0.55) 45%,
+    rgba(20, 20, 20, 0.2) 100%
+  );
+}
+
+/* ---- dots do slider ---- */
+
+.dotsWrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 48px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(245, 245, 245, 0.2);
+  border-radius: 50px;
+  padding: 10px 12px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50px;
+  background: #fff;
+  opacity: 0.2;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: width 0.3s ease, opacity 0.3s ease;
+}
+
+.dotActive {
+  width: 19px;
+  opacity: 1;
+}
+
+/* ============================================================
+   Variante CENTERED (Type3) — sólido, tudo centralizado, compacto
+   ============================================================ */
+
+.heroCentered {
+  min-height: 520px;
+}
+
+.innerCentered {
   align-items: center;
   justify-content: center;
-  padding: 0;
+  text-align: center;
+  min-height: 520px;
+  padding: 120px 80px;
+}
+
+.innerCentered .textBlock {
+  align-items: center;
+  max-width: 100%;
+}
+
+/* ============================================================
+   Variantes SPLIT (Type4 imagem · Type5 form)
+   ============================================================ */
+
+.heroSplit {
+  min-height: 90vh;
+}
+
+.innerSplit {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 56px;
+  min-height: 90vh;
+}
+
+.innerSplitReverse {
+  flex-direction: row-reverse;
+}
+
+.innerSplit .textBlock {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* nos splits o texto divide espaço com o card — pode quebrar pra caber (conforme Figma).
+   Tamanho da fonte é o mesmo das demais variantes (T4); só liberamos a quebra. */
+.innerSplit .title span {
+  white-space: normal;
+}
+
+/* ---- card de imagem (Type4) ---- */
+
+.mediaCard {
+  flex-shrink: 0;
+  width: 555px;
+  max-width: 45%;
+  aspect-ratio: 555 / 540;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.mediaImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.mediaPlaceholder {
   width: 100%;
   height: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c4c4c4;
 }
 
-.variantFullWidth {
-  /* Full width with image covering entire height */
-  position: relative;
-  height: 100vh;
-  max-width: 100%;
-  border-radius: 0;
-  margin: 0;
+/* ---- card de formulário (Type5) ---- */
+
+.formCard {
+  flex-shrink: 0;
+  width: 555px;
+  max-width: 45%;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 20px;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.formTitle {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-form-title);
+  line-height: 1.6;
+  color: #141414;
+}
+
+.formSubtitle {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-form-subtitle);
+  line-height: 1.15;
+  color: #666;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.formLabel {
+  padding: 0 8px;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-form-label);
+  line-height: 1.333;
+  color: #141414;
+}
+
+.formInput {
+  height: 52px;
+  padding: 0 24px;
+  border-radius: 50px;
+  border: none;
+  background: #f5f5f5;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-form-input);
+  line-height: 1.333;
+  color: #141414;
+  outline: none;
   width: 100%;
+  box-sizing: border-box;
 }
 
-.fullWidthContent {
-  padding: 0;
-  max-width: 100%;
+.formInput::placeholder {
+  color: #a3a3a3;
 }
 
-.ctaButtonLight {
-  background-color: #f3f9ef !important;
+.formInput:focus {
+  box-shadow: 0 0 0 2px rgba(20, 20, 20, 0.15) inset;
 }
 
-.ctaButtonLight:hover {
-  background-color: #eb0033 !important;
+.formButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 100px;
+  border: none;
+  background: #141414;
+  color: #fff;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-cta);
+  line-height: 1.5;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
 }
 
-.ctaButtonLight span {
-  color: #514c46 !important;
+.formButton:hover {
+  opacity: 0.88;
 }
 
-.ctaButtonLight:hover span {
-  color: #ffffff !important;
+.formLegal {
+  margin: 0;
+  padding: 0 8px;
+  text-align: center;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-form-legal);
+  line-height: 1.333;
+  color: #666;
 }
 
-/* Overlay variant - center all content */
-.variantImageOverlay .textContent {
-  align-items: center !important;
-  justify-content: flex-end !important;
-  max-width: 700px;
-  padding-bottom: 120px;
+.formLegalLink {
+  color: #666;
+  text-decoration: underline;
 }
 
-.variantImageOverlay .title {
-  text-align: center !important;
-  align-self: center;
-}
+/* ============================================================
+   Responsivo
+   ============================================================ */
 
-.variantImageOverlay .description {
-  text-align: center !important;
-  align-self: center;
-}
-
-.variantImageOverlay .ctaButton {
-  align-self: center;
-}
-
-/* Responsive adjustments for variants */
-@media (max-width: 768px) {
-  .variantImageRight .contentWrapper {
+@media (max-width: 1024px) {
+  /* reduz toda a escala tipográfica proporcionalmente */
+  .hero {
+    --hero-scale: 0.82;
+  }
+  .inner {
+    padding: 120px 40px 64px;
+  }
+  .innerSplit,
+  .innerSplitReverse {
     flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
   }
-
-  .variantImageOverlay {
-    min-height: 520px;
+  .mediaCard,
+  .formCard {
+    width: 100%;
+    max-width: 100%;
   }
+}
 
-  .variantFullWidth {
-    height: auto;
-    min-height: 520px;
+@media (max-width: 640px) {
+  .hero {
+    --hero-scale: 0.6;
   }
-
-  .fullWidthContent {
-    position: relative;
-    transform: none !important;
-    top: auto !important;
-    left: auto !important;
+  .inner {
+    padding: 96px 20px 48px;
+  }
+  /* em telas muito estreitas, permite quebrar dentro da linha como fallback */
+  .title span {
+    white-space: normal;
+  }
+  .textBlock {
+    gap: 32px;
+  }
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .cta {
+    width: 100%;
+  }
+  .formCard {
+    padding: 28px;
   }
 }

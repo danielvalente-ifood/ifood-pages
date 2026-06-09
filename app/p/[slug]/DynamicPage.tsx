@@ -32,6 +32,7 @@ interface DynamicPageProps {
 const typeLabels: Record<string, string> = {
   navbar: 'Navbar',
   hero: 'Hero',
+  beneficios: 'Benefícios',
   vision: 'Social Proof',
   growth: 'Growth',
   integrated: 'Features',
@@ -57,6 +58,8 @@ export function DynamicPage({
 
   const [blocks, setBlocks] = useState<Block[]>(processedBlocks);
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
+  // Seleção de sub-elemento (card) — específico de componentes com itens (ex: benefícios)
+  const [selectedCard, setSelectedCard] = useState<{ blockId: string; index: number } | null>(null);
 
   const handleMessage = useCallback((event: MessageEvent) => {
     const { type, payload } = event.data || {};
@@ -76,12 +79,21 @@ export function DynamicPage({
         break;
       case 'cms:select-block':
         setSelectedBlockId(payload.blockId);
+        setSelectedCard(null);
         document
           .getElementById(`block-${payload.blockId}`)
           ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         break;
+      case 'cms:select-card':
+        setSelectedCard(
+          payload.cardIndex == null
+            ? null
+            : { blockId: payload.blockId, index: payload.cardIndex }
+        );
+        break;
       case 'cms:deselect':
         setSelectedBlockId(null);
+        setSelectedCard(null);
         break;
     }
   }, []);
@@ -140,8 +152,19 @@ export function DynamicPage({
   const handleBlockClick = (block: Block) => {
     if (!isEditMode) return;
     setSelectedBlockId(block.id);
+    setSelectedCard(null);
     window.parent.postMessage(
       { type: 'landing:block-selected', payload: { blockId: block.id, blockType: block.type } },
+      '*'
+    );
+  };
+
+  const handleCardSelect = (block: Block, index: number) => {
+    if (!isEditMode) return;
+    setSelectedBlockId(block.id);
+    setSelectedCard({ blockId: block.id, index });
+    window.parent.postMessage(
+      { type: 'landing:card-selected', payload: { blockId: block.id, cardIndex: index } },
       '*'
     );
   };
@@ -151,6 +174,10 @@ export function DynamicPage({
   const mainBlocks = blocks.filter((b) => b.type !== 'navbar' && b.type !== 'footer');
 
   const renderBlock = (block: Block) => {
+    // Quando um card deste bloco está selecionado, não destacamos a seção inteira
+    const cardSelectedHere = selectedCard?.blockId === block.id;
+    const sectionSelected = selectedBlockId === block.id && !cardSelectedHere;
+
     const editProps = isEditMode
       ? {
           onClick: (e: React.MouseEvent) => {
@@ -160,17 +187,17 @@ export function DynamicPage({
           style: {
             position: 'relative' as const,
             cursor: 'pointer',
-            outline: selectedBlockId === block.id ? '2px solid #EB0033' : 'none',
+            outline: sectionSelected ? '2px solid #EB0033' : 'none',
             outlineOffset: '-2px',
             transition: 'outline 0.15s ease',
           },
           onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
-            if (selectedBlockId !== block.id) {
+            if (!sectionSelected) {
               e.currentTarget.style.outline = '2px dashed rgba(235, 0, 51, 0.4)';
             }
           },
           onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
-            if (selectedBlockId !== block.id) {
+            if (!sectionSelected) {
               e.currentTarget.style.outline = 'none';
             }
           },
@@ -178,7 +205,7 @@ export function DynamicPage({
       : {};
 
     const label =
-      isEditMode && selectedBlockId === block.id ? (
+      isEditMode && sectionSelected ? (
         <div
           style={{
             position: 'absolute',
@@ -199,7 +226,12 @@ export function DynamicPage({
       ) : null;
 
     const content = isEditMode ? (
-      <BlockRenderer block={block} />
+      <BlockRenderer
+        block={block}
+        editMode
+        selectedCardIndex={cardSelectedHere ? selectedCard!.index : null}
+        onSelectCard={(i) => handleCardSelect(block, i)}
+      />
     ) : (
       <SectionTracker section={block.type}>
         <BlockRenderer block={block} />
@@ -250,18 +282,33 @@ export function DynamicPage({
   );
 }
 
-function BlockRenderer({ block }: { block: Block }) {
+function BlockRenderer({
+  block,
+  editMode = false,
+  selectedCardIndex = null,
+  onSelectCard,
+}: {
+  block: Block;
+  editMode?: boolean;
+  selectedCardIndex?: number | null;
+  onSelectCard?: (index: number) => void;
+}) {
   const entry = getEntry(block.type);
   if (!entry) return null;
 
   const Component = entry.component;
 
-  // Render parcial: assetPosition (config) → variante do Hero
-  let data = block.data;
-  if (block.type === 'hero' && block.config?.assetPosition) {
-    const pos = block.config.assetPosition;
-    data = { ...data, variant: pos === 'right' ? 'image-right' : 'image-left' };
+  // Benefícios: suporta seleção de card individual no modo edição
+  if (block.type === 'beneficios' && editMode) {
+    return (
+      <Component
+        data={block.data}
+        editMode
+        selectedCardIndex={selectedCardIndex}
+        onSelectCard={onSelectCard}
+      />
+    );
   }
 
-  return <Component data={data} />;
+  return <Component data={block.data} />;
 }

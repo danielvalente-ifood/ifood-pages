@@ -8,6 +8,7 @@ import faqEntry from './faq';
 import navbarEntry from './navbar';
 import footerEntry from './footer';
 import ctaBannerEntry from './cta-banner';
+import beneficiosEntry from './beneficios';
 
 /**
  * Fonte única de verdade dos componentes de landing page.
@@ -23,6 +24,7 @@ export const registry: RegistryEntry[] = [
   resultsEntry,
   faqEntry,
   footerEntry,
+  beneficiosEntry,
   ctaBannerEntry, // Fase 5: componente de teste do registry — manter ou remover
 ];
 
