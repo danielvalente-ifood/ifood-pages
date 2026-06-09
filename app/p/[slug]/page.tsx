@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic';
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+  searchParams: Promise<{ edit?: string }>;
 }
 
 function makeSupabase() {
@@ -57,62 +58,73 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   };
 }
 
-export default async function PublishedPage({ params }: PageProps) {
+export default async function PublishedPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
+  const { edit } = await searchParams;
+  const isEditMode = edit === 'true';
   const supabase = makeSupabase();
 
-  const { data: page } = await supabase
-    .from('pages')
-    .select('*')
-    .eq('slug', slug)
-    .eq('status', 'published')
-    .single();
+  // Em modo edição: carrega qualquer página (draft incluso)
+  // Em modo público: apenas páginas publicadas
+  const pageBase = supabase.from('pages').select('*').eq('slug', slug);
+  const { data: page } = await (
+    isEditMode ? pageBase : pageBase.eq('status', 'published')
+  ).single();
 
   if (!page) {
     notFound();
   }
 
-  const { data: version } = await supabase
+  // Em modo edição: carrega a versão mais recente (qualquer tipo)
+  // Em modo público: apenas versões publicadas
+  const versionBase = supabase
     .from('page_versions')
     .select('content')
     .eq('page_id', page.id)
-    .eq('version_type', 'published')
     .order('created_at', { ascending: false })
-    .limit(1)
-    .single();
+    .limit(1);
 
-  if (!version) {
+  const { data: version } = await (
+    isEditMode ? versionBase : versionBase.eq('version_type', 'published')
+  ).single();
+
+  // Em modo público, sem versão publicada → 404
+  // Em modo edição, sem versão → render com blocos vazios (CMS enviará via postMessage)
+  if (!version && !isEditMode) {
     notFound();
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const content = version.content as any;
+  const content = (version?.content as any) ?? { blocks: [] };
 
-  const { data: experiments } = await supabase
-    .from('experiments')
-    .select('*')
-    .eq('page_id', page.id)
-    .eq('status', 'running');
-
+  // Experimentos só importam em modo público
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let experimentsWithVariants: any[] = [];
 
-  if (experiments && experiments.length > 0) {
-    const expIds = experiments.map((e) => e.id);
-    const { data: variants } = await supabase
-      .from('experiment_variants')
+  if (!isEditMode) {
+    const { data: experiments } = await supabase
+      .from('experiments')
       .select('*')
-      .in('experiment_id', expIds);
+      .eq('page_id', page.id)
+      .eq('status', 'running');
 
-    experimentsWithVariants = experiments.map((exp) => ({
-      ...exp,
-      variants: (variants || []).filter((v) => v.experiment_id === exp.id),
-    }));
+    if (experiments && experiments.length > 0) {
+      const expIds = experiments.map((e) => e.id);
+      const { data: variants } = await supabase
+        .from('experiment_variants')
+        .select('*')
+        .in('experiment_id', expIds);
+
+      experimentsWithVariants = experiments.map((exp) => ({
+        ...exp,
+        variants: (variants || []).filter((v) => v.experiment_id === exp.id),
+      }));
+    }
   }
 
   return (
     <DynamicPage
-      blocks={content.blocks}
+      blocks={content.blocks ?? []}
       experiments={experimentsWithVariants}
       pageId={page.id}
       pageSlug={slug}
