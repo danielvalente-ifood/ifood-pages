@@ -7,6 +7,7 @@ import resultsEntry from './results';
 import faqEntry from './faq';
 import navbarEntry from './navbar';
 import footerEntry from './footer';
+import ctaBannerEntry from './cta-banner';
 
 /**
  * Fonte única de verdade dos componentes de landing page.
@@ -22,6 +23,7 @@ export const registry: RegistryEntry[] = [
   resultsEntry,
   faqEntry,
   footerEntry,
+  ctaBannerEntry, // Fase 5: componente de teste do registry — manter ou remover
 ];
 
 /** Busca uma entrada pelo type (ex: 'hero'). Retorna undefined se não encontrado. */
