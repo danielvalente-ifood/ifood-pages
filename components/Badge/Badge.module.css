@@ -1,0 +1,21 @@
+.badge {
+  background-color: #e8e8ed;
+  padding: 6px 9px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  height: fit-content;
+}
+
+.badge span {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #424245;
+  line-height: 20px;
+  letter-spacing: -0.3px;
+  white-space: nowrap;
+}

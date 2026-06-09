@@ -1,0 +1,351 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 100px 72px 80px 72px;
+  background-color: #fafafc;
+}
+
+/* Header Section */
+.headerSection {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: 40px;
+}
+
+.titleWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  flex: 1;
+}
+
+
+/* Title */
+.title {
+  font-family: 'iFood RC Títulos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #1d1d1f;
+  letter-spacing: -1.2px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 75px;
+  justify-content: center;
+}
+
+.title p {
+  margin: 0;
+  padding: 0;
+}
+
+.title p:first-child {
+  margin-bottom: 0;
+}
+
+/* Tab Switch */
+.tabSwitch {
+  display: flex;
+  gap: 0;
+  background-color: #fafafc;
+  padding: 4px;
+  border-radius: 50px;
+  position: absolute;
+  top: 42px;
+  left: 72px;
+  z-index: 10;
+}
+
+.tabSwitch::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 92px;
+  height: 40px;
+  background-color: #eb0033;
+  border-radius: 50px;
+  transition: transform 0.35s ease-in-out, width 0.35s ease-in-out;
+  z-index: -1;
+}
+
+.tabSwitch[data-active="salao"]::before {
+  width: 74px;
+  transform: translateX(96px);
+}
+
+.tabButton {
+  padding: 10px 20px;
+  border: none;
+  background-color: transparent;
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666666;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.4s ease-out;
+  white-space: nowrap;
+}
+
+
+.tabActive {
+  color: #ffffff;
+}
+
+.tabButton:nth-child(1).tabActive {
+  padding: 10px 32px 10px 20px;
+}
+
+.tabButton:nth-child(2).tabActive {
+  padding: 10px 20px 10px 24px;
+}
+
+/* Slider Section */
+.sliderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+}
+
+.sliderContainer {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: visible;
+  width: 100%;
+  padding: 10px 8px 20px 8px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-left: calc(50vw - 50% + 8px);
+  padding-right: calc(50vw - 50% + 8px);
+}
+
+/* Hide scrollbar */
+.sliderContainer::-webkit-scrollbar {
+  height: 0;
+}
+
+.sliderContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sliderContainer::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Slider Card */
+.sliderCard {
+  flex-shrink: 0;
+  width: 519.333px;
+  height: 520px;
+  background-color: #ffffff;
+  border-radius: 28px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  transition: border 0.4s ease-out, transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  border: 1px solid transparent;
+}
+
+.sliderCard:first-child {
+  margin-left: 32px;
+}
+
+.sliderCard:hover {
+  border: 1px solid #f3f3f3;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+}
+
+.cardContent {
+  position: relative;
+  z-index: 2;
+  padding: 42px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.cardTitle {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: #1d1d1f;
+  letter-spacing: -0.84px;
+  margin: 0;
+  padding: 0;
+}
+
+.cardDescription {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #a3a3a3;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.cardIcon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  filter: brightness(0) saturate(100%) invert(7%) sepia(15%) saturate(1217%) hue-rotate(357deg) brightness(99%) contrast(107%);
+  transition: transform 0.3s ease-out, filter 0.3s ease-out;
+}
+
+.sliderCard:hover .cardIcon {
+  transform: translateX(4px);
+  filter: brightness(0) saturate(100%) invert(27%) sepia(71%) saturate(1489%) hue-rotate(346deg) brightness(103%) contrast(101%);
+}
+
+/* Slider Indicator */
+.indicatorWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.indicatorTrack {
+  background-color: #ffffff;
+  border-radius: 50px;
+  padding: 10px 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.indicatorDots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #222222;
+  opacity: 0.2;
+  transition: all 0.4s ease-out;
+}
+
+.dotActive {
+  width: 19px;
+  border-radius: 50px;
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding: 80px 48px;
+    gap: 60px;
+  }
+
+  .headerSection {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .sliderCard {
+    width: 400px;
+    height: 450px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 60px 20px 40px 20px;
+    gap: 40px;
+  }
+
+  .headerSection {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .title {
+    font-size: 24px;
+    height: auto;
+  }
+
+  .tabSwitch {
+    width: 100%;
+  }
+
+  .tabButton {
+    flex: 1;
+    padding: 12px;
+  }
+
+  .sliderContainer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sliderCard {
+    width: 100%;
+    min-width: 100%;
+    height: auto;
+    min-height: 320px;
+  }
+
+  .cardContent {
+    padding: 20px;
+  }
+
+  .cardTitle {
+    font-size: 18px;
+  }
+
+  .cardDescription {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .cardIcon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .cardFooter {
+    gap: 8px;
+  }
+}

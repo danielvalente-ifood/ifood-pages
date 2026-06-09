@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /p/
+Disallow: /preview/
+Disallow: /catalog/
+Disallow: /api/
+
+Sitemap: https://pages.ifood.com.br/sitemap.xml

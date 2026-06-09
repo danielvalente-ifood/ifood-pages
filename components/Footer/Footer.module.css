@@ -1,0 +1,294 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 80px;
+  width: 100%;
+  background-color: #ffffff;
+}
+
+/* Main Content */
+.mainContent {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  width: 100%;
+}
+
+/* Columns Wrapper */
+.columnsWrapper {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 32px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+/* Column */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.columnTitle {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  color: rgba(34, 34, 34, 0.65);
+  letter-spacing: -0.1px;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 22px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* New Badge */
+.newBadge {
+  background-color: #ffc347;
+  color: #000000;
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 18px;
+  white-space: nowrap;
+  opacity: 1 !important;
+}
+
+/* Links List */
+.linksList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.linksList li {
+  margin: 0;
+  padding: 0;
+}
+
+.linksList a {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 17px;
+  font-weight: 400;
+  color: #222222;
+  letter-spacing: -0.2px;
+  line-height: 40px;
+  text-decoration: none;
+  transition: color 0.3s ease-out;
+}
+
+.linksList a:hover {
+  color: #eb0033;
+}
+
+/* Bottom Section */
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.copyrightSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+}
+
+.copyright {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #222222;
+  opacity: 0.65;
+  letter-spacing: -0.1px;
+  line-height: 18px;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  max-width: 500px;
+}
+
+.socialLinks {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.socialIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease-out;
+  flex-shrink: 0;
+}
+
+.socialIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.socialIcon:hover {
+  transform: scale(1.15);
+}
+
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 25px;
+}
+
+.logoWrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .footer {
+    padding: 80px 48px;
+    gap: 40px;
+  }
+
+  .columnsWrapper {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .columnTitle {
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  .linksList a {
+    font-size: 15px;
+    line-height: 32px;
+  }
+
+  .copyright {
+    font-size: 11px;
+  }
+
+  .socialIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .logoWrapper {
+    width: 26px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    padding: 60px 20px;
+    gap: 32px;
+  }
+
+  .columnsWrapper {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+
+  .columnTitle {
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .newBadge {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  .linksList a {
+    font-size: 14px;
+    line-height: 28px;
+  }
+
+  .copyrightSection {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .copyright {
+    font-size: 10px;
+    line-height: 1.5;
+  }
+
+  .socialLinks {
+    gap: 12px;
+  }
+
+  .socialIcon {
+    width: 18px;
+    height: 18px;
+  }
+
+  .logoWrapper {
+    width: 24px;
+    height: 21px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 40px 16px;
+    gap: 24px;
+  }
+
+  .columnsWrapper {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .columnTitle {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .linksList a {
+    font-size: 13px;
+    line-height: 24px;
+  }
+
+  .copyright {
+    font-size: 9px;
+    line-height: 1.4;
+    max-width: 100%;
+  }
+
+  .socialIcon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .logoWrapper {
+    width: 20px;
+    height: 18px;
+  }
+}

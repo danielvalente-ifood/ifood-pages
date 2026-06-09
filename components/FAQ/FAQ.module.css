@@ -1,0 +1,284 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: #fafafc;
+  padding: 0 72px 160px 72px;
+}
+
+.wrapper {
+  display: flex;
+  gap: 175px;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 1600px;
+  padding: 100px 60px;
+}
+
+/* Left Section */
+.leftSection {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  width: 427px;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: 'iFood RC Títulos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #1d1d1f;
+  letter-spacing: -1.2px;
+  margin: 0;
+  padding: 0;
+}
+
+.description {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.643;
+  color: #161c2d;
+  opacity: 0.7;
+  letter-spacing: -0.2px;
+  margin: 0;
+  padding: 0;
+  width: 288px;
+}
+
+/* Right Section - FAQ Items */
+.rightSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  width: 100%;
+}
+
+.faqItem {
+  background-color: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  transition: all 0.3s ease-out;
+}
+
+.faqItem:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.faqButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  min-height: 72px;
+  transition: all 0.3s ease-out;
+}
+
+.question {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.357;
+  color: #222222;
+  letter-spacing: -0.1167px;
+  margin: 0;
+  padding: 0;
+  padding-left: 8px;
+  text-align: left;
+  flex: 1;
+}
+
+.icon {
+  font-size: 24px;
+  color: #666666;
+  flex-shrink: 0;
+  margin-left: 20px;
+  transition: transform 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+
+.faqItem.expanded .icon {
+  transform: rotate(45deg);
+}
+
+.answer {
+  padding: 20px 24px 24px 24px;
+  animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.answer.closing {
+  animation: slideUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.answer p {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.643;
+  color: #6b6f7a;
+  letter-spacing: -0.2px;
+  margin: 0;
+  padding: 0;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+    padding-top: 20px;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 1;
+    max-height: 500px;
+    padding-top: 20px;
+  }
+  to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding: 80px 48px;
+  }
+
+  .wrapper {
+    gap: 120px;
+    padding: 80px 48px;
+  }
+
+  .leftSection {
+    width: 350px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .description {
+    width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 60px 20px;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    gap: 40px;
+    padding: 40px 20px;
+  }
+
+  .leftSection {
+    width: 100%;
+    gap: 24px;
+  }
+
+  .rightSection {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .description {
+    font-size: 13px;
+    width: 100%;
+    line-height: 1.5;
+  }
+
+  .faqButton {
+    padding: 16px;
+    min-height: 60px;
+  }
+
+  .question {
+    font-size: 13px;
+  }
+
+  .icon {
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+  }
+
+  .answer {
+    padding: 0 16px 16px 16px;
+  }
+
+  .answer p {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 40px 16px;
+  }
+
+  .wrapper {
+    padding: 32px 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .faqButton {
+    padding: 12px;
+    min-height: 50px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .question {
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
+    font-size: 18px;
+    margin-left: 0;
+    align-self: flex-end;
+    margin-top: -30px;
+  }
+
+  .answer {
+    padding: 0 12px 12px 12px;
+  }
+}

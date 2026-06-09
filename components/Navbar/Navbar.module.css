@@ -1,0 +1,360 @@
+.navbar {
+  background-color: transparent;
+  border-radius: 20px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+  transition: all 0.3s ease-out;
+}
+
+.navbarSticky {
+  position: fixed;
+  top: 4px;
+  left: 8px;
+  right: 8px;
+  width: auto;
+  background-color: #ffffff;
+  border-radius: 16px;
+  z-index: 200;
+  animation: slideDownIn 0.3s ease-out forwards;
+}
+
+.navbarSticky .container {
+  padding: 16px 32px 16px 80px;
+  width: auto;
+}
+
+.navbarFullWidthFixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 0;
+  z-index: 1000;
+}
+
+.navbarFullWidthFixed .container {
+  padding: 16px 32px 16px 80px;
+  width: 100%;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 32px 32px 80px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 32px;
+  flex-shrink: 0;
+  animation: slideUpIn 0.6s ease-out;
+}
+
+.logo img {
+  width: 55px;
+  height: 30px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%);
+  transition: filter 0.3s ease-out;
+}
+
+.navbarSticky .logo img {
+  filter: none;
+}
+
+.navbarFullWidthFixed .logo img {
+  filter: none;
+}
+
+/* Left Section - Logo + Navigation Items */
+.leftSection {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+}
+
+/* Navigation Items */
+.navItems {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+
+.navItemWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.navButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'iFood RC Textos', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #f3f9ef;
+  line-height: normal;
+  transition: all 0.5s ease-out;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.navbarSticky .navButton {
+  color: #666666;
+}
+
+.navbarSticky .chevronIcon {
+  filter: grayscale(100%) brightness(0.75);
+}
+
+.navbarSticky .navButton:hover {
+  color: #ffffff;
+}
+
+.navbarSticky .navButton:hover .chevronIcon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%);
+}
+
+.navbarFullWidthFixed .navButton {
+  color: #666666;
+}
+
+.navbarFullWidthFixed .chevronIcon {
+  filter: grayscale(100%) brightness(0.75);
+}
+
+.navbarFullWidthFixed .navButton:hover {
+  color: #ffffff;
+}
+
+.navbarFullWidthFixed .navButton:hover .chevronIcon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%);
+}
+
+.navButton:hover {
+  color: #ffffff;
+  background-color: #eb0033;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(235, 0, 51, 0.2);
+}
+
+.navButton:active {
+  background-color: #c70029;
+  transform: scale(0.98) translateY(0);
+}
+
+/* Chevron Icon */
+.chevron {
+  width: 8px;
+  height: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  flex-shrink: 0;
+}
+
+.chevronIcon {
+  width: 7.637px;
+  height: 16px;
+  display: block;
+  transition: filter 0.5s ease-out;
+}
+
+.navButton:hover .chevronIcon {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%);
+}
+
+.chevronOpen {
+  transform: translateY(-8px);
+}
+
+/* Dropdown */
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 8px;
+  background-color: #ffffff;
+  border: 1px solid #e8e8ed;
+  border-radius: 12px;
+  padding: 16px;
+  min-width: 200px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  animation: slideDown 0.2s ease-out forwards;
+}
+
+.dropdownPlaceholder {
+  margin: 0;
+  font-size: 14px;
+  color: #666666;
+  font-weight: 400;
+  font-family: 'iFood RC Textos', sans-serif;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDownIn {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CTA Button */
+.ctaButton {
+  width: 150px;
+  height: 40px;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 70px;
+  font-family: 'iFood RC Textos', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 16px;
+  cursor: pointer;
+  transition: all 0.5s ease-out;
+  white-space: nowrap;
+  backdrop-filter: blur(27px);
+  -webkit-backdrop-filter: blur(27px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  animation: slideUpIn 0.6s ease-out;
+}
+
+.ctaButton:hover {
+  background-color: #eb0033;
+  transform: translateY(-2px);
+  border-color: #eb0033;
+  box-shadow: 0 6px 20px rgba(235, 0, 51, 0.2);
+  backdrop-filter: blur(27px);
+}
+
+.ctaButton:active {
+  background-color: #c70029;
+  transform: translateY(-1px);
+  border-color: #c70029;
+  box-shadow: 0 3px 10px rgba(235, 0, 51, 0.15);
+}
+
+.navbarSticky .ctaButton {
+  background-color: #ffffff;
+  color: #666666;
+  border-color: #e8e8ed;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.navbarSticky .ctaButton:hover {
+  background-color: #eb0033;
+  color: #ffffff;
+  border-color: #eb0033;
+  box-shadow: 0 4px 12px rgba(235, 0, 51, 0.15);
+}
+
+.navbarSticky .ctaButton:active {
+  background-color: #c70029;
+  color: #ffffff;
+  border-color: #c70029;
+}
+
+.navbarFullWidthFixed .ctaButton {
+  background-color: #ffffff;
+  color: #666666;
+  border-color: #e8e8ed;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.navbarFullWidthFixed .ctaButton:hover {
+  background-color: #eb0033;
+  color: #ffffff;
+  border-color: #eb0033;
+  box-shadow: 0 4px 12px rgba(235, 0, 51, 0.15);
+}
+
+.navbarFullWidthFixed .ctaButton:active {
+  background-color: #c70029;
+  color: #ffffff;
+  border-color: #c70029;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .navItems {
+    gap: 30px;
+    margin-left: 40px;
+  }
+
+  .navButton {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px 20px 16px 40px;
+  }
+
+  .navItems {
+    display: none;
+  }
+
+  .ctaButton {
+    width: 130px;
+    height: 36px;
+    font-size: 12px;
+    line-height: 14px;
+  }
+
+  .logo {
+    width: 48px;
+  }
+}

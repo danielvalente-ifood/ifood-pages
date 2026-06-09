@@ -1,0 +1,413 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+  width: 100%;
+  padding: 160px 72px 160px 72px;
+  background-color: #fafafc;
+}
+
+/* Header Section */
+.headerSection {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.title {
+  font-family: 'iFood RC Títulos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #1d1d1f;
+  letter-spacing: -1.2px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 75px;
+  justify-content: center;
+}
+
+.title p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Slider Section */
+.sliderWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  position: relative;
+}
+
+.sliderContainer {
+  display: grid;
+  grid-template-columns: 420px 420px 420px 420px 420px;
+  grid-template-rows: 305px 305px;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: visible;
+  width: 100%;
+  padding: 10px 8px 20px 8px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-left: calc(50vw - 50% + 8px);
+  padding-right: calc(50vw - 50% + 8px);
+}
+
+/* Hide scrollbar */
+.sliderContainer::-webkit-scrollbar {
+  height: 0;
+}
+
+.sliderContainer::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sliderContainer::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Slider Item */
+.sliderItem {
+  width: 420px;
+  height: 100%;
+}
+
+.visualCard {
+  height: 100%;
+}
+
+.quoteCard {
+  height: 100%;
+}
+
+/* Testimonial Card */
+.testimonialCard {
+  width: 100%;
+  height: 100%;
+  background-size: 100%;
+  background-position: center;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 0;
+  transition: background-size 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.testimonialCard:hover {
+  background-size: 115%;
+}
+
+/* Card Overlay */
+.cardOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.27) 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.header {
+  margin-bottom: auto;
+}
+
+.name {
+  font-family: 'iFood RC Títulos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.6;
+  color: #ffffff;
+  letter-spacing: -0.224px;
+  margin: 0;
+  padding: 0;
+}
+
+.company {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 2.667;
+  color: #ffffff;
+  opacity: 0.7;
+  margin: 0;
+  padding: 0;
+}
+
+/* Rating Stars */
+.ratingStars {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 24px;
+  margin-top: auto;
+  font-size: 16px;
+  color: #ff9500;
+}
+
+/* Main Quote */
+.mainQuote {
+  font-family: 'iFood RC Títulos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.286;
+  color: #ffffff;
+  letter-spacing: -0.224px;
+  margin: 0 0 24px 0;
+  padding: 0;
+}
+
+/* Full Quote */
+.fullQuote {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ffffff;
+  letter-spacing: -0.224px;
+  margin: 0;
+  padding: 0;
+}
+
+/* Slider Indicator */
+.indicatorWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.indicatorTrack {
+  background-color: #ffffff;
+  border-radius: 50px;
+  padding: 10px 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.indicatorDots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #222222;
+  opacity: 0.2;
+  transition: all 0.4s ease-out;
+}
+
+.dotActive {
+  width: 19px;
+  border-radius: 50px;
+  opacity: 1;
+}
+
+/* Quote Card */
+.quoteCard {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.quoteCardContent {
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  background-color: #ffffff;
+  border-radius: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: center;
+}
+
+.quoteStars {
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+  color: #ff9500;
+}
+
+.quoteText {
+  font-family: 'iFood RC Títulos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #1d1d1f;
+  letter-spacing: -0.6px;
+  margin: 0;
+  padding: 0;
+}
+
+.quoteAuthor {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: auto;
+}
+
+.quoteName {
+  font-family: 'iFood RC Títulos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1d1d1f;
+  letter-spacing: -0.3px;
+  margin: 0;
+  padding: 0;
+}
+
+.quoteCompany {
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  color: #a3a3a3;
+  margin: 0;
+  padding: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding: 120px 48px;
+    gap: 60px;
+  }
+
+  .sliderContainer {
+    grid-template-columns: repeat(3, 420px);
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .testimonialCard {
+    width: 400px;
+    height: 600px;
+  }
+
+  .quoteCardContent {
+    padding: 32px;
+  }
+
+  .quoteText {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 80px 20px;
+    gap: 40px;
+  }
+
+  .sliderContainer {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .sliderWrapper {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .title {
+    font-size: 24px;
+    height: auto;
+  }
+
+  .testimonialCard {
+    width: 100%;
+    height: 400px;
+  }
+
+  .cardOverlay {
+    padding: 20px;
+  }
+
+  .name {
+    font-size: 14px;
+  }
+
+  .company {
+    font-size: 11px;
+  }
+
+  .mainQuote {
+    font-size: 16px;
+  }
+
+  .fullQuote {
+    font-size: 13px;
+  }
+
+  .quoteCardContent {
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .quoteText {
+    font-size: 16px;
+  }
+
+  .quoteName {
+    font-size: 12px;
+  }
+
+  .quoteCompany {
+    font-size: 11px;
+  }
+
+  .quoteStars {
+    font-size: 12px;
+  }
+
+  .sliderItem {
+    width: 100%;
+  }
+
+  .visualCard {
+    height: 320px;
+    grid-row: auto;
+  }
+
+  .quoteCard {
+    height: auto;
+    min-height: 180px;
+  }
+}
