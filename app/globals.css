@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ifood-brand: #EB0033;
+  --color-ifood-primary: #141414;
+  --color-ifood-secondary: #666666;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fafafc;
+  font-family: 'iFood RC Textos', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-weight: 400;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@keyframes slideUpIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scalePopIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes buttonClick {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+
+.fade-in { animation: fadeIn 0.5s ease-in-out; }
+.fade-out { animation: fadeOut 0.3s ease-in-out; }
+.slide-up-in { animation: slideUpIn 0.6s ease-out; }
+.scale-pop-in { animation: scalePopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.button-click { animation: buttonClick 0.3s ease-in-out; }
+.transition-smooth { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.transition-colors-smooth { transition: background-color 0.3s ease-out, color 0.3s ease-out; }
+.tab-content { animation: slideUpIn 0.6s ease-out; }
+.card-item { animation: scalePopIn 0.5s ease-out; }
+.card-item:nth-child(1) { animation-delay: 0s; }
+.card-item:nth-child(2) { animation-delay: 0.1s; }
+.card-item:nth-child(3) { animation-delay: 0.2s; }
+.card-item:nth-child(4) { animation-delay: 0.3s; }
+
+/* Scroll animations */
+@keyframes slideInFromLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInFromRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInFromBottom {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInFromTop {
+  from { opacity: 0; transform: translateY(-40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes rotateInUp {
+  from { opacity: 0; transform: perspective(400px) rotateX(90deg) translateY(40px); }
+  to { opacity: 1; transform: perspective(400px) rotateX(0) translateY(0); }
+}
+
+.scroll-fade-in { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+.scroll-slide-up { opacity: 0; animation: slideInFromBottom 0.8s ease-out forwards; }
+.scroll-slide-left { opacity: 0; animation: slideInFromLeft 0.8s ease-out forwards; }
+.scroll-slide-right { opacity: 0; animation: slideInFromRight 0.8s ease-out forwards; }
+.scroll-slide-down { opacity: 0; animation: slideInFromTop 0.8s ease-out forwards; }
+.scroll-zoom { opacity: 0; animation: zoomIn 0.8s ease-out forwards; }
+.scroll-rotate { opacity: 0; animation: rotateInUp 0.8s ease-out forwards; }
+
+.scroll-stagger > * { opacity: 0; animation: slideInFromBottom 0.6s ease-out forwards; }
+.scroll-stagger > *:nth-child(1) { animation-delay: 0s; }
+.scroll-stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.scroll-stagger > *:nth-child(3) { animation-delay: 0.2s; }
+.scroll-stagger > *:nth-child(4) { animation-delay: 0.3s; }
+.scroll-stagger > *:nth-child(5) { animation-delay: 0.4s; }
+.scroll-stagger > *:nth-child(6) { animation-delay: 0.5s; }
+
+@keyframes menuItemAppear {
+  from { opacity: 0; transform: scale(0.9) translateY(-10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.menu-item-appear { animation: menuItemAppear 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+@keyframes menuCardAppear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.menu-card-appear { animation: menuCardAppear 0.3s ease-out forwards; }
+
+.scale-y-100 { transform: scaleY(1); }
+.scale-y-95 { transform: scaleY(0.95); }
+
+/* Scroll Reveal Animations */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}

@@ -1,0 +1,119 @@
+/* iFood RC Textos - Thin */
+@font-face {
+  font-family: 'iFood RC Textos';
+  src: url('/Font/iFoodRCTextos-Thin-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTextos-Thin-web.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Textos - Light */
+@font-face {
+  font-family: 'iFood RC Textos';
+  src: url('/Font/iFoodRCTextos-Light-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTextos-Light-web.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Textos - Regular */
+@font-face {
+  font-family: 'iFood RC Textos';
+  src: url('/Font/iFoodRCTextos-Regular-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTextos-Regular-web.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Textos - Medium */
+@font-face {
+  font-family: 'iFood RC Textos';
+  src: url('/Font/iFoodRCTextos-Medium-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTextos-Medium-web.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Textos - Bold */
+@font-face {
+  font-family: 'iFood RC Textos';
+  src: url('/Font/iFoodRCTextos-Bold-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTextos-Bold-web.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Textos - ExtraBold */
+@font-face {
+  font-family: 'iFood RC Textos';
+  src: url('/Font/iFoodRCTextos-ExtraBold-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTextos-ExtraBold-web.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Títulos - Thin */
+@font-face {
+  font-family: 'iFood RC Títulos';
+  src: url('/Font/iFoodRCTitulos-Thin-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTitulos-Thin-web.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Títulos - Light */
+@font-face {
+  font-family: 'iFood RC Títulos';
+  src: url('/Font/iFoodRCTitulos-Light-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTitulos-Light-web.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Títulos - Regular */
+@font-face {
+  font-family: 'iFood RC Títulos';
+  src: url('/Font/iFoodRCTitulos-Regular-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTitulos-Regular-web.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Títulos - Medium */
+@font-face {
+  font-family: 'iFood RC Títulos';
+  src: url('/Font/iFoodRCTitulos-Medium-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTitulos-Medium-web.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Títulos - Bold */
+@font-face {
+  font-family: 'iFood RC Títulos';
+  src: url('/Font/iFoodRCTitulos-Bold-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTitulos-Bold-web.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* iFood RC Títulos - ExtraBold */
+@font-face {
+  font-family: 'iFood RC Títulos';
+  src: url('/Font/iFoodRCTitulos-ExtraBold-web.woff2') format('woff2'),
+       url('/Font/iFoodRCTitulos-ExtraBold-web.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
