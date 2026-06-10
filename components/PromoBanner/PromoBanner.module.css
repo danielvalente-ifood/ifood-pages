@@ -1,0 +1,229 @@
+/* ============================================================
+   Promo Banner — fundo cor/imagem · layout centered/split ·
+   conteúdo claro/escuro · efeito cortina (sticky estilo nubank)
+   Figma: node 16-2729
+   Tokens: título T6 40/48 Medium · desc H3 18/24 Regular ·
+   card imagem branco 698×500 radius 20 · CTA gap 10 · gap split 50
+   ============================================================ */
+
+.section {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  /* fundo definido inline (cor) ou via .bgLayer (imagem) */
+
+  --pb-scale: 1;
+  --fs-title: calc(2.5rem * var(--pb-scale));    /* T6 — 40px */
+  --fs-desc: calc(1.125rem * var(--pb-scale));   /* H3 — 18px */
+}
+
+/* ---- esquema de cor do conteúdo ---- */
+.contentLight {
+  --pb-title: #ffffff;
+  --pb-desc: rgba(255, 255, 255, 0.78);
+}
+.contentDark {
+  --pb-title: #141414;
+  --pb-desc: #666666;
+}
+
+/* ---- efeito cortina: seção pinada no fundo; o próximo bloco
+   (opaco, mais à frente no DOM) sobe por cima cobrindo-a ---- */
+.curtain {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+/* ---- camada de imagem de fundo ---- */
+.bgLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.bgImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---- container ---- */
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 96px 80px;
+}
+
+.curtain .inner {
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* ---- layout centered ---- */
+.centered {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 56px;
+  max-width: 698px;
+  margin: 0 auto;
+}
+
+/* ---- layout split ---- */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+.splitReverse .splitText {
+  order: 2;
+}
+.splitReverse .mediaCard {
+  order: 1;
+}
+.splitText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 56px;
+}
+
+/* ---- texto ---- */
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-title);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: var(--pb-title);
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-desc);
+  line-height: 1.333;
+  letter-spacing: 0;
+  color: var(--pb-desc);
+  max-width: 534px;
+}
+
+.centered .description {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---- CTAs ---- */
+.ctaRow {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+.centered .ctaRow {
+  justify-content: center;
+}
+
+/* ---- card de imagem (split) ---- */
+.mediaCard {
+  width: 100%;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #fff;
+}
+.mediaImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.mediaPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d1d1d1;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .section {
+    --pb-scale: 0.9;
+  }
+  .inner {
+    padding: 72px 40px;
+  }
+  .split {
+    gap: 40px;
+  }
+  .mediaCard {
+    height: 420px;
+  }
+}
+
+@media (max-width: 768px) {
+  .split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .splitReverse .splitText,
+  .splitReverse .mediaCard {
+    order: initial;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    --pb-scale: 0.8;
+  }
+  .inner {
+    padding: 56px 20px;
+  }
+  .centered,
+  .splitText {
+    gap: 40px;
+  }
+  .mediaCard {
+    height: 320px;
+  }
+  .ctaRow {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .centered .ctaRow {
+    align-items: center;
+  }
+  /* em telas pequenas o sticky pode atrapalhar a leitura — vira fluxo normal */
+  .curtain {
+    position: relative;
+    min-height: auto;
+  }
+}

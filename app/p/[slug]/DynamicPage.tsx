@@ -33,6 +33,8 @@ const typeLabels: Record<string, string> = {
   navbar: 'Navbar',
   hero: 'Hero',
   beneficios: 'Benefícios',
+  content: 'Conteúdo',
+  promo: 'Banner promocional',
   vision: 'Social Proof',
   growth: 'Growth',
   integrated: 'Features',
@@ -259,8 +261,24 @@ export function DynamicPage({
       <main id="main-content">
         {mainBlocks.map((block) => {
           const { editProps, label, content } = renderBlock(block);
+          // Efeito cortina: o banner promocional fica pinado (sticky no wrapper,
+          // que é filho direto do <main>) e os blocos seguintes — com z-index
+          // acima — sobem por cima cobrindo-o. Requer que o bloco logo abaixo
+          // tenha fundo opaco.
+          const isCurtain =
+            block.type === 'promo' && (block.data?.curtain ?? true) !== false;
+          // Efeito cortina: o banner fica sticky (z-index 0) e os blocos
+          // seguintes (z-index 1) sobem por cima. A opacidade de cada bloco é
+          // responsabilidade do próprio componente (todos usam var --page-bg).
+          const wrapperStyle: React.CSSProperties = isCurtain
+            ? { position: 'sticky', top: 0, zIndex: 0 }
+            : { position: 'relative', zIndex: 1 };
+          const mergedProps = {
+            ...editProps,
+            style: { ...wrapperStyle, ...(editProps as { style?: React.CSSProperties }).style, ...(isCurtain ? { position: 'sticky' as const, top: 0, zIndex: 0 } : {}) },
+          };
           return (
-            <div key={block.id} id={`block-${block.id}`} {...editProps}>
+            <div key={block.id} id={`block-${block.id}`} {...mergedProps}>
               {label}
               {content}
             </div>

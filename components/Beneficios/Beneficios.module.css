@@ -7,8 +7,9 @@
 .section {
   position: relative;
   width: 100%;
-  /* sem fundo próprio — herda o fundo do site/página */
-  background: transparent;
+  /* fundo opaco = cor da página (necessário p/ cobrir seções com efeito
+     cortina pinadas atrás; antes era transparent) */
+  background: var(--page-bg, #fafafc);
   color: #141414;
 
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
@@ -157,56 +158,12 @@
 .cardCtas {
   display: flex;
   flex-wrap: wrap;
+  /* Figma: gap 10px entre botões, align-items: flex-start */
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
+  /* empurra para o fundo quando os cards têm alturas iguais */
   margin-top: auto;
-  padding-top: 8px;
-}
-
-.cardCta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 14px 24px;
-  border-radius: 100px;
-  font-family: 'iFood RC Textos', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-cta);
-  line-height: 1.5;
-  text-decoration: none;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
-  white-space: nowrap;
-}
-
-.cardCta:hover {
-  transform: translateY(-1px);
-}
-
-.cardCtaPrimary {
-  background: #141414;
-  color: #fff;
-}
-
-.cardCtaPrimary:hover {
-  opacity: 0.88;
-}
-
-/* Figma "light": fundo branco, texto escuro, sem borda */
-.cardCtaSecondary {
-  background: #fff;
-  color: #141414;
-  border-color: transparent;
-}
-
-.cardCtaSecondary:hover {
-  background: #f5f5f5;
-}
-
-.chevron {
-  flex-shrink: 0;
+  /* Visual dos botões controlado pelo componente Button */
 }
 
 /* ============================================================

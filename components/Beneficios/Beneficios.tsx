@@ -2,6 +2,7 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
+import { Button } from '@/components/Button/Button';
 import styles from './Beneficios.module.css';
 
 export interface BeneficioCTA {
@@ -62,35 +63,21 @@ interface BeneficiosProps {
   onSelectCard?: (index: number) => void;
 }
 
-function Chevron() {
-  return (
-    <svg
-      className={styles.chevron}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <polyline points="9 6 15 12 9 18" />
-    </svg>
-  );
-}
-
 function CardCta({ cta }: { cta: BeneficioCTA }) {
   const secondary = cta.style === 'secondary';
+  /**
+   * Benefícios usa fundo de card branco:
+   *   primary   → fill dark (fundo #141414, texto branco)
+   *   secondary → stroke dark (borda rgba(0,0,0,0.16), texto #141414)
+   */
   return (
-    <a
+    <Button
       href={cta.link || '#'}
-      className={`${styles.cardCta} ${secondary ? styles.cardCtaSecondary : styles.cardCtaPrimary}`}
-    >
-      <span>{cta.text}</span>
-      <Chevron />
-    </a>
+      label={cta.text}
+      variant={secondary ? 'stroke' : 'fill'}
+      color="dark"
+      content="text-icon"
+    />
   );
 }
 

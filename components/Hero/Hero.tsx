@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { events } from '@/lib/gtag';
+import { Button } from '@/components/Button/Button';
 import styles from './Hero.module.css';
 
 export type HeroVariant = 'full' | 'slider' | 'centered' | 'split-image' | 'split-form';
@@ -69,36 +70,21 @@ interface HeroProps {
 
 /* ---------- peças compartilhadas ---------- */
 
-function Chevron() {
-  return (
-    <svg
-      className={styles.chevron}
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <polyline points="9 6 15 12 9 18" />
-    </svg>
-  );
-}
-
+/**
+ * Hero usa fundo escuro em todas as variantes → botões no esquema "light"
+ * (fill light = branco preenchido; stroke light = borda branca transparente)
+ */
 function Cta({ cta }: { cta: HeroCTA }) {
   const secondary = cta.style === 'secondary';
   return (
-    <a
+    <Button
       href={cta.link || '#'}
-      className={`${styles.cta} ${secondary ? styles.ctaSecondary : styles.ctaPrimary}`}
+      label={cta.text}
+      variant={secondary ? 'stroke' : 'fill'}
+      color="light"
+      content="text-icon"
       onClick={() => events.heroCta(cta.text)}
-    >
-      <span>{cta.text}</span>
-      <Chevron />
-    </a>
+    />
   );
 }
 
@@ -337,10 +323,14 @@ function HeroSplitForm({ d }: { d: HeroData }) {
             <input className={styles.formInput} placeholder={f.placeholder} aria-label={f.label || 'Campo'} />
           </div>
 
-          <button type="submit" className={styles.formButton}>
-            <span>{f.button_text}</span>
-            <Chevron />
-          </button>
+          <Button
+            type="submit"
+            label={f.button_text}
+            variant="fill"
+            color="dark"
+            content="text-icon"
+            className={styles.formButton}
+          />
 
           {f.legal && (
             <p className={styles.formLegal}>

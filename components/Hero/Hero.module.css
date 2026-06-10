@@ -95,57 +95,12 @@
 .ctaRow {
   display: flex;
   gap: 10px;
-  align-items: center;
+  align-items: flex-start;
   flex-wrap: wrap;
 }
 
 .ctaRowCenter {
   justify-content: center;
-}
-
-.cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  padding: 14px 24px;
-  border-radius: 100px;
-  font-family: 'iFood RC Textos', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-cta);
-  line-height: 1.5;
-  text-decoration: none;
-  cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform 0.15s ease, background 0.15s ease, opacity 0.15s ease;
-  white-space: nowrap;
-}
-
-.cta:hover {
-  transform: translateY(-1px);
-}
-
-.ctaPrimary {
-  background: #fff;
-  color: #141414;
-}
-
-.ctaPrimary:hover {
-  background: #f0f0f0;
-}
-
-.ctaSecondary {
-  background: transparent;
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.16);
-}
-
-.ctaSecondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.chevron {
-  flex-shrink: 0;
 }
 
 /* ============================================================
@@ -403,27 +358,9 @@
   box-shadow: 0 0 0 2px rgba(20, 20, 20, 0.15) inset;
 }
 
+/* formButton: override de largura — visual vem do Button component */
 .formButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
   width: 100%;
-  padding: 14px 24px;
-  border-radius: 100px;
-  border: none;
-  background: #141414;
-  color: #fff;
-  font-family: 'iFood RC Textos', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: var(--fs-cta);
-  line-height: 1.5;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-}
-
-.formButton:hover {
-  opacity: 0.88;
 }
 
 .formLegal {
