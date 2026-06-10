@@ -3,6 +3,7 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
 import { Button } from '@/components/Button/Button';
+import { Editable } from '@/components/edit/Editable';
 import styles from './Beneficios.module.css';
 
 export interface BeneficioCTA {
@@ -99,15 +100,19 @@ export default function Beneficios({
     >
       <div className={styles.inner}>
         <header className={styles.header}>
-          {d.badge && <span className={styles.badge}>{d.badge}</span>}
+          {d.badge && (
+            <Editable as="span" className={styles.badge} path="badge" value={d.badge} />
+          )}
           {d.title?.length > 0 && (
             <h2 className={styles.title}>
               {d.title.map((line, i) => (
-                <span key={i}>{line}</span>
+                <Editable key={i} as="span" path={`title.${i}`} value={line} />
               ))}
             </h2>
           )}
-          {d.description && <p className={styles.description}>{d.description}</p>}
+          {d.description && (
+            <Editable as="p" className={styles.description} path="description" value={d.description} multiline />
+          )}
         </header>
 
         <div className={styles.cards} data-count={cards.length}>
@@ -129,8 +134,12 @@ export default function Beneficios({
                 <div className={styles.iconChip} aria-hidden="true">
                   <Icon name={card.icon || 'grid-dashboard-bento'} size={24} />
                 </div>
-                {card.title && <h3 className={styles.cardTitle}>{card.title}</h3>}
-                {card.description && <p className={styles.cardDesc}>{card.description}</p>}
+                {card.title && (
+                  <Editable as="h3" className={styles.cardTitle} path={`cards.${i}.title`} value={card.title} />
+                )}
+                {card.description && (
+                  <Editable as="p" className={styles.cardDesc} path={`cards.${i}.description`} value={card.description} multiline />
+                )}
                 {ctas.length > 0 && (
                   <div className={styles.cardCtas}>
                     {ctas.map((c, j) => (

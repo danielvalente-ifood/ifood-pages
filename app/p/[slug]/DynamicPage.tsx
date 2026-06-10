@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { SectionTracker } from '@/components/SectionTracker';
 import { SkipLink } from '@/components/SkipLink';
+import { SmoothScroll } from '@/components/SmoothScroll/SmoothScroll';
+import { EditProvider } from '@/components/edit/EditContext';
 import { applyBlockExperiments } from '@/lib/ab-testing';
 import { personalize } from '@/lib/personalization';
 import { initTracker } from '@/lib/tracker';
@@ -27,6 +29,23 @@ interface DynamicPageProps {
   pageId?: string;
   pageSlug?: string;
   aiEnabled?: boolean;
+}
+
+/** Set imutável por path com índices (ex: 'cards.2.title'). */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function setByPath(obj: any, path: string, value: any): any {
+  const keys = path.split('.');
+  const clone = Array.isArray(obj) ? [...obj] : { ...obj };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let cur: any = clone;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const k = keys[i];
+    const next = cur[k];
+    cur[k] = Array.isArray(next) ? [...next] : { ...(next ?? {}) };
+    cur = cur[k];
+  }
+  cur[keys[keys.length - 1]] = value;
+  return clone;
 }
 
 const typeLabels: Record<string, string> = {
@@ -171,6 +190,26 @@ export function DynamicPage({
     );
   };
 
+  // Edição inline: atualiza o estado local na hora e notifica o CMS.
+  const emitContentEdit = useCallback((blockId: string, path: string, value: string) => {
+    setBlocks((prev) =>
+      prev.map((b) => (b.id === blockId ? { ...b, data: setByPath(b.data, path, value) } : b))
+    );
+    window.parent.postMessage(
+      { type: 'landing:content-edit', payload: { blockId, path, value } },
+      '*'
+    );
+  }, []);
+
+  const requestImageEdit = useCallback((blockId: string, path: string) => {
+    setSelectedBlockId(blockId);
+    setSelectedCard(null);
+    window.parent.postMessage(
+      { type: 'landing:image-edit-request', payload: { blockId, path } },
+      '*'
+    );
+  }, []);
+
   const navbarBlock = blocks.find((b) => b.type === 'navbar');
   const footerBlock = blocks.find((b) => b.type === 'footer');
   const mainBlocks = blocks.filter((b) => b.type !== 'navbar' && b.type !== 'footer');
@@ -228,12 +267,21 @@ export function DynamicPage({
       ) : null;
 
     const content = isEditMode ? (
-      <BlockRenderer
-        block={block}
-        editMode
-        selectedCardIndex={cardSelectedHere ? selectedCard!.index : null}
-        onSelectCard={(i) => handleCardSelect(block, i)}
-      />
+      <EditProvider
+        value={{
+          editMode: true,
+          blockId: block.id,
+          emit: (p, v) => emitContentEdit(block.id, p, v),
+          requestImage: (p) => requestImageEdit(block.id, p),
+        }}
+      >
+        <BlockRenderer
+          block={block}
+          editMode
+          selectedCardIndex={cardSelectedHere ? selectedCard!.index : null}
+          onSelectCard={(i) => handleCardSelect(block, i)}
+        />
+      </EditProvider>
     ) : (
       <SectionTracker section={block.type}>
         <BlockRenderer block={block} />
@@ -245,6 +293,7 @@ export function DynamicPage({
 
   return (
     <>
+      <SmoothScroll />
       <SkipLink />
 
       {navbarBlock &&

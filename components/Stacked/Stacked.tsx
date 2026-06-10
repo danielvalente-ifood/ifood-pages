@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/Button/Button';
 import { Icon } from '@/components/Icon/Icon';
+import { Editable } from '@/components/edit/Editable';
+import { EditableImage } from '@/components/edit/EditableImage';
 import styles from './Stacked.module.css';
 
 export interface StackedCTA {
@@ -127,11 +129,13 @@ export default function Stacked({ data }: StackedProps) {
         <div className={styles.pinned}>
           <div className={styles.inner}>
             <header className={styles.header}>
-              {d.badge && <span className={styles.badge}>{d.badge}</span>}
+              {d.badge && (
+                <Editable as="span" className={styles.badge} path="badge" value={d.badge} />
+              )}
               {d.title?.length > 0 && (
                 <h2 className={styles.title}>
                   {d.title.map((line, i) => (
-                    <span key={i}>{line}</span>
+                    <Editable key={i} as="span" path={`title.${i}`} value={line} />
                   ))}
                 </h2>
               )}
@@ -152,7 +156,7 @@ export default function Stacked({ data }: StackedProps) {
                       onClick={() => setActive(i)}
                       aria-expanded={isActive}
                     >
-                      <span>{card.label}</span>
+                      <Editable as="span" path={`cards.${i}.label`} value={card.label} />
                     </button>
 
                     <div className={styles.cardBody}>
@@ -160,19 +164,32 @@ export default function Stacked({ data }: StackedProps) {
                         className={`${styles.grid} ${assetRight ? styles.gridAssetRight : ''}`}
                       >
                         <div className={styles.media}>
-                          {card.image ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={card.image} alt="" className={styles.mediaImg} />
-                          ) : (
-                            <div className={styles.mediaPlaceholder} aria-hidden="true">
-                              <Icon name="photo-image-default" size={48} />
-                            </div>
-                          )}
+                          <EditableImage
+                            path={`cards.${i}.image`}
+                            src={card.image}
+                            className={styles.mediaImg}
+                            placeholderClassName={styles.mediaPlaceholder}
+                            placeholder={<Icon name="photo-image-default" size={48} />}
+                          />
                         </div>
                         <div className={styles.content}>
-                          {card.title && <p className={styles.cardTitle}>{card.title}</p>}
+                          {card.title && (
+                            <Editable
+                              as="p"
+                              className={styles.cardTitle}
+                              path={`cards.${i}.title`}
+                              value={card.title}
+                              multiline
+                            />
+                          )}
                           {card.description && (
-                            <p className={styles.cardDesc}>{card.description}</p>
+                            <Editable
+                              as="p"
+                              className={styles.cardDesc}
+                              path={`cards.${i}.description`}
+                              value={card.description}
+                              multiline
+                            />
                           )}
                           {card.cta?.text && (
                             <div className={styles.cardCta}>

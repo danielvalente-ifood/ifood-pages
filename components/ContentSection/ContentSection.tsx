@@ -3,6 +3,8 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
 import { Button } from '@/components/Button/Button';
+import { Editable } from '@/components/edit/Editable';
+import { EditableImage } from '@/components/edit/EditableImage';
 import styles from './ContentSection.module.css';
 
 export interface ContentSectionCTA {
@@ -66,28 +68,32 @@ export default function ContentSection({ data }: ContentSectionProps) {
 
   const media = (
     <div className={styles.mediaCard}>
-      {d.image ? (
-        <img src={d.image} alt="" className={styles.mediaImage} />
-      ) : (
-        <div className={styles.mediaPlaceholder} aria-hidden="true">
-          <Icon name="photo-image-default" size={56} />
-        </div>
-      )}
+      <EditableImage
+        path="image"
+        src={d.image}
+        className={styles.mediaImage}
+        placeholderClassName={styles.mediaPlaceholder}
+        placeholder={<Icon name="photo-image-default" size={56} />}
+      />
     </div>
   );
 
   const content = (
     <div className={styles.textColumn}>
       <div className={styles.textGroup}>
-        {d.badge && <span className={styles.badge}>{d.badge}</span>}
+        {d.badge && (
+          <Editable as="span" className={styles.badge} path="badge" value={d.badge} />
+        )}
         {d.title?.length > 0 && (
           <h2 className={styles.title}>
             {d.title.map((line, i) => (
-              <span key={i}>{line}</span>
+              <Editable key={i} as="span" path={`title.${i}`} value={line} />
             ))}
           </h2>
         )}
-        {d.description && <p className={styles.description}>{d.description}</p>}
+        {d.description && (
+          <Editable as="p" className={styles.description} path="description" value={d.description} multiline />
+        )}
       </div>
 
       {ctas.length > 0 && (

@@ -4,6 +4,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { events } from '@/lib/gtag';
 import { Button } from '@/components/Button/Button';
+import { Editable } from '@/components/edit/Editable';
+import { EditableImage } from '@/components/edit/EditableImage';
+import { useEdit } from '@/components/edit/EditContext';
 import styles from './Hero.module.css';
 
 export type HeroVariant = 'full' | 'slider' | 'centered' | 'split-image' | 'split-form';
@@ -104,19 +107,30 @@ function TextGroup({
   title,
   description,
   center,
+  pathPrefix = '',
 }: {
   title: string[];
   description: string;
   center?: boolean;
+  /** prefixo de path para edição inline (ex: 'slides.0.') */
+  pathPrefix?: string;
 }) {
   return (
     <div className={`${styles.textGroup} ${center ? styles.textGroupCenter : ''}`}>
       <h1 className={styles.title}>
         {(title ?? []).map((line, i) => (
-          <span key={i}>{line}</span>
+          <Editable key={i} as="span" path={`${pathPrefix}title.${i}`} value={line} />
         ))}
       </h1>
-      {description && <p className={styles.description}>{description}</p>}
+      {description && (
+        <Editable
+          as="p"
+          className={styles.description}
+          path={`${pathPrefix}description`}
+          value={description}
+          multiline
+        />
+      )}
     </div>
   );
 }
@@ -194,8 +208,10 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
           },
         ];
 
+  const { editMode } = useEdit();
   const isSlider = panels.length > 1;
-  const { active, select } = useSlider(panels.length, isSlider);
+  // Em edit mode o autoplay pausa, pra não trocar o slide enquanto edita.
+  const { active, select } = useSlider(panels.length, isSlider && !editMode);
   const panel = panels[active] ?? panels[0];
 
   return (
@@ -221,7 +237,11 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
 
       <div className={styles.inner}>
         <div className={styles.textBlock}>
-          <TextGroup title={panel.title} description={panel.description} />
+          <TextGroup
+            title={panel.title}
+            description={panel.description}
+            pathPrefix={isSlider ? `slides.${active}.` : ''}
+          />
           <CtaRow ctas={panel.ctas} />
         </div>
 
@@ -268,17 +288,19 @@ function HeroSplitImage({ d }: { d: HeroData }) {
           <CtaRow ctas={d.ctas} />
         </div>
         <div className={styles.mediaCard}>
-          {d.image ? (
-            <img src={d.image} alt="" className={styles.mediaImage} />
-          ) : (
-            <div className={styles.mediaPlaceholder} aria-hidden="true">
+          <EditableImage
+            path="image"
+            src={d.image}
+            className={styles.mediaImage}
+            placeholderClassName={styles.mediaPlaceholder}
+            placeholder={
               <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <rect x="3" y="3" width="18" height="18" rx="2" />
                 <circle cx="8.5" cy="8.5" r="1.5" />
                 <path d="m21 15-5-5L5 21" />
               </svg>
-            </div>
-          )}
+            }
+          />
         </div>
       </div>
     </section>

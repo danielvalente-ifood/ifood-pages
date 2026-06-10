@@ -7,11 +7,30 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll suave agora é feito pelo Lenis (components/SmoothScroll). O
+     scroll-behavior:smooth do CSS conflita com o Lenis, então fica de fora. */
   /* cor de fundo da página — usada por seções sem fundo próprio para ficarem
      opacas (necessário para o efeito cortina do Promo Banner cobrir o que está
      pinado atrás). Centralizada aqui para futura customização por página. */
   --page-bg: #fafafc;
+}
+
+/* ---- Lenis (smooth scroll) ---- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
