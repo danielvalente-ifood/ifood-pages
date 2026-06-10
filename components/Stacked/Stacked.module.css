@@ -1,0 +1,288 @@
+/* ============================================================
+   Stacked — cards empilhados scroll-driven (estilo Nubank)
+   Figma: node 10:3598 "Stacked"
+   Tokens: título seção T6 40/Medium · label card H2 20/Medium
+   título card T8 32/Medium · desc H3 18/Regular #666
+   container radius 24 · card top radius 20 · imagem 400 radius 20
+   borda topo #EBEBEB · badge 12/Medium #424245 bg #F5F5F5
+   ============================================================ */
+
+.section {
+  position: relative;
+  width: 100%;
+  background: var(--page-bg, #fafafc);
+  color: #141414;
+
+  /* escala tipográfica (REM, tokens do Figma) */
+  --st-scale: 1;
+  --fs-title: calc(2.5rem * var(--st-scale)); /* T6 — 40px */
+  --fs-badge: calc(0.75rem * var(--st-scale)); /* P3 — 12px */
+  --fs-label: calc(1.25rem * var(--st-scale)); /* H2 — 20px */
+  --fs-card-title: calc(2rem * var(--st-scale)); /* T8 — 32px */
+  --fs-card-desc: calc(1.125rem * var(--st-scale)); /* H3 — 18px */
+
+  /* altura de rolagem por card (define o "tempo" de cada transição) */
+  --step: 70vh;
+}
+
+/* Wrapper alto = área de rolagem que alimenta o progresso.
+   pinned fica grudado no topo enquanto rolamos por esta área. */
+.wrapper {
+  position: relative;
+  height: calc(100vh + (var(--card-count, 3) - 1) * var(--step));
+}
+
+.pinned {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inner {
+  max-width: 1600px;
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  padding: 64px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* ---- cabeçalho ---- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  max-width: 716px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 24px;
+  background: #f5f5f5;
+  color: #424245;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-badge);
+  line-height: 1.667;
+  letter-spacing: -0.374px;
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-title);
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #141414;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---- pilha de cards ---- */
+
+.stack {
+  position: relative;
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.card {
+  position: relative;
+  z-index: calc(var(--i) + 1);
+  background: #fff;
+  border-top: 1px solid #ebebeb;
+  border-radius: 20px 20px 0 0;
+}
+
+/* sobreposição (seam) entre cards — efeito "colado/deck" */
+.card + .card {
+  margin-top: -20px;
+}
+
+/* barra de label sempre visível */
+.cardLabel {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 26px 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-label);
+  line-height: 1.6;
+  color: #141414;
+}
+
+/* corpo do card — colapsa via grid-template-rows 0fr → 1fr */
+.cardBody {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 480ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardActive .cardBody {
+  grid-template-rows: 1fr;
+}
+
+.cardBody > .grid {
+  overflow: hidden;
+  min-height: 0;
+  opacity: 0;
+  transition: opacity 320ms ease;
+}
+
+.cardActive .cardBody > .grid {
+  opacity: 1;
+  transition: opacity 360ms ease 160ms;
+}
+
+/* grid de conteúdo do card aberto: imagem + texto */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  padding: 12px 32px 56px;
+  align-items: start;
+}
+
+/* imagem à direita (assetPosition='right') */
+.gridAssetRight .media {
+  order: 2;
+}
+
+/* ---- mídia ---- */
+
+.media {
+  width: 100%;
+}
+
+.mediaImg {
+  display: block;
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+}
+
+.mediaPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 400px;
+  border-radius: 20px;
+  background: #f5f5f5;
+  color: #c4c4c4;
+}
+
+/* ---- conteúdo textual ---- */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  height: 100%;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: var(--fs-card-title);
+  line-height: 1.25;
+  color: #141414;
+}
+
+/* título + descrição com gap menor entre si */
+.cardTitle + .cardDesc {
+  margin-top: -26px;
+}
+
+.cardDesc {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: var(--fs-card-desc);
+  line-height: 1.333;
+  color: #666;
+}
+
+.cardCta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ============================================================
+   Responsivo — mantém o efeito scroll-driven; reduz escala e
+   empilha mídia/texto em coluna única (legibilidade no mobile).
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .section {
+    --st-scale: 0.85;
+  }
+  .inner {
+    padding: 48px 40px;
+  }
+  .grid {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    --st-scale: 0.72;
+    --step: 60vh;
+  }
+  .inner {
+    padding: 40px 20px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 8px 20px 32px;
+  }
+  /* no mobile a imagem sempre vem antes do texto */
+  .gridAssetRight .media {
+    order: 0;
+  }
+  .mediaImg,
+  .mediaPlaceholder {
+    height: 220px;
+  }
+  .content {
+    gap: 28px;
+  }
+  .cardTitle + .cardDesc {
+    margin-top: -16px;
+  }
+  .cardLabel {
+    padding: 20px;
+  }
+}
+
+/* acessibilidade: respeita redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  .cardBody,
+  .cardBody > .grid {
+    transition: none;
+  }
+}

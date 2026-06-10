@@ -11,6 +11,7 @@ import ctaBannerEntry from './cta-banner';
 import beneficiosEntry from './beneficios';
 import contentEntry from './content-section';
 import promoEntry from './promo-banner';
+import stackedEntry from './stacked';
 
 /**
  * Fonte única de verdade dos componentes de landing page.
@@ -29,6 +30,7 @@ export const registry: RegistryEntry[] = [
   beneficiosEntry,
   contentEntry,
   promoEntry,
+  stackedEntry,
   ctaBannerEntry, // Fase 5: componente de teste do registry — manter ou remover
 ];
 
