@@ -40,6 +40,8 @@ export interface ButtonProps {
   icon?: string;
   /** Tipo HTML do elemento button */
   type?: 'button' | 'submit' | 'reset';
+  /** Substitui o <span>{label}</span> interno — útil para conteúdo editável */
+  children?: React.ReactNode;
 }
 
 /** Ícone padrão para o lado direito (text-icon / icon) */
@@ -68,6 +70,7 @@ export function Button({
   disabled,
   icon,
   type = 'button',
+  children,
 }: ButtonProps) {
   const isIconOnly = content === 'icon';
   const hasGap = content !== 'text';
@@ -86,7 +89,7 @@ export function Button({
   const inner = (
     <>
       {content === 'icon-text' && <Icon name={leftIcon} size={24} />}
-      {!isIconOnly && <span>{label}</span>}
+      {!isIconOnly && (children ?? <span>{label}</span>)}
       {(content === 'text-icon' || content === 'icon') && <Icon name={rightIcon} size={24} />}
     </>
   );

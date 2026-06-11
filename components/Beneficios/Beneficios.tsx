@@ -2,14 +2,14 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
-import { Button } from '@/components/Button/Button';
+import { EditableButton } from '@/components/edit/EditableButton';
 import { Editable } from '@/components/edit/Editable';
 import styles from './Beneficios.module.css';
 
 export interface BeneficioCTA {
   text: string;
   link: string;
-  style?: 'primary' | 'secondary';
+  style?: 'primary' | 'secondary' | 'empty';
 }
 
 export interface BeneficioCard {
@@ -64,18 +64,20 @@ interface BeneficiosProps {
   onSelectCard?: (index: number) => void;
 }
 
-function CardCta({ cta }: { cta: BeneficioCTA }) {
-  const secondary = cta.style === 'secondary';
+function CardCta({ cta, path }: { cta: BeneficioCTA; path: string }) {
   /**
    * Benefícios usa fundo de card branco:
    *   primary   → fill dark (fundo #141414, texto branco)
    *   secondary → stroke dark (borda rgba(0,0,0,0.16), texto #141414)
+   *   empty     → empty dark (sem fundo, sem borda)
    */
+  const variant = cta.style === 'secondary' ? 'stroke' : cta.style === 'empty' ? 'empty' : 'fill';
   return (
-    <Button
+    <EditableButton
+      path={path}
       href={cta.link || '#'}
       label={cta.text}
-      variant={secondary ? 'stroke' : 'fill'}
+      variant={variant}
       color="dark"
       content="text-icon"
     />
@@ -104,11 +106,13 @@ export default function Beneficios({
             <Editable as="span" className={styles.badge} path="badge" value={d.badge} />
           )}
           {d.title?.length > 0 && (
-            <h2 className={styles.title}>
-              {d.title.map((line, i) => (
-                <Editable key={i} as="span" path={`title.${i}`} value={line} />
-              ))}
-            </h2>
+            <Editable
+              as="h2"
+              className={styles.title}
+              path="title"
+              value={Array.isArray(d.title) ? d.title.join(' ') : d.title}
+              multiline
+            />
           )}
           {d.description && (
             <Editable as="p" className={styles.description} path="description" value={d.description} multiline />
@@ -143,7 +147,7 @@ export default function Beneficios({
                 {ctas.length > 0 && (
                   <div className={styles.cardCtas}>
                     {ctas.map((c, j) => (
-                      <CardCta key={j} cta={c} />
+                      <CardCta key={j} cta={c} path={`cards.${i}.ctas.${j}.text`} />
                     ))}
                   </div>
                 )}

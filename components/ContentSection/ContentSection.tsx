@@ -2,7 +2,7 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
-import { Button } from '@/components/Button/Button';
+import { EditableButton } from '@/components/edit/EditableButton';
 import { Editable } from '@/components/edit/Editable';
 import { EditableImage } from '@/components/edit/EditableImage';
 import styles from './ContentSection.module.css';
@@ -10,7 +10,7 @@ import styles from './ContentSection.module.css';
 export interface ContentSectionCTA {
   text: string;
   link: string;
-  style?: 'primary' | 'secondary';
+  style?: 'primary' | 'secondary' | 'empty';
 }
 
 export interface ContentSectionData {
@@ -47,13 +47,14 @@ interface ContentSectionProps {
  *   primary   → fill dark   (fundo #141414, texto branco)
  *   secondary → stroke dark (borda rgba(0,0,0,0.16), texto #141414)
  */
-function ContentCta({ cta }: { cta: ContentSectionCTA }) {
-  const secondary = cta.style === 'secondary';
+function ContentCta({ cta, path }: { cta: ContentSectionCTA; path: string }) {
+  const variant = cta.style === 'secondary' ? 'stroke' : cta.style === 'empty' ? 'empty' : 'fill';
   return (
-    <Button
+    <EditableButton
+      path={path}
       href={cta.link || '#'}
       label={cta.text}
-      variant={secondary ? 'stroke' : 'fill'}
+      variant={variant}
       color="dark"
       content="text-icon"
     />
@@ -95,7 +96,7 @@ export default function ContentSection({ data }: ContentSectionProps) {
       {ctas.length > 0 && (
         <div className={styles.ctaRow}>
           {ctas.map((c, i) => (
-            <ContentCta key={i} cta={c} />
+            <ContentCta key={i} cta={c} path={`ctas.${i}.text`} />
           ))}
         </div>
       )}

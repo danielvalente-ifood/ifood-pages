@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef, type PointerEvent as ReactPoi
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { events } from '@/lib/gtag';
 import { Button } from '@/components/Button/Button';
+import { EditableButton } from '@/components/edit/EditableButton';
 import { Editable } from '@/components/edit/Editable';
 import { EditableImage } from '@/components/edit/EditableImage';
 import { useEdit } from '@/components/edit/EditContext';
@@ -14,7 +15,7 @@ export type HeroVariant = 'full' | 'slider' | 'centered' | 'split-image' | 'spli
 export interface HeroCTA {
   text: string;
   link: string;
-  style?: 'primary' | 'secondary';
+  style?: 'primary' | 'secondary' | 'empty';
 }
 
 export interface HeroSlide {
@@ -77,13 +78,14 @@ interface HeroProps {
  * Hero usa fundo escuro em todas as variantes → botões no esquema "light"
  * (fill light = branco preenchido; stroke light = borda branca transparente)
  */
-function Cta({ cta }: { cta: HeroCTA }) {
-  const secondary = cta.style === 'secondary';
+function Cta({ cta, path }: { cta: HeroCTA; path: string }) {
+  const variant = cta.style === 'secondary' ? 'stroke' : cta.style === 'empty' ? 'empty' : 'fill';
   return (
-    <Button
+    <EditableButton
+      path={path}
       href={cta.link || '#'}
       label={cta.text}
-      variant={secondary ? 'stroke' : 'fill'}
+      variant={variant}
       color="light"
       content="text-icon"
       onClick={() => events.heroCta(cta.text)}
@@ -91,13 +93,13 @@ function Cta({ cta }: { cta: HeroCTA }) {
   );
 }
 
-function CtaRow({ ctas, center }: { ctas?: HeroCTA[]; center?: boolean }) {
+function CtaRow({ ctas, center, basePath = 'ctas' }: { ctas?: HeroCTA[]; center?: boolean; basePath?: string }) {
   const list = (ctas ?? []).slice(0, 2);
   if (list.length === 0) return null;
   return (
     <div className={`${styles.ctaRow} ${center ? styles.ctaRowCenter : ''}`}>
       {list.map((c, i) => (
-        <Cta key={i} cta={c} />
+        <Cta key={i} cta={c} path={`${basePath}.${i}.text`} />
       ))}
     </div>
   );
@@ -268,7 +270,7 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
             description={panel.description}
             pathPrefix={isSlider ? `slides.${active}.` : ''}
           />
-          <CtaRow ctas={panel.ctas} />
+          <CtaRow ctas={panel.ctas} basePath={isSlider ? `slides.${active}.ctas` : 'ctas'} />
         </div>
 
         {isSlider && <SliderDots count={panels.length} active={active} onSelect={goTo} />}

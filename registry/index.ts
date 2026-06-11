@@ -12,6 +12,7 @@ import beneficiosEntry from './beneficios';
 import contentEntry from './content-section';
 import promoEntry from './promo-banner';
 import stackedEntry from './stacked';
+import bigNumbersEntry from './big-numbers';
 
 /**
  * Fonte única de verdade dos componentes de landing page.
@@ -31,6 +32,7 @@ export const registry: RegistryEntry[] = [
   contentEntry,
   promoEntry,
   stackedEntry,
+  bigNumbersEntry,
   ctaBannerEntry, // Fase 5: componente de teste do registry — manter ou remover
 ];
 

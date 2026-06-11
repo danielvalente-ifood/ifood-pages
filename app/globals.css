@@ -146,12 +146,12 @@ body {
 
 /* Scroll Reveal Animations */
 .scroll-reveal {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(30px);
 }
 
 .scroll-reveal.visible {
   opacity: 1;
   transform: translateY(0);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transition: transform 0.8s ease-out;
 }

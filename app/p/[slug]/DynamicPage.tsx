@@ -61,6 +61,7 @@ const typeLabels: Record<string, string> = {
   results: 'Depoimentos',
   faq: 'FAQ',
   footer: 'Footer',
+  'big-numbers': 'Big Numbers',
 };
 
 export function DynamicPage({

@@ -2,14 +2,14 @@
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
-import { Button } from '@/components/Button/Button';
+import { EditableButton } from '@/components/edit/EditableButton';
 import { Editable } from '@/components/edit/Editable';
 import styles from './PromoBanner.module.css';
 
 export interface PromoBannerCTA {
   text: string;
   link: string;
-  style?: 'primary' | 'secondary';
+  style?: 'primary' | 'secondary' | 'empty';
 }
 
 export interface PromoBannerData {
@@ -54,13 +54,14 @@ interface PromoBannerProps {
   data?: PromoBannerData;
 }
 
-function PromoCta({ cta, color }: { cta: PromoBannerCTA; color: 'light' | 'dark' }) {
-  const secondary = cta.style === 'secondary';
+function PromoCta({ cta, color, path }: { cta: PromoBannerCTA; color: 'light' | 'dark'; path: string }) {
+  const variant = cta.style === 'secondary' ? 'stroke' : cta.style === 'empty' ? 'empty' : 'fill';
   return (
-    <Button
+    <EditableButton
+      path={path}
       href={cta.link || '#'}
       label={cta.text}
-      variant={secondary ? 'stroke' : 'fill'}
+      variant={variant}
       color={color}
       content="text-icon"
     />
@@ -97,7 +98,7 @@ export default function PromoBanner({ data }: PromoBannerProps) {
     ctas.length > 0 ? (
       <div className={styles.ctaRow}>
         {ctas.map((c, i) => (
-          <PromoCta key={i} cta={c} color={contentColor} />
+          <PromoCta key={i} cta={c} color={contentColor} path={`ctas.${i}.text`} />
         ))}
       </div>
     ) : null;
