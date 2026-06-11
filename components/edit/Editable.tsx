@@ -28,6 +28,7 @@ export function Editable({ path, value, as = 'span', multiline = false, classNam
   const ref = useRef<any>(null);
   const editingRef = useRef(false);
   const [editing, setEditing] = useState(false);
+  const [hovered, setHovered] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Mantém o texto do DOM em sync com o value enquanto NÃO está editando.
@@ -73,12 +74,21 @@ export function Editable({ path, value, as = 'span', multiline = false, classNam
       suppressContentEditableWarning
       style={{
         cursor: editing ? 'text' : 'pointer',
-        outline: editing ? '1px solid rgba(127,127,127,0.55)' : 'none',
+        // outline sempre presente em 1px solid; só a COR muda → transição suave
+        // e sem o "piscar" causado por trocar de 'none' pra dashed/solid.
+        outline: '1px solid',
+        outlineColor: editing
+          ? 'rgba(127,127,127,0.55)'
+          : hovered
+          ? 'rgba(127,127,127,0.40)'
+          : 'transparent',
         outlineOffset: 3,
         background: editing ? 'rgba(127,127,127,0.08)' : 'transparent',
         borderRadius: 6,
-        transition: 'background 120ms ease, outline-color 120ms ease',
+        transition: 'outline-color 90ms ease-out, background 120ms ease',
       }}
+      onMouseEnter={() => !editing && setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onDoubleClick={(e: any) => {
         e.stopPropagation();

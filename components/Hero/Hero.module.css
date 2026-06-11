@@ -15,7 +15,7 @@
      Tamanhos iguais em TODAS as variantes. --hero-scale reduz tudo
      proporcionalmente nos breakpoints (1 = tamanho do Figma). */
   --hero-scale: 1;
-  --fs-title: calc(4rem * var(--hero-scale));        /* T4 — 64px */
+  --fs-title: calc(3.5rem * var(--hero-scale));      /* 56px */
   --fs-desc: calc(1.125rem * var(--hero-scale));     /* H3 — 18px */
   --fs-cta: calc(1rem * var(--hero-scale));          /* P1 — 16px */
   --fs-form-title: calc(1.25rem * var(--hero-scale));    /* H2 — 20px */
