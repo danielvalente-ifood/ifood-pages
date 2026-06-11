@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { SectionTracker } from '@/components/SectionTracker';
 import { SkipLink } from '@/components/SkipLink';
 import { SmoothScroll } from '@/components/SmoothScroll/SmoothScroll';
+import Footer from '@/components/Footer/Footer';
 import { EditProvider } from '@/components/edit/EditContext';
 import { applyBlockExperiments } from '@/lib/ab-testing';
 import { personalize } from '@/lib/personalization';
@@ -335,16 +336,10 @@ export function DynamicPage({
         })}
       </main>
 
-      {footerBlock &&
-        (() => {
-          const { editProps, label, content } = renderBlock(footerBlock);
-          return (
-            <div id={`block-${footerBlock.id}`} {...editProps}>
-              {label}
-              {content}
-            </div>
-          );
-        })()}
+      {/* Footer é fixo em toda página (padrão), com dados do bloco se existir
+          (legado/migração) ou os defaults do componente caso contrário.
+          Não é editável via painel — não aparece como seção selecionável. */}
+      <Footer data={footerBlock?.data} />
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
 import { Button } from '@/components/Button/Button';
+import { Editable } from '@/components/edit/Editable';
 import styles from './PromoBanner.module.css';
 
 export interface PromoBannerCTA {
@@ -84,13 +85,11 @@ export default function PromoBanner({ data }: PromoBannerProps) {
   const textGroup = (
     <div className={styles.textGroup}>
       {d.title?.length > 0 && (
-        <h2 className={styles.title}>
-          {d.title.map((line, i) => (
-            <span key={i}>{line}</span>
-          ))}
-        </h2>
+        <Editable as="h2" className={styles.title} path="title.0" value={(d.title ?? []).join(' ')} />
       )}
-      {d.description && <p className={styles.description}>{d.description}</p>}
+      {d.description && (
+        <Editable as="p" className={styles.description} path="description" value={d.description} multiline />
+      )}
     </div>
   );
 

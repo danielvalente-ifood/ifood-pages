@@ -67,13 +67,13 @@
   line-height: 1.125;
   letter-spacing: 0;
   color: #fff;
-  display: flex;
-  flex-direction: column;
-}
-
-/* cada linha do array é uma quebra manual — não quebrar dentro da linha */
-.title span {
-  white-space: nowrap;
+  /* título de linha única que quebra automaticamente, limitado a 3 linhas */
+  white-space: normal;
+  overflow-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
 }
 
 .description {
@@ -151,6 +151,28 @@
 
 .bgImageActive {
   opacity: 1;
+}
+
+/* animação de entrada do conteúdo a cada troca de slide */
+.slideEnter {
+  animation: heroSlideIn 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes heroSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slideEnter {
+    animation: none;
+  }
 }
 
 .bgScrim {

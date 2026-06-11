@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef, type PointerEvent as ReactPointerEvent } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { events } from '@/lib/gtag';
 import { Button } from '@/components/Button/Button';
@@ -115,13 +115,12 @@ function TextGroup({
   /** prefixo de path para edição inline (ex: 'slides.0.') */
   pathPrefix?: string;
 }) {
+  // Título é uma única string que quebra automaticamente (máx. 3 linhas via CSS).
+  // Arrays legados (linha 1 / linha 2) são unidos num texto só.
+  const titleText = (title ?? []).join(' ');
   return (
     <div className={`${styles.textGroup} ${center ? styles.textGroupCenter : ''}`}>
-      <h1 className={styles.title}>
-        {(title ?? []).map((line, i) => (
-          <Editable key={i} as="span" path={`${pathPrefix}title.${i}`} value={line} />
-        ))}
-      </h1>
+      <Editable as="h1" className={styles.title} path={`${pathPrefix}title.0`} value={titleText} />
       {description && (
         <Editable
           as="p"
@@ -170,7 +169,7 @@ function useSlider(length: number, enabled: boolean) {
     if (!enabled || length <= 1) return;
     const timer = setInterval(() => {
       setActive((prev) => (prev + 1) % length);
-    }, 6000);
+    }, 5000);
     return () => clearInterval(timer);
   }, [enabled, length]);
 
@@ -210,14 +209,40 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
 
   const { editMode } = useEdit();
   const isSlider = panels.length > 1;
-  // Em edit mode o autoplay pausa, pra não trocar o slide enquanto edita.
-  const { active, select } = useSlider(panels.length, isSlider && !editMode);
+  // Autoplay (5s) roda sempre que há slides; pausa ao passar o mouse por cima
+  // (assim dá pra editar o conteúdo inline sem ele trocar sozinho).
+  const [paused, setPaused] = useState(false);
+  const { active, select } = useSlider(panels.length, isSlider && !paused);
   const panel = panels[active] ?? panels[0];
+
+  const goTo = useCallback(
+    (i: number) => select(((i % panels.length) + panels.length) % panels.length),
+    [select, panels.length]
+  );
+
+  // ---- swipe / drag horizontal (touch + mouse) ----
+  const dragStartX = useRef<number | null>(null);
+  const onPointerDown = (e: ReactPointerEvent) => {
+    if (!isSlider) return;
+    dragStartX.current = e.clientX;
+  };
+  const onPointerUp = (e: ReactPointerEvent) => {
+    if (dragStartX.current === null) return;
+    const dx = e.clientX - dragStartX.current;
+    dragStartX.current = null;
+    if (Math.abs(dx) > 45) goTo(active + (dx < 0 ? 1 : -1));
+  };
 
   return (
     <section
       ref={ref}
       aria-label="Hero"
+      onPointerDown={onPointerDown}
+      onPointerUp={onPointerUp}
+      onPointerCancel={() => (dragStartX.current = null)}
+      onMouseEnter={() => isSlider && setPaused(true)}
+      onMouseLeave={() => isSlider && setPaused(false)}
+      style={isSlider ? { touchAction: 'pan-y' } : undefined}
       className={`${styles.hero} ${variant === 'full' ? styles.heroFull : styles.heroSlider} scroll-reveal ${isVisible ? 'visible' : ''}`}
     >
       <div className={styles.bgLayer} aria-hidden="true">
@@ -236,7 +261,8 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
       </div>
 
       <div className={styles.inner}>
-        <div className={styles.textBlock}>
+        {/* key={active} re-monta o bloco a cada troca → dispara a animação de entrada */}
+        <div key={active} className={`${styles.textBlock} ${isSlider ? styles.slideEnter : ''}`}>
           <TextGroup
             title={panel.title}
             description={panel.description}
@@ -245,7 +271,7 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
           <CtaRow ctas={panel.ctas} />
         </div>
 
-        {isSlider && <SliderDots count={panels.length} active={active} onSelect={select} />}
+        {isSlider && <SliderDots count={panels.length} active={active} onSelect={goTo} />}
       </div>
     </section>
   );

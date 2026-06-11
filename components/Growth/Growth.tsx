@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Badge } from '@/components/Badge';
+import { Editable } from '@/components/edit/Editable';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { events } from '@/lib/gtag';
 import styles from './Growth.module.css';
@@ -93,12 +94,12 @@ export default function Growth({ data }: GrowthProps) {
       <div className={styles.headerSection}>
         <div className={styles.titleWrapper}>
           {/* Badge */}
-          <Badge text={d.badge} />
+          <Badge text={d.badge} editPath="badge" />
 
           {/* Title */}
           <h2 className={styles.title}>
             {d.title.map((line, i) => (
-              <p key={i}>{line}</p>
+              <Editable key={i} as="p" path={`title.${i}`} value={line} />
             ))}
           </h2>
         </div>

@@ -85,11 +85,7 @@ export default function ContentSection({ data }: ContentSectionProps) {
           <Editable as="span" className={styles.badge} path="badge" value={d.badge} />
         )}
         {d.title?.length > 0 && (
-          <h2 className={styles.title}>
-            {d.title.map((line, i) => (
-              <Editable key={i} as="span" path={`title.${i}`} value={line} />
-            ))}
-          </h2>
+          <Editable as="h2" className={styles.title} path="title.0" value={(d.title ?? []).join(' ')} />
         )}
         {d.description && (
           <Editable as="p" className={styles.description} path="description" value={d.description} multiline />

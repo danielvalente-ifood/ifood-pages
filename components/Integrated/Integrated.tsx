@@ -1,6 +1,7 @@
 'use client';
 
 import { Badge } from '@/components/Badge';
+import { Editable } from '@/components/edit/Editable';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import styles from './Integrated.module.css';
 
@@ -27,8 +28,8 @@ export default function Integrated({ data }: IntegratedProps) {
     <section ref={ref} aria-label="Ecossistema integrado iFood" className={`${styles.container} scroll-reveal ${isVisible ? 'visible' : ''}`}>
       {/* Header */}
       <div className={styles.headerContent}>
-        <Badge text={d.badge} />
-        <h2 className={styles.title}>{d.title}</h2>
+        <Badge text={d.badge} editPath="badge" />
+        <Editable as="h2" className={styles.title} path="title" value={d.title} />
       </div>
 
       {/* Background Image */}

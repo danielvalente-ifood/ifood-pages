@@ -73,9 +73,11 @@ export function Editable({ path, value, as = 'span', multiline = false, classNam
       suppressContentEditableWarning
       style={{
         cursor: editing ? 'text' : 'pointer',
-        outline: editing ? '2px solid #EB0033' : 'none',
-        outlineOffset: 2,
-        borderRadius: 4,
+        outline: editing ? '1px solid rgba(127,127,127,0.55)' : 'none',
+        outlineOffset: 3,
+        background: editing ? 'rgba(127,127,127,0.08)' : 'transparent',
+        borderRadius: 6,
+        transition: 'background 120ms ease, outline-color 120ms ease',
       }}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       onDoubleClick={(e: any) => {

@@ -51,7 +51,7 @@
   justify-content: center;
   padding: 4px 12px;
   border-radius: 24px;
-  background: #f5f5f5;
+  background: #F1F1F1;
   color: #424245;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
@@ -107,17 +107,17 @@
 /* modo edição — card clicável e destaque do selecionado */
 .cardEditable {
   cursor: pointer;
-  outline: 2px solid transparent;
+  outline: 1px solid transparent;
   outline-offset: 2px;
   transition: outline-color 0.15s ease;
 }
 
 .cardEditable:hover {
-  outline-color: rgba(235, 0, 51, 0.4);
+  outline-color: rgba(20, 20, 20, 0.08);
 }
 
 .cardSelected {
-  outline-color: #eb0033 !important;
+  outline-color: rgba(20, 20, 20, 0.18) !important;
 }
 
 .iconChip {

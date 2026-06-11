@@ -10,6 +10,7 @@ const entry: RegistryEntry = {
     badge: 'FAQ',
     title: 'Ficou com alguma dúvida?',
     description: 'Encontre as respostas para suas principais dúvidas sobre produtos e serviços do iFood.',
+    cta: { text: 'Não encontrei minha dúvida', link: '#' },
     items: [
       {
         id: 1,

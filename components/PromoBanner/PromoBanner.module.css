@@ -115,8 +115,9 @@
   line-height: 1.2;
   letter-spacing: 0;
   color: var(--pb-title);
-  display: flex;
-  flex-direction: column;
+  /* linha única que quebra automaticamente conforme o espaço */
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 .description {
