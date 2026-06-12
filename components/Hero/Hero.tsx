@@ -256,8 +256,6 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
             />
           ) : null
         )}
-        {/* Scrim só quando há imagem — para legibilidade do texto sobre a foto */}
-        {panel.background_image && <div className={styles.bgScrim} />}
       </div>
 
       <div className={styles.inner}>
