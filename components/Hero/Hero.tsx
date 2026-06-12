@@ -209,10 +209,9 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
 
   const { editMode } = useEdit();
   const isSlider = panels.length > 1;
-  // Autoplay (5s) roda sempre que há slides; pausa ao passar o mouse por cima
-  // (assim dá pra editar o conteúdo inline sem ele trocar sozinho).
+  // Autoplay desativado no editor CMS (editMode) e ao passar o mouse por cima.
   const [paused, setPaused] = useState(false);
-  const { active, select } = useSlider(panels.length, isSlider && !paused);
+  const { active, select } = useSlider(panels.length, isSlider && !paused && !editMode);
   const panel = panels[active] ?? panels[0];
 
   const goTo = useCallback(
