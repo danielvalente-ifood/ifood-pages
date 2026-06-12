@@ -48,8 +48,8 @@
   align-items: center;
   justify-content: center;
   padding: 4px 12px;
-  border-radius: 24px;
-  background: #F1F1F1;
+  border-radius: 60px !important;
+  background: rgba(33, 33, 33, 0.05) !important;
   color: #424245;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;

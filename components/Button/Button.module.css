@@ -75,9 +75,9 @@
    Variantes: fill
    ============================================================ */
 
-/* fill dark — fundo #141414, texto branco */
+/* fill dark — fundo #EE073A, texto branco */
 .fillDark {
-  background: #141414;
+  background: #EE073A;
   color: #fff;
   border-color: transparent;
 }
@@ -129,10 +129,10 @@
    Variantes: empty (ghost — sem fundo, sem borda)
    ============================================================ */
 
-/* empty dark — apenas texto #141414 */
+/* empty dark — apenas texto #EE073A */
 .emptyDark {
   background: transparent;
-  color: #141414;
+  color: #EE073A;
   border-color: transparent;
 }
 

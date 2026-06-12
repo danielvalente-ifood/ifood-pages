@@ -123,15 +123,13 @@ function TextGroup({
   return (
     <div className={`${styles.textGroup} ${center ? styles.textGroupCenter : ''}`}>
       <Editable as="h1" className={styles.title} path={`${pathPrefix}title.0`} value={titleText} />
-      {description && (
-        <Editable
-          as="p"
-          className={styles.description}
-          path={`${pathPrefix}description`}
-          value={description}
-          multiline
-        />
-      )}
+      <Editable
+        as="p"
+        className={styles.description}
+        path={`${pathPrefix}description`}
+        value={description ?? ''}
+        multiline
+      />
     </div>
   );
 }
