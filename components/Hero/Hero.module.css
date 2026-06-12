@@ -84,6 +84,7 @@
   line-height: 1.333;
   color: #bfbfbf;
   max-width: 496px;
+  min-height: 1.333em;
 }
 
 .textGroupCenter .description {

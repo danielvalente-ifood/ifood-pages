@@ -197,11 +197,11 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
 
   const panels: HeroSlide[] =
     d.slider && d.slides && d.slides.length > 0
-      ? d.slides.slice(0, 3)
+      ? d.slides.slice(0, 3).map(s => ({ ...s, description: s.description ?? '' }))
       : [
           {
             title: d.title,
-            description: d.description,
+            description: d.description ?? '',
             ctas: d.ctas,
             background_image: d.background_image,
           },
