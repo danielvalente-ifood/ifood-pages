@@ -45,11 +45,11 @@ type NavItem = {
 };
 
 const navItems: NavItem[] = [
-  { label: 'Delivery', hasDropdown: false, href: '/delivery' },
-  { label: 'Salão', hasDropdown: true },
+  { label: 'iFood Ecossistema', hasDropdown: false, href: '/delivery' },
+  { label: 'iFood Salão', hasDropdown: true },
   { label: 'iFood Pago', hasDropdown: false, href: '/ifood-pago' },
-  { label: 'Logística', hasDropdown: false, href: '/logistica' },
-  { label: 'Ads', hasDropdown: false, href: '/ads' },
+  { label: 'iFood Logística', hasDropdown: false, href: '/logistica' },
+  { label: 'iFood Ads', hasDropdown: false, href: '/ads' },
 ];
 
 interface NavbarProps {
@@ -141,7 +141,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
                 )}
 
                 {/* Megamenu — Salão */}
-                {item.hasDropdown && item.label === 'Salão' && activeDropdown === 'Salão' && (
+                {item.hasDropdown && item.label === 'iFood Salão' && activeDropdown === 'iFood Salão' && (
                   <div className={styles.megamenu} role="dialog" aria-label="Menu iFood Salão">
                     <div className={styles.megamenuInner}>
                       {/* Left card — promo */}
