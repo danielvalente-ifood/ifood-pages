@@ -19,6 +19,10 @@ export interface BeneficioCard {
   description: string;
   /** CTAs opcionais por card (0, 1 ou 2) */
   ctas?: BeneficioCTA[];
+  /** Cor do ícone e do fundo do chip (hex) — default '#141414' */
+  iconColor?: string;
+  /** Opacidade do fundo do chip (0–100) — default 5 */
+  iconBgOpacity?: number;
 }
 
 export interface BeneficiosData {
@@ -27,6 +31,8 @@ export interface BeneficiosData {
   description?: string;
   /** mínimo 2, máximo 5 cards */
   cards: BeneficioCard[];
+  /** variante de layout — 'default' exibe CTAs, 'compact' oculta botões e usa título 40px */
+  variant?: 'default' | 'compact';
 }
 
 const defaultData: BeneficiosData = {
@@ -64,6 +70,16 @@ interface BeneficiosProps {
   onSelectCard?: (index: number) => void;
 }
 
+/** Converte hex + opacidade (0–100) em CSSProperties para o chip de ícone */
+function chipStyle(color: string | undefined, opacity: number | undefined): React.CSSProperties {
+  const hex = color || '#141414';
+  const op = (opacity ?? 5) / 100;
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return { background: `rgba(${r},${g},${b},${op})`, color: hex };
+}
+
 function CardCta({ cta, path }: { cta: BeneficioCTA; path: string }) {
   /**
    * Benefícios usa fundo de card branco:
@@ -93,6 +109,7 @@ export default function Beneficios({
   const { ref, isVisible } = useScrollReveal();
   const d = data ?? defaultData;
   const cards = (d.cards ?? []).slice(0, 5);
+  const isCompact = d.variant === 'compact';
 
   return (
     <section
@@ -135,16 +152,25 @@ export default function Beneficios({
               : { className: styles.card };
             return (
               <article key={i} {...editProps}>
-                <div className={styles.iconChip} aria-hidden="true">
+                <div
+                  className={styles.iconChip}
+                  aria-hidden="true"
+                  style={chipStyle(card.iconColor, card.iconBgOpacity)}
+                >
                   <Icon name={card.icon || 'grid-dashboard-bento'} size={24} />
                 </div>
                 {card.title && (
-                  <Editable as="h3" className={styles.cardTitle} path={`cards.${i}.title`} value={card.title} />
+                  <Editable
+                    as="h3"
+                    className={`${styles.cardTitle} ${isCompact ? styles.cardTitleCompact : ''}`}
+                    path={`cards.${i}.title`}
+                    value={card.title}
+                  />
                 )}
                 {card.description && (
                   <Editable as="p" className={styles.cardDesc} path={`cards.${i}.description`} value={card.description} multiline />
                 )}
-                {ctas.length > 0 && (
+                {!isCompact && ctas.length > 0 && (
                   <div className={styles.cardCtas}>
                     {ctas.map((c, j) => (
                       <CardCta key={j} cta={c} path={`cards.${i}.ctas.${j}.text`} />

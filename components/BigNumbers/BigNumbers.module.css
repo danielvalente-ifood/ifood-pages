@@ -80,6 +80,18 @@
   gap: 16px;
 }
 
+.statEditable {
+  cursor: pointer;
+  border-radius: 12px;
+  outline: 1px solid transparent;
+  outline-offset: 8px;
+  transition: outline-color 0.15s ease;
+  padding: 8px;
+  margin: -8px;
+}
+.statEditable:hover { outline-color: rgba(127,127,127,0.35); }
+.statSelected { outline-color: rgba(127,127,127,0.6) !important; background: rgba(127,127,127,0.05); }
+
 /* Número grande */
 .statValue {
   margin: 0;

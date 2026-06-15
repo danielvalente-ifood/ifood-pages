@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { Badge } from '@/components/Badge';
+import Badge from '@/components/Badge/Badge';
 import { Editable } from '@/components/edit/Editable';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import styles from './Results.module.css';
@@ -19,12 +19,30 @@ const defaultData = {
   ],
 };
 
+interface ResultsData {
+  badge: string;
+  title: string[];
+  testimonials: typeof defaultData.testimonials;
+  variant?: 'default' | 'featured';
+}
+
 interface ResultsProps {
-  data?: typeof defaultData;
+  data?: ResultsData;
+}
+
+/* ---- Stars helper ---- */
+function Stars({ rating }: { rating: number }) {
+  return (
+    <div className={styles.featuredStars} aria-label={`${rating} de 5 estrelas`} role="img">
+      {Array.from({ length: rating }).map((_, i) => (
+        <span key={i} aria-hidden="true" className={styles.star}>★</span>
+      ))}
+    </div>
+  );
 }
 
 export default function Results({ data }: ResultsProps) {
-  const d = data ?? defaultData;
+  const d = (data ?? defaultData) as ResultsData;
   // Map to internal format used in rendering
   const testimonials = d.testimonials.map(t => ({
     ...t,
@@ -34,6 +52,54 @@ export default function Results({ data }: ResultsProps) {
   const { ref, isVisible } = useScrollReveal();
   const [activeIndex, setActiveIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  /* ---- variante featured ---- */
+  if (d.variant === 'featured') {
+    const t = testimonials[activeIndex] ?? testimonials[0];
+    return (
+      <section
+        ref={ref}
+        className={`${styles.featuredSection} scroll-reveal ${isVisible ? 'visible' : ''}`}
+      >
+        {/* Header */}
+        <div className={styles.featuredHeader}>
+          <Badge text={d.badge} editPath="badge" />
+          <h2 className={styles.featuredTitle}>
+            {d.title.map((line, i) => (
+              <Editable key={i} as="p" path={`title.${i}`} value={line} />
+            ))}
+          </h2>
+        </div>
+
+        {/* Card grande */}
+        <div className={styles.featuredCard}>
+          <div className={styles.featuredAuthor}>
+            <span className={styles.featuredName}>{t.name}</span>
+            <span className={styles.featuredRole}>{t.company}</span>
+          </div>
+          <div className={styles.featuredQuoteBlock}>
+            <Stars rating={t.rating} />
+            <p className={styles.featuredQuote}>{t.mainQuote}</p>
+          </div>
+        </div>
+
+        {/* Dots navigation */}
+        {testimonials.length > 1 && (
+          <div className={styles.featuredDots}>
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`Depoimento ${i + 1}`}
+                className={`${styles.featuredDot} ${i === activeIndex ? styles.featuredDotActive : ''}`}
+                onClick={() => setActiveIndex(i)}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+    );
+  }
 
   const handleScroll = () => {
     if (sliderRef.current) {

@@ -13,6 +13,15 @@ html {
      opacas (necessário para o efeito cortina do Promo Banner cobrir o que está
      pinado atrás). Centralizada aqui para futura customização por página. */
   --page-bg: #fafafc;
+
+  /* ---- Frame encapsulado ---- */
+  padding: 6px 6px 0;
+  box-sizing: border-box;
+  background: #fafafc;   /* mesmo fundo da página — frame invisível */
+}
+
+body {
+  border-radius: 20px 20px 0 0;
 }
 
 /* ---- Lenis (smooth scroll) ---- */

@@ -299,6 +299,169 @@
   padding: 0;
 }
 
+/* ============================================================
+   Variante Featured — fundo escuro, card único centralizado
+   Figma: node 102-887
+   ============================================================ */
+
+.featuredSection {
+  position: relative;
+  width: 100%;
+  background: var(--page-bg, #fafafc);
+  padding: 96px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  box-sizing: border-box;
+}
+
+.featuredHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  max-width: 716px;
+}
+
+.featuredTitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;      /* 40px */
+  line-height: 3rem;      /* 48px */
+  letter-spacing: 0;
+  color: #141414;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.featuredTitle p {
+  margin: 0;
+}
+
+/* ---- Card branco ---- */
+.featuredCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 49px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Autor */
+.featuredAuthor {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.featuredName {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;   /* 20px */
+  line-height: 2rem;    /* 32px */
+  letter-spacing: 0;
+  color: #141414;
+}
+
+.featuredRole {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;  /* 14px */
+  line-height: 1rem;    /* 16px */
+  letter-spacing: 0;
+  color: #666;
+  opacity: 0.7;
+}
+
+/* Bloco estrelas + citação */
+.featuredQuoteBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.featuredStars {
+  display: flex;
+  gap: 4px;
+  line-height: 1;
+}
+
+.star {
+  font-size: 0.875rem; /* ~14px — proporção da imagem no Figma (13.685px) */
+  color: #f5a623;
+}
+
+.featuredQuote {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;    /* 24px */
+  line-height: 2rem;    /* 32px */
+  letter-spacing: 0;
+  color: #141414;
+}
+
+/* ---- Dots de navegação ---- */
+.featuredDots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.featuredDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.featuredDotActive {
+  width: 20px;
+  border-radius: 50px;
+  background: #ffffff;
+}
+
+/* Responsivo */
+@media (max-width: 1024px) {
+  .featuredSection {
+    padding: 72px 40px;
+    gap: 48px;
+  }
+  .featuredCard {
+    padding: 48px;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 640px) {
+  .featuredSection {
+    padding: 56px 20px;
+    gap: 40px;
+  }
+  .featuredTitle {
+    font-size: 2rem;
+    line-height: 2.5rem;
+  }
+  .featuredCard {
+    padding: 32px 24px;
+    gap: 32px;
+  }
+  .featuredQuote {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .container {

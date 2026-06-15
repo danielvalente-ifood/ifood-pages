@@ -111,18 +111,19 @@ function TextGroup({
   center,
   pathPrefix = '',
 }: {
-  title: string[];
+  title: string | string[];
   description: string;
   center?: boolean;
   /** prefixo de path para edição inline (ex: 'slides.0.') */
   pathPrefix?: string;
 }) {
-  // Título é uma única string que quebra automaticamente (máx. 3 linhas via CSS).
-  // Arrays legados (linha 1 / linha 2) são unidos num texto só.
-  const titleText = (title ?? []).join(' ');
+  // Título pode ser string (pós-edição) ou array legado (linha 1 / linha 2).
+  // Usamos path 'title' (não 'title.0') para que o setByPath substitua o array
+  // inteiro por uma string simples, evitando acúmulo de título[1] no DB.
+  const titleText = Array.isArray(title) ? title.join(' ') : (title ?? '');
   return (
     <div className={`${styles.textGroup} ${center ? styles.textGroupCenter : ''}`}>
-      <Editable as="h1" className={styles.title} path={`${pathPrefix}title.0`} value={titleText} />
+      <Editable as="h1" className={styles.title} path={`${pathPrefix}title`} value={titleText} />
       <Editable
         as="p"
         className={styles.description}
@@ -195,12 +196,23 @@ export default function Hero({ data }: HeroProps) {
 function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
   const { ref, isVisible } = useScrollReveal();
 
+  // normalizeTitle: converte title legado (string[]) ou novo (string) → string[]
+  const normalizeTitle = (t: string | string[] | undefined): string[] => {
+    if (!t) return [''];
+    if (Array.isArray(t)) return [t.join(' ')];
+    return [t];
+  };
+
   const panels: HeroSlide[] =
     d.slider && d.slides && d.slides.length > 0
-      ? d.slides.slice(0, 3).map(s => ({ ...s, description: s.description ?? '' }))
+      ? d.slides.slice(0, 3).map(s => ({
+          ...s,
+          title: normalizeTitle(s.title as string | string[] | undefined),
+          description: s.description ?? '',
+        }))
       : [
           {
-            title: d.title,
+            title: normalizeTitle(d.title as string | string[] | undefined),
             description: d.description ?? '',
             ctas: d.ctas,
             background_image: d.background_image,

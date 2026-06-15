@@ -140,6 +140,14 @@
   color: #141414;
 }
 
+/* variante compact: título maior e mais escuro, sem CTAs */
+.cardTitleCompact {
+  font-size: 2.5rem;   /* 40px */
+  line-height: 1.1;
+  letter-spacing: -1px;
+  color: #000;
+}
+
 .cardDesc {
   margin: -18px 0 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;

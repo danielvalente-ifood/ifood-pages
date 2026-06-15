@@ -12,6 +12,10 @@ export interface BigNumbersStat {
   icon: string;
   /** Rótulo descritivo — ex: "Pedidos no app" */
   label: string;
+  /** Cor pura do ícone (hex) — default '#141414' */
+  iconColor?: string;
+  /** Opacidade do fundo do chip (0–100) — default 10 */
+  iconBgOpacity?: number;
 }
 
 export interface BigNumbersData {
@@ -35,15 +39,31 @@ const defaultData: BigNumbersData = {
 
 interface BigNumbersProps {
   data?: BigNumbersData;
+  editMode?: boolean;
+  selectedStatIndex?: number | null;
+  onSelectStat?: (index: number) => void;
 }
 
-export default function BigNumbers({ data }: BigNumbersProps) {
+/** Converte hex + opacidade (0–100) em string rgba */
+function chipStyle(color: string | undefined, opacity: number | undefined): React.CSSProperties {
+  const hex = color || '#141414';
+  const op = (opacity ?? 10) / 100;
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return {
+    background: `rgba(${r},${g},${b},${op})`,
+    color: hex,
+  };
+}
+
+export default function BigNumbers({ data, editMode = false, selectedStatIndex = null, onSelectStat }: BigNumbersProps) {
   const { ref, isVisible } = useScrollReveal();
   const d: BigNumbersData = {
     ...defaultData,
     ...data,
     // stats: só usa do data se vier preenchido; caso contrário cai pro default
-    stats: data?.stats?.length ? data.stats : defaultData.stats,
+    stats: Array.isArray(data?.stats) && data.stats.length > 0 ? data.stats : defaultData.stats,
   };
   const stats = d.stats.slice(0, 5);
 
@@ -64,27 +84,38 @@ export default function BigNumbers({ data }: BigNumbersProps) {
         </header>
 
         <div className={styles.grid} data-count={stats.length}>
-          {stats.map((stat, i) => (
-            <div key={i} className={styles.stat}>
-              <Editable
-                as="p"
-                className={styles.statValue}
-                path={`stats.${i}.value`}
-                value={stat.value}
-              />
-              <div className={styles.statMeta}>
-                <div className={styles.iconChip} aria-hidden="true">
-                  <Icon name={stat.icon || 'barchart-default'} size={18} />
-                </div>
+          {stats.map((stat, i) => {
+            const isSelected = editMode && selectedStatIndex === i;
+            return (
+              <div
+                key={i}
+                className={`${styles.stat} ${editMode ? styles.statEditable : ''} ${isSelected ? styles.statSelected : ''}`}
+                onClick={editMode ? (e) => { e.stopPropagation(); onSelectStat?.(i); } : undefined}
+              >
                 <Editable
-                  as="span"
-                  className={styles.statLabel}
-                  path={`stats.${i}.label`}
-                  value={stat.label}
+                  as="p"
+                  className={styles.statValue}
+                  path={`stats.${i}.value`}
+                  value={stat.value}
                 />
+                <div className={styles.statMeta}>
+                  <div
+                    className={styles.iconChip}
+                    aria-hidden="true"
+                    style={chipStyle(stat.iconColor, stat.iconBgOpacity)}
+                  >
+                    <Icon name={stat.icon || 'barchart-default'} size={18} />
+                  </div>
+                  <Editable
+                    as="span"
+                    className={styles.statLabel}
+                    path={`stats.${i}.label`}
+                    value={stat.label}
+                  />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

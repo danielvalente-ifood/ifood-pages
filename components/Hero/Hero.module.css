@@ -10,6 +10,7 @@
   background: #272727;
   color: #fff;
   overflow: hidden;
+  border-radius: 20px;
 
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
      Tamanhos iguais em TODAS as variantes. --hero-scale reduz tudo
@@ -82,7 +83,7 @@
   font-weight: 400;
   font-size: var(--fs-desc);
   line-height: 1.333;
-  color: #bfbfbf;
+  color: rgba(255, 255, 255, 0.8);
   max-width: 496px;
   min-height: 1.333em;
 }

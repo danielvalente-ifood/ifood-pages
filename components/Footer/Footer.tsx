@@ -58,8 +58,6 @@ export default function Footer({ data }: FooterProps) {
 
   return (
     <footer className={styles.footer}>
-      {/* Linha divisória no topo (Figma node 82:1553) */}
-      <div className={styles.divider} aria-hidden="true" />
 
       <div className={styles.content}>
         {/* Colunas de links */}

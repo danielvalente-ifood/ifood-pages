@@ -373,5 +373,17 @@ function BlockRenderer({
     );
   }
 
+  // BigNumbers: suporta seleção de stat individual no modo edição
+  if (block.type === 'big-numbers' && editMode) {
+    return (
+      <Component
+        data={block.data}
+        editMode
+        selectedStatIndex={selectedCardIndex}
+        onSelectStat={onSelectCard}
+      />
+    );
+  }
+
   return <Component data={block.data} />;
 }
