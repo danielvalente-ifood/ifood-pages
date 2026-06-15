@@ -41,6 +41,8 @@ export interface HeroData {
   title: string[];
   description: string;
   ctas?: HeroCTA[];
+  /** cor sólida de fundo (hex) — alternativa à imagem */
+  background_color?: string;
   /** full / slider — imagem de fundo (modo banner único) */
   background_image?: string;
   /** split-image — imagem do card */
@@ -244,6 +246,11 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
     if (Math.abs(dx) > 45) goTo(active + (dx < 0 ? 1 : -1));
   };
 
+  const bgStyle: React.CSSProperties = {
+    ...(isSlider ? { touchAction: 'pan-y' } : {}),
+    ...(d.background_color && !d.background_image ? { background: d.background_color } : {}),
+  };
+
   return (
     <section
       ref={ref}
@@ -253,7 +260,7 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
       onPointerCancel={() => (dragStartX.current = null)}
       onMouseEnter={() => isSlider && setPaused(true)}
       onMouseLeave={() => isSlider && setPaused(false)}
-      style={isSlider ? { touchAction: 'pan-y' } : undefined}
+      style={bgStyle}
       className={`${styles.hero} ${variant === 'full' ? styles.heroFull : styles.heroSlider} scroll-reveal ${isVisible ? 'visible' : ''}`}
     >
       <div className={styles.bgLayer} aria-hidden="true">
@@ -294,6 +301,7 @@ function HeroCentered({ d }: { d: HeroData }) {
     <section
       ref={ref}
       aria-label="Hero"
+      style={d.background_color ? { background: d.background_color } : undefined}
       className={`${styles.hero} ${styles.heroCentered} scroll-reveal ${isVisible ? 'visible' : ''}`}
     >
       <div className={`${styles.inner} ${styles.innerCentered}`}>
@@ -311,10 +319,12 @@ function HeroCentered({ d }: { d: HeroData }) {
 function HeroSplitImage({ d }: { d: HeroData }) {
   const { ref, isVisible } = useScrollReveal();
   const right = (d.assetPosition || 'right') === 'right';
+  const hasImage = !!d.image;
   return (
     <section
       ref={ref}
       aria-label="Hero"
+      style={d.background_color ? { background: d.background_color } : undefined}
       className={`${styles.hero} ${styles.heroSplit} scroll-reveal ${isVisible ? 'visible' : ''}`}
     >
       <div className={`${styles.inner} ${styles.innerSplit} ${right ? '' : styles.innerSplitReverse}`}>
@@ -322,7 +332,10 @@ function HeroSplitImage({ d }: { d: HeroData }) {
           <TextGroup title={d.title} description={d.description} />
           <CtaRow ctas={d.ctas} />
         </div>
-        <div className={styles.mediaCard}>
+        <div
+          className={styles.mediaCard}
+          style={hasImage ? { background: 'none' } : undefined}
+        >
           <EditableImage
             path="image"
             src={d.image}
@@ -362,6 +375,7 @@ function HeroSplitForm({ d }: { d: HeroData }) {
     <section
       ref={ref}
       aria-label="Hero"
+      style={d.background_color ? { background: d.background_color } : undefined}
       className={`${styles.hero} ${styles.heroSplit} scroll-reveal ${isVisible ? 'visible' : ''}`}
     >
       <div className={`${styles.inner} ${styles.innerSplit} ${right ? '' : styles.innerSplitReverse}`}>
