@@ -258,7 +258,7 @@
 .ctaButton {
   width: 150px;
   height: 40px;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: transparent;
   color: #ffffff;
   border: 2px solid #ffffff;
   border-radius: 70px;
@@ -269,8 +269,6 @@
   cursor: pointer;
   transition: all 0.5s ease-out;
   white-space: nowrap;
-  backdrop-filter: blur(27px);
-  -webkit-backdrop-filter: blur(27px);
   display: flex;
   align-items: center;
   justify-content: center;
