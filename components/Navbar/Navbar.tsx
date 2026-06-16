@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom';
 import { ifoodImages } from '@/public/images/ifood/config';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { events } from '@/lib/gtag';
+import { Button } from '@/components/Button/Button';
 import styles from './Navbar.module.css';
 
 /* ---- Megamenu data ---- */
@@ -14,26 +15,25 @@ const megamenuColumns = [
   {
     title: 'Venda mais',
     items: [
-      { icon: '', label: 'Comer fora', desc: 'Atraia clientes para o salão' },
-      { icon: '', label: 'CRM 360', desc: 'Tenha visão completa dos clientes' },
-      { icon: '', label: 'Cardápio digital', desc: 'Mais praticidade na escolha' },
+      { icon: '', label: 'Comer fora', desc: 'Atraia clientes para o salão', iconColor: '#eb0033' },
+      { icon: '', label: 'CRM 360', desc: 'Tenha visão completa dos clientes', iconColor: '#7b61ff' },
+      { icon: '', label: 'Cardápio digital', desc: 'Mais praticidade na escolha', iconColor: '#ff9500' },
     ],
   },
   {
     title: 'Controle central',
     items: [
-      { icon: '', label: 'PDV', desc: 'Tenha visão completa do negócio' },
-      { icon: '', label: 'Relatórios e Insights', desc: 'Esteja sempre um passo à frente' },
-      { icon: '', label: 'Gestão financeira', desc: 'Organize as finanças' },
+      { icon: '', label: 'PDV', desc: 'Tenha visão completa do negócio', iconColor: '#5856D6' },
+      { icon: '', label: 'Relatórios e Insights', desc: 'Esteja sempre um passo à frente', iconColor: '#007AFF' },
+      { icon: '', label: 'Gestão financeira', desc: 'Organize as finanças', iconColor: '#34C759' },
     ],
   },
   {
     title: 'Eficiência operacional',
     items: [
-      { icon: '', label: 'Totem', desc: 'Mais facilidade pros clientes' },
-      { icon: '', label: 'Reservas', desc: 'Ofereça agendamento prévio' },
-      { icon: '', label: 'Gestão de filas', desc: 'Organize o atendimento' },
-      { icon: '', label: 'Integração de pagamentos', desc: 'Organize o atendimento' },
+      { icon: '', label: 'Totem', desc: 'Mais facilidade pros clientes', iconColor: '#FF9F0A' },
+      { icon: '', label: 'Reservas', desc: 'Ofereça agendamento prévio', iconColor: '#5AC8FA' },
+      { icon: '', label: 'Gestão de filas', desc: 'Organize o atendimento', iconColor: '#30D158' },
     ],
   },
 ];
@@ -63,12 +63,11 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
   const navRef = useRef<HTMLElement>(null);
   const scrollY = useScrollPosition();
   const isSticky = fullWidthFixed || forceSticky || scrollY > 100;
+  const megaOpen = !!activeDropdown;
+  const isGlass = isSticky || megaOpen;
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  useEffect(() => { setMounted(true); }, []);
 
-  /* Close megamenu on outside click */
   useEffect(() => {
     if (!activeDropdown) return;
     const handleClick = (e: MouseEvent) => {
@@ -90,115 +89,136 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
     <nav
       ref={navRef}
       aria-label="Navegação principal"
-      className={`${styles.navbar} ${fullWidthFixed ? styles.navbarFullWidthFixed : ''} ${isSticky && !fullWidthFixed ? styles.navbarSticky : ''}`}
+      className={[
+        styles.navbar,
+        fullWidthFixed ? styles.navbarFullWidthFixed : '',
+        isGlass && !fullWidthFixed ? styles.navbarGlass : '',
+        megaOpen ? styles.navbarMegaOpen : '',
+      ].filter(Boolean).join(' ')}
     >
+      {/* ── Top row: logo + links + CTA ── */}
       <div className={styles.container}>
-        {/* Left Section - Logo + Navigation Items */}
         <div className={styles.leftSection}>
-          {/* Logo */}
           <Link href="/" className={styles.logoLink} aria-label="iFood — página inicial">
             <div className={styles.logo}>
-              <Image
-                src={ifoodImages.logo.src}
-                alt={ifoodImages.logo.alt}
-                width={55}
-                height={30}
-              />
+              <Image src={ifoodImages.logo.src} alt={ifoodImages.logo.alt} width={55} height={30} />
             </div>
           </Link>
 
-          {/* Navigation Items */}
           <ul className={styles.navItems} role="list">
             {navItems.map((item) => (
               <li key={item.label} className={styles.navItemWrapper}>
                 {item.href ? (
-                  <Link href={item.href} className={styles.navButton} onClick={() => events.navClick(item.label)}>
+                  <Link
+                    href={item.href}
+                    className={`${styles.navButton} ${isGlass ? styles.navButtonDark : ''}`}
+                    onClick={() => events.navClick(item.label)}
+                  >
                     <span>{item.label}</span>
                   </Link>
                 ) : (
                   <button
-                    className={styles.navButton}
+                    className={[
+                      styles.navButton,
+                      isGlass ? styles.navButtonDark : '',
+                      activeDropdown === item.label ? styles.navButtonActive : '',
+                    ].filter(Boolean).join(' ')}
                     aria-expanded={activeDropdown === item.label}
                     aria-haspopup={item.hasDropdown ? 'true' : undefined}
-                    aria-label={item.hasDropdown ? `${item.label} — abrir submenu` : item.label}
                     onClick={() => item.hasDropdown && handleDropdownToggle(item.label)}
                   >
                     <span>{item.label}</span>
                     {item.hasDropdown && (
                       <svg
                         className={`${styles.chevron} ${activeDropdown === item.label ? styles.chevronOpen : ''}`}
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        aria-hidden="true"
-                        focusable="false"
+                        width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        aria-hidden="true" focusable="false"
                       >
                         <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </button>
                 )}
-
-                {/* Megamenu — Salão */}
-                {item.hasDropdown && item.label === 'iFood Salão' && activeDropdown === 'iFood Salão' && (
-                  <div className={styles.megamenu} role="dialog" aria-label="Menu iFood Salão">
-                    <div className={styles.megamenuInner}>
-                      {/* Left card — promo */}
-                      <div className={styles.megaPromoCard}>
-                        <div className={styles.megaPromoImage}>
-                          <div className={styles.megaLogoBadge}>
-                            <span className={styles.megaLogoText}>iFood</span>
-                            <span className={styles.megaLogoSub}>Salão</span>
-                          </div>
-                        </div>
-                        <div className={styles.megaPromoBody}>
-                          <div>
-                            <p className={styles.megaPromoTitle}>iFood Salão</p>
-                            <p className={styles.megaPromoDesc}>Seus clientes do iFood agora podem viver a experiência presencial</p>
-                          </div>
-                          <button className={styles.megaPromoBtn}>Falar com especialista</button>
-                        </div>
-                      </div>
-
-                      {/* Right columns */}
-                      <div className={styles.megaColumns}>
-                        {megamenuColumns.map((col) => (
-                          <div key={col.title} className={styles.megaColumn}>
-                            <p className={styles.megaColumnTitle}>{col.title}</p>
-                            <div className={styles.megaColumnItems}>
-                              {col.items.map((item) => (
-                                <button key={item.label} className={styles.megaItem}>
-                                  <div className={styles.megaItemIcon}>
-                                    <span className={styles.megaItemIconGlyph}>{item.icon}</span>
-                                  </div>
-                                  <div className={styles.megaItemText}>
-                                    <span className={styles.megaItemLabel}>{item.label}</span>
-                                    <span className={styles.megaItemDesc}>{item.desc}</span>
-                                  </div>
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
               </li>
             ))}
           </ul>
         </div>
 
-        {/* CTA Button */}
-        <button className={styles.ctaButton} onClick={() => events.navbarCta('Entrar no portal')}>
+        <button
+          className={`${styles.ctaButton} ${isGlass ? styles.ctaButtonDark : ''}`}
+          onClick={() => events.navbarCta('Entrar no portal')}
+        >
           Entrar no portal
         </button>
       </div>
+
+      {/* ── Megamenu panel (inline, expands the nav) ── */}
+      {megaOpen && activeDropdown === 'iFood Salão' && (
+        <div className={styles.megapanel} role="dialog" aria-label="Menu iFood Salão">
+          {/* Left card */}
+          <div className={styles.megaLeft}>
+            <div className={styles.megaPhotoWrap}>
+              <img
+                src="/images/ifood/salao-megamenu-photo.png"
+                alt="iFood Salão"
+                className={styles.megaPhoto}
+              />
+              <div className={styles.megaBadge}>
+                <img
+                  src="/images/ifood/salao-badge.png"
+                  alt="iFood Salão"
+                  className={styles.megaBadgeImg}
+                />
+              </div>
+            </div>
+
+            <div className={styles.megaLeftBody}>
+              <div>
+                <p className={styles.megaLeftTitle}>iFood Salão</p>
+                <p className={styles.megaLeftDesc}>
+                  Seus clientes do iFood agora podem{'\n'}viver a experiência presencial
+                </p>
+              </div>
+              <Button
+                variant="stroke"
+                color="dark"
+                content="text-icon"
+                label="Falar com especialista"
+              />
+            </div>
+          </div>
+
+          {/* Right columns */}
+          <div className={styles.megaCols}>
+            {megamenuColumns.map((col) => (
+              <div key={col.title} className={styles.megaCol}>
+                <p className={styles.megaColTitle}>{col.title}</p>
+                <div className={styles.megaColItems}>
+                  {col.items.map((itm) => (
+                    <button
+                      key={itm.label}
+                      className={styles.megaItem}
+                      style={{ '--icon-color': itm.iconColor } as React.CSSProperties}
+                    >
+                      <div className={styles.megaItemIcon}>
+                        <span className={styles.megaItemGlyph}>{itm.icon}</span>
+                      </div>
+                      <div className={styles.megaItemText}>
+                        <span className={styles.megaItemLabel}>{itm.label}</span>
+                        <span className={styles.megaItemDesc}>{itm.desc}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 
-  if ((isSticky || fullWidthFixed) && mounted) {
+  if ((isGlass || fullWidthFixed) && mounted) {
     return createPortal(navContent, document.body);
   }
 
