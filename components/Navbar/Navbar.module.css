@@ -78,10 +78,11 @@
   box-sizing: border-box;
 }
 
-/* Estado flutuante (com fundo): mantém os lados do transparente, mas o
-   padding-top fica em 14px (mais compacto que o estado sobre o hero). */
+/* Estado flutuante (com fundo) — mesmo padding do nav aberto: pt-14 · px-20.
+   Assim logo/menu/botão não deslocam ao abrir ou fechar o submenu.
+   (No aberto, .navbarMegaOpen zera só o padding-bottom; o resto é idêntico.) */
 .navbarFloating .container {
-  padding-top: 14px;
+  padding: 14px 20px;
 }
 
 .navbarFullWidthFixed .container {
