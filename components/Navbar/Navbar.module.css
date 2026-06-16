@@ -188,10 +188,11 @@
   box-shadow: 0 6px 20px rgba(235, 0, 51, 0.25);
 }
 
+/* Modo flutuante/glass: sem fill — apenas stroke na cor escura padrão */
 .ctaButtonDark {
-  background: #ffffff;
+  background: transparent;
   color: #141414;
-  border-color: #e8e8ed;
+  border-color: #141414;
 }
 
 .ctaButtonDark:hover {
