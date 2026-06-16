@@ -1,48 +1,58 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, type CSSProperties } from 'react';
 import Link from 'next/link';
 import { createPortal } from 'react-dom';
 import { ifoodImages } from '@/public/images/ifood/config';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
 import { events } from '@/lib/gtag';
 import { Button } from '@/components/Button/Button';
+import { Icon } from '@/components/Icon/Icon';
 import styles from './Navbar.module.css';
 
-/* ---- Megamenu data ---- */
-const megamenuColumns = [
+/* ---- Megamenu data ----
+   Ícones SVG da biblioteca fixa (/public/icons). Box = cor do ícone com
+   opacidade, mesmo padrão dos cards de Benefícios (chipStyle). */
+type MegaItem = { icon: string; label: string; desc: string; iconColor?: string };
+const ICON_COLOR = '#141414';
+
+const megamenuColumns: { title: string; items: MegaItem[] }[] = [
   {
     title: 'Venda mais',
     items: [
-      { icon: '', label: 'Comer fora', desc: 'Atraia clientes para o salão', iconColor: '#eb0033' },
-      { icon: '', label: 'CRM 360', desc: 'Tenha visão completa dos clientes', iconColor: '#7b61ff' },
-      { icon: '', label: 'Cardápio digital', desc: 'Mais praticidade na escolha', iconColor: '#ff9500' },
+      { icon: 'store-building-default', label: 'Comer fora', desc: 'Atraia clientes para o salão' },
+      { icon: 'users-group-default', label: 'CRM 360', desc: 'Tenha visão completa dos clientes' },
+      { icon: 'file-default', label: 'Cardápio digital', desc: 'Mais praticidade na escolha' },
     ],
   },
   {
     title: 'Controle central',
     items: [
-      { icon: '', label: 'PDV', desc: 'Tenha visão completa do negócio', iconColor: '#5856D6' },
-      { icon: '', label: 'Relatórios e Insights', desc: 'Esteja sempre um passo à frente', iconColor: '#007AFF' },
-      { icon: '', label: 'Gestão financeira', desc: 'Organize as finanças', iconColor: '#34C759' },
+      { icon: 'monitor', label: 'PDV', desc: 'Tenha visão completa do negócio' },
+      { icon: 'barchart-default', label: 'Relatórios e Insights', desc: 'Esteja sempre um passo à frente' },
+      { icon: 'grid-dashboard-bento', label: 'Gestão financeira', desc: 'Organize as finanças' },
     ],
   },
   {
     title: 'Eficiência operacional',
     items: [
-      { icon: '', label: 'Totem', desc: 'Mais facilidade pros clientes', iconColor: '#FF9F0A' },
-      { icon: '', label: 'Reservas', desc: 'Ofereça agendamento prévio', iconColor: '#5AC8FA' },
-      { icon: '', label: 'Gestão de filas', desc: 'Organize o atendimento', iconColor: '#30D158' },
+      { icon: 'tablet', label: 'Totem', desc: 'Mais facilidade pros clientes' },
+      { icon: 'check', label: 'Reservas', desc: 'Ofereça agendamento prévio' },
+      { icon: 'burger-menu-three', label: 'Gestão de filas', desc: 'Organize o atendimento' },
     ],
   },
 ];
 
-type NavItem = {
-  label: string;
-  href?: string;
-  hasDropdown?: boolean;
-};
+/** Box do ícone: fundo = cor com opacidade, ícone = cor cheia (igual Benefícios) */
+function chipStyle(color = ICON_COLOR, opacity = 6): CSSProperties {
+  const r = parseInt(color.slice(1, 3), 16);
+  const g = parseInt(color.slice(3, 5), 16);
+  const b = parseInt(color.slice(5, 7), 16);
+  return { background: `rgba(${r},${g},${b},${opacity / 100})`, color };
+}
+
+type NavItem = { label: string; href?: string; hasDropdown?: boolean };
 
 const navItems: NavItem[] = [
   { label: 'iFood Ecossistema', hasDropdown: false, href: '/delivery' },
@@ -64,7 +74,13 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
   const scrollY = useScrollPosition();
   const isSticky = fullWidthFixed || forceSticky || scrollY > 100;
   const megaOpen = !!activeDropdown;
-  const isGlass = isSticky || megaOpen;
+
+  /* Tema visual "glass" (texto/logo escuros, fundo translúcido): quando sticky
+     OU quando o megamenu está aberto sobre o hero. */
+  const glassTheme = isSticky || megaOpen;
+  /* Geometria fixa+inset: SÓ quando sticky (scroll). Ao abrir sobre o hero,
+     mantemos a navbar exatamente onde está — ela só muda de forma. */
+  const fixedInset = isSticky;
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -92,11 +108,12 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
       className={[
         styles.navbar,
         fullWidthFixed ? styles.navbarFullWidthFixed : '',
-        isGlass && !fullWidthFixed ? styles.navbarGlass : '',
+        glassTheme && !fullWidthFixed ? styles.navbarGlassBg : '',
+        fixedInset && !fullWidthFixed ? styles.navbarSticky : '',
         megaOpen ? styles.navbarMegaOpen : '',
       ].filter(Boolean).join(' ')}
     >
-      {/* ── Top row: logo + links + CTA ── */}
+      {/* ── Top row ── */}
       <div className={styles.container}>
         <div className={styles.leftSection}>
           <Link href="/" className={styles.logoLink} aria-label="iFood — página inicial">
@@ -111,7 +128,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
                 {item.href ? (
                   <Link
                     href={item.href}
-                    className={`${styles.navButton} ${isGlass ? styles.navButtonDark : ''}`}
+                    className={`${styles.navButton} ${glassTheme ? styles.navButtonDark : ''}`}
                     onClick={() => events.navClick(item.label)}
                   >
                     <span>{item.label}</span>
@@ -120,7 +137,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
                   <button
                     className={[
                       styles.navButton,
-                      isGlass ? styles.navButtonDark : '',
+                      glassTheme ? styles.navButtonDark : '',
                       activeDropdown === item.label ? styles.navButtonActive : '',
                     ].filter(Boolean).join(' ')}
                     aria-expanded={activeDropdown === item.label}
@@ -145,30 +162,22 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
         </div>
 
         <button
-          className={`${styles.ctaButton} ${isGlass ? styles.ctaButtonDark : ''}`}
+          className={`${styles.ctaButton} ${glassTheme ? styles.ctaButtonDark : ''}`}
           onClick={() => events.navbarCta('Entrar no portal')}
         >
           Entrar no portal
         </button>
       </div>
 
-      {/* ── Megamenu panel (inline, expands the nav) ── */}
+      {/* ── Megamenu panel — expande a nav no mesmo lugar ── */}
       {megaOpen && activeDropdown === 'iFood Salão' && (
         <div className={styles.megapanel} role="dialog" aria-label="Menu iFood Salão">
-          {/* Left card */}
+          {/* Card promo */}
           <div className={styles.megaLeft}>
             <div className={styles.megaPhotoWrap}>
-              <img
-                src="/images/ifood/salao-megamenu-photo.png"
-                alt="iFood Salão"
-                className={styles.megaPhoto}
-              />
+              <img src="/images/ifood/salao-megamenu-photo.png" alt="iFood Salão" className={styles.megaPhoto} />
               <div className={styles.megaBadge}>
-                <img
-                  src="/images/ifood/salao-badge.png"
-                  alt="iFood Salão"
-                  className={styles.megaBadgeImg}
-                />
+                <img src="/images/ifood/salao-badge.png" alt="iFood Salão" className={styles.megaBadgeImg} />
               </div>
             </div>
 
@@ -179,29 +188,20 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
                   Seus clientes do iFood agora podem{'\n'}viver a experiência presencial
                 </p>
               </div>
-              <Button
-                variant="stroke"
-                color="dark"
-                content="text-icon"
-                label="Falar com especialista"
-              />
+              <Button variant="stroke" color="dark" content="text-icon" label="Falar com especialista" />
             </div>
           </div>
 
-          {/* Right columns */}
+          {/* Colunas */}
           <div className={styles.megaCols}>
             {megamenuColumns.map((col) => (
               <div key={col.title} className={styles.megaCol}>
                 <p className={styles.megaColTitle}>{col.title}</p>
                 <div className={styles.megaColItems}>
                   {col.items.map((itm) => (
-                    <button
-                      key={itm.label}
-                      className={styles.megaItem}
-                      style={{ '--icon-color': itm.iconColor } as React.CSSProperties}
-                    >
-                      <div className={styles.megaItemIcon}>
-                        <span className={styles.megaItemGlyph}>{itm.icon}</span>
+                    <button key={itm.label} className={styles.megaItem}>
+                      <div className={styles.megaItemIcon} style={chipStyle(itm.iconColor)} aria-hidden="true">
+                        <Icon name={itm.icon} size={20} />
                       </div>
                       <div className={styles.megaItemText}>
                         <span className={styles.megaItemLabel}>{itm.label}</span>
@@ -218,7 +218,9 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
     </nav>
   );
 
-  if ((isGlass || fullWidthFixed) && mounted) {
+  /* Portal só na geometria fixa (sticky/full-width). Ao abrir sobre o hero a
+     navbar permanece inline → ancorada exatamente onde estava. */
+  if ((fixedInset || fullWidthFixed) && mounted) {
     return createPortal(navContent, document.body);
   }
 
