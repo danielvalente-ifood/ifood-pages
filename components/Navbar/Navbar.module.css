@@ -66,9 +66,8 @@
   box-sizing: border-box;
 }
 
-.navbarFloating .container {
-  padding: 16px 24px 16px 40px;
-}
+/* Estado flutuante (sticky/submenu aberto) usa o MESMO padding do estado
+   transparente → o nav principal fica idêntico (fonte, gaps, posição). */
 
 .navbarFullWidthFixed .container {
   padding: 16px 32px 16px 80px;
@@ -214,7 +213,7 @@
   gap: 40px;
   align-items: flex-start;
   /* alinha o card promo sob o logo (mesmo padding-left do container flutuante) */
-  padding: 4px 24px 28px 40px;
+  padding: 4px 16px 28px 32px;
   width: 100%;
   box-sizing: border-box;
   animation: megaFadeIn 0.2s ease-out forwards;
