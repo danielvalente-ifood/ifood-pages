@@ -29,7 +29,7 @@
   right: 16px;
   width: auto;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.90);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
@@ -37,9 +37,10 @@
   animation: navFadeIn 0.25s ease-out forwards;
 }
 
-/* Mega aberto: fundo um pouco mais opaco para legibilidade dos cards */
+/* Mega aberto: mesma transparência do estado fechado (90%) para o blur
+   aparecer igual nos dois cenários. */
 .navbarMegaOpen {
-  background: rgba(255, 255, 255, 0.96);
+  background: rgba(255, 255, 255, 0.90);
 }
 
 /* Aberto (Figma 129-12136): card com padding 20px lados · 14px topo · 24px
