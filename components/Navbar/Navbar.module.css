@@ -54,13 +54,14 @@
 }
 
 /* ── Top row ── */
-/* Estado transparente (sobre o hero) = Figma node 129-11782:
-   py 14px · pl 32px · pr 16px · logo→nav gap 60px · itens gap 50px */
+/* Estado transparente (sobre o hero) — medidas a partir do limite do hero:
+   topo 24px · direita 16px · bottom 16px · esquerda 32px
+   logo→nav gap 60px · itens gap 50px */
 .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 14px 32px;
+  padding: 24px 16px 16px 32px;
   width: 100%;
   box-sizing: border-box;
 }
