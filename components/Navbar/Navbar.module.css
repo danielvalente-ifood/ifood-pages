@@ -77,8 +77,11 @@
   box-sizing: border-box;
 }
 
-/* Estado flutuante (sticky/submenu aberto) usa o MESMO padding do estado
-   transparente → o nav principal fica idêntico (fonte, gaps, posição). */
+/* Estado flutuante (com fundo): mantém os lados do transparente, mas o
+   padding-top fica em 14px (mais compacto que o estado sobre o hero). */
+.navbarFloating .container {
+  padding-top: 14px;
+}
 
 .navbarFullWidthFixed .container {
   padding: 16px 32px 16px 80px;
