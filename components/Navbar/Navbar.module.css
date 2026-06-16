@@ -71,13 +71,13 @@
 
 /* ── Top row ── */
 /* Estado transparente (sobre o hero) — medidas a partir do limite do hero:
-   topo 24px · direita 16px · bottom 16px · esquerda 32px
+   topo 24px · direita 28px · bottom 16px · esquerda 32px
    logo→nav gap 60px · itens gap 50px */
 .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 24px 16px 16px 32px;
+  padding: 24px 28px 16px 32px;
   width: 100%;
   box-sizing: border-box;
 }
