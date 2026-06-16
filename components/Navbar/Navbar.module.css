@@ -42,10 +42,15 @@
   background: rgba(255, 255, 255, 0.96);
 }
 
-/* Aberto: remove o padding-bottom do top row → o gap nav→painel (50px) fica
-   controlado só pelo padding-top do .megapanel. */
+/* Aberto (Figma 129-12136): card com padding 20px lados · 14px topo · 24px
+   bottom. O top row leva pt-14/px-20 e pb-0 (o gap nav→painel de 50px fica
+   no padding-top do .megapanel); o painel leva px-20 e pb-24. */
 .navbarMegaOpen .container {
-  padding-bottom: 0;
+  padding: 14px 20px 0;
+}
+
+.navbarMegaOpen .megapanel {
+  padding: 50px 20px 24px;
 }
 
 .navbarFullWidthFixed {
