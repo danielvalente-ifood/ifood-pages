@@ -106,7 +106,7 @@ export default function PromoBanner({ data }: PromoBannerProps) {
   const mediaCard = (
     <div className={styles.mediaCard}>
       {d.image ? (
-        <img src={d.image} alt="" className={styles.mediaImage} />
+        <img src={d.image} alt="" className={styles.mediaImage} loading="lazy" />
       ) : (
         <div className={styles.mediaPlaceholder} aria-hidden="true">
           <Icon name="photo-image-default" size={56} />
@@ -132,7 +132,7 @@ export default function PromoBanner({ data }: PromoBannerProps) {
     >
       {isImageBg && (
         <div className={styles.bgLayer} aria-hidden="true">
-          <img src={d.backgroundImage} alt="" className={styles.bgImage} />
+          <img src={d.backgroundImage} alt="" className={styles.bgImage} loading="lazy" />
         </div>
       )}
 

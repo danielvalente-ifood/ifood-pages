@@ -1,0 +1,42 @@
+.breadcrumb {
+  padding: 12px 24px;
+  background: transparent;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.link {
+  font-size: 13px;
+  color: #666;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.link:hover {
+  color: #EB0033;
+}
+
+.current {
+  font-size: 13px;
+  color: #141414;
+  font-weight: 500;
+}
+
+.sep {
+  color: #999;
+  flex-shrink: 0;
+}

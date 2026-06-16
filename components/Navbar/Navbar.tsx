@@ -187,9 +187,9 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
           {/* Card promo */}
           <div className={styles.megaLeft}>
             <div className={styles.megaPhotoWrap}>
-              <img src="/images/ifood/salao-megamenu-photo.png" alt="iFood Salão" className={styles.megaPhoto} />
+              <img src="/images/ifood/salao-megamenu-photo.png" alt="iFood Salão" className={styles.megaPhoto} loading="lazy" />
               <div className={styles.megaBadge}>
-                <img src="/images/ifood/salao-badge.png" alt="iFood Salão" className={styles.megaBadgeImg} />
+                <img src="/images/ifood/salao-badge.png" alt="iFood Salão" className={styles.megaBadgeImg} loading="lazy" />
               </div>
             </div>
 

@@ -94,14 +94,14 @@ export default function Footer({ data }: FooterProps) {
                   className={styles.socialIcon}
                   onClick={() => events.socialClick(s.platform)}
                 >
-                  <img src={s.icon} alt="" aria-hidden="true" />
+                  <img src={s.icon} alt="" aria-hidden="true" loading="lazy" />
                 </a>
               ))}
             </div>
           </div>
           {d.logo && (
             <div className={styles.logo}>
-              <img src={d.logo} alt="iFood" />
+              <img src={d.logo} alt="iFood" loading="lazy" />
             </div>
           )}
         </div>

@@ -47,6 +47,8 @@ export interface HeroData {
   background_image?: string;
   /** split-image — imagem do card */
   image?: string;
+  /** split-image — texto alternativo da imagem (SEO) */
+  imageAlt?: string;
   /** split-image — posição do card de imagem */
   assetPosition?: 'left' | 'right';
   /** full / slider — ativa o modo slider */
@@ -271,6 +273,7 @@ function HeroBackground({ d, variant }: { d: HeroData; variant: HeroVariant }) {
               src={p.background_image}
               alt=""
               className={`${styles.bgImage} ${i === active ? styles.bgImageActive : ''}`}
+              {...(i === 0 ? { fetchPriority: 'high' as const } : { loading: 'lazy' as const })}
             />
           ) : null
         )}
@@ -339,6 +342,7 @@ function HeroSplitImage({ d }: { d: HeroData }) {
           <EditableImage
             path="image"
             src={d.image}
+            alt={d.imageAlt || d.title?.[0] || 'iFood'}
             className={styles.mediaImage}
             placeholderClassName={styles.mediaPlaceholder}
             placeholder={

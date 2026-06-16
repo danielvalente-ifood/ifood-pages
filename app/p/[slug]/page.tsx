@@ -2,6 +2,7 @@ import { createClient } from '@supabase/supabase-js';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { DynamicPage } from '../DynamicPage';
+import { webPageSchema } from '@/lib/schema';
 
 // Force dynamic rendering — no cache
 export const dynamic = 'force-dynamic';
@@ -44,10 +45,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const description = page.meta_description || 'Gerencie seu restaurante com o ecossistema iFood.';
   const images = page.og_image ? [page.og_image] : undefined;
 
+  const url = `/p/${verticalSlug}`;
   return {
     title,
     description,
-    openGraph: { title, description, url: `/p/${verticalSlug}`, type: 'website', ...(images ? { images } : {}) },
+    alternates: { canonical: url },
+    openGraph: { title, description, url, type: 'website', ...(images ? { images } : {}) },
     twitter: { card: 'summary_large_image', title, description, ...(images ? { images } : {}) },
   };
 }
@@ -116,13 +119,23 @@ export default async function VerticalHomePage({ params, searchParams }: PagePro
     }
   }
 
+  const title = page.meta_title || page.name || 'iFood Pages';
+  const description = page.meta_description || 'Gerencie seu restaurante com o ecossistema iFood.';
+  const schema = webPageSchema({ title, description, url: `/p/${verticalSlug}` });
+
   return (
-    <DynamicPage
-      blocks={content.blocks ?? []}
-      experiments={experimentsWithVariants}
-      pageId={page.id}
-      pageSlug={page.slug}
-      aiEnabled={page.ai_adaptation_enabled ?? false}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <DynamicPage
+        blocks={content.blocks ?? []}
+        experiments={experimentsWithVariants}
+        pageId={page.id}
+        pageSlug={page.slug}
+        aiEnabled={page.ai_adaptation_enabled ?? false}
+      />
+    </>
   );
 }
