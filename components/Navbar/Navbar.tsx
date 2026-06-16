@@ -115,8 +115,8 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
       style={
         floating && !fullWidthFixed
           ? {
-              backdropFilter: 'blur(20px) saturate(180%)',
-              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+              backdropFilter: 'blur(12px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(12px) saturate(180%)',
             }
           : undefined
       }
