@@ -24,9 +24,9 @@
    Mesmas margens nos dois casos: topo + laterais afastados das bordas. */
 .navbarFloating {
   position: fixed;
-  top: 11px;
-  left: 12px;
-  right: 12px;
+  top: 15px;
+  left: 16px;
+  right: 16px;
   width: auto;
   border-radius: 20px;
   background: rgba(255, 255, 255, 0.82);
