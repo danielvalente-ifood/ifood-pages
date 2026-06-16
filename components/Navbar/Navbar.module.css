@@ -34,10 +34,13 @@
   -webkit-backdrop-filter: blur(12px) saturate(180%);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   z-index: 300;
-  /* Entrada suave ao aparecer no scroll: slide-down só com transform.
-     IMPORTANTE: nada de animação de OPACITY aqui — opacizar este elemento
-     força uma camada composta com backdrop vazio e o blur para de funcionar.
-     Transform é seguro (testado: o backdrop-filter continua sampleando). */
+}
+
+/* Slide-down só quando a nav surge pelo SCROLL (.navbarSlideIn). Ao abrir o
+   submenu no topo, esta classe NÃO é aplicada → a nav só ganha o fundo no
+   lugar, sem deslizar (parece o mesmo menu).
+   IMPORTANTE: animar só com transform — opacity quebraria o backdrop-filter. */
+.navbarSlideIn {
   animation: navSlideDown 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 

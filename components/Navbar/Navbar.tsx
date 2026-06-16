@@ -107,6 +107,10 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
         styles.navbar,
         fullWidthFixed ? styles.navbarFullWidthFixed : '',
         floating && !fullWidthFixed ? styles.navbarFloating : '',
+        /* Slide-down SÓ quando a nav surge por scroll (sticky). Ao abrir o
+           submenu estando no topo, ela não desliza — só ganha o fundo no
+           lugar, parecendo o mesmo menu. */
+        isSticky && !fullWidthFixed ? styles.navbarSlideIn : '',
         megaOpen ? styles.navbarMegaOpen : '',
       ].filter(Boolean).join(' ')}
       /* O backdrop-filter vem inline porque o Lightning CSS (build do Next)
