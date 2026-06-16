@@ -1,12 +1,11 @@
 /* ============================================================
    Navbar — iFood Pages
    Estados:
-   · transparente (sobre o hero)        → .navbar
-   · glass theme (sticky OU mega aberto) → .navbarGlassBg  (só o fundo/tema)
-   · geometria fixa+inset (só scroll)    → .navbarSticky
-   · full-width fixed                    → .navbarFullWidthFixed
-   Ao abrir o megamenu sobre o hero a navbar NÃO troca de geometria —
-   ela só ganha o fundo glass e expande o painel, no mesmo lugar.
+   · transparente (sobre o hero)             → .navbar
+   · card flutuante (sticky OU mega aberto)  → .navbarFloating
+   · full-width fixed                        → .navbarFullWidthFixed
+   O card flutuante usa as MESMAS margens (topo + laterais) nos dois
+   casos: ao rolar (sticky) e ao abrir o megamenu sobre o hero.
    ============================================================ */
 
 .navbar {
@@ -21,30 +20,26 @@
   transition: background 0.3s ease-out, box-shadow 0.3s ease-out;
 }
 
-/* ── Tema glass (fundo translúcido + blur). NÃO altera posição. ── */
-.navbarGlassBg {
+/* ── Card flutuante (sticky no scroll OU megamenu aberto) ──
+   Mesmas margens nos dois casos: topo + laterais afastados das bordas. */
+.navbarFloating {
+  position: fixed;
+  top: 16px;
+  left: 24px;
+  right: 24px;
+  width: auto;
+  border-radius: 20px;
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   z-index: 300;
+  animation: navFadeIn 0.25s ease-out forwards;
 }
 
 /* Mega aberto: fundo um pouco mais opaco para legibilidade dos cards */
 .navbarMegaOpen {
   background: rgba(255, 255, 255, 0.96);
-}
-
-/* ── Geometria fixa+inset (só no scroll sticky) ── */
-.navbarSticky {
-  position: fixed;
-  top: 4px;
-  left: 8px;
-  right: 8px;
-  width: auto;
-  border-radius: 20px;
-  z-index: 300;
-  animation: navFadeIn 0.25s ease-out forwards;
 }
 
 .navbarFullWidthFixed {
@@ -68,8 +63,8 @@
   box-sizing: border-box;
 }
 
-.navbarSticky .container {
-  padding: 14px 16px 14px 32px;
+.navbarFloating .container {
+  padding: 16px 24px 16px 40px;
 }
 
 .navbarFullWidthFixed .container {
@@ -100,8 +95,7 @@
 }
 
 /* No tema glass o logo volta à cor original */
-.navbarGlassBg .logo img,
-.navbarSticky .logo img,
+.navbarFloating .logo img,
 .navbarFullWidthFixed .logo img {
   filter: none;
 }
@@ -215,16 +209,11 @@
   display: flex;
   gap: 40px;
   align-items: flex-start;
-  /* alinha o card promo sob o logo (mesmo padding-left do container no hero) */
-  padding: 4px 80px 28px;
+  /* alinha o card promo sob o logo (mesmo padding-left do container flutuante) */
+  padding: 4px 24px 28px 40px;
   width: 100%;
   box-sizing: border-box;
   animation: megaFadeIn 0.2s ease-out forwards;
-}
-
-/* No sticky o container tem padding 32px → o painel acompanha */
-.navbarSticky .megapanel {
-  padding: 4px 32px 24px;
 }
 
 @keyframes megaFadeIn {
@@ -344,18 +333,18 @@
   gap: 12px;
   padding: 12px 16px 12px 12px;
   background: #ffffff;
-  border: none;
+  border: 1px solid transparent;
   border-radius: 16px;
   cursor: pointer;
   text-align: left;
   width: 100%;
-  transition: background 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease;
   box-sizing: border-box;
 }
 
+/* Hover: apenas um stroke sutil cinza (sem sombra) */
 .megaItem:hover {
-  background: #fafafa;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border-color: #e8e8ed;
 }
 
 /* Box do ícone: tamanho/forma aqui; background + color vêm do chipStyle inline

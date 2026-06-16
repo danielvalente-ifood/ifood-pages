@@ -75,12 +75,10 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
   const isSticky = fullWidthFixed || forceSticky || scrollY > 100;
   const megaOpen = !!activeDropdown;
 
-  /* Tema visual "glass" (texto/logo escuros, fundo translúcido): quando sticky
-     OU quando o megamenu está aberto sobre o hero. */
-  const glassTheme = isSticky || megaOpen;
-  /* Geometria fixa+inset: SÓ quando sticky (scroll). Ao abrir sobre o hero,
-     mantemos a navbar exatamente onde está — ela só muda de forma. */
-  const fixedInset = isSticky;
+  /* "Glass/flutuante": fundo translúcido + card com margens. Vale tanto no
+     scroll sticky quanto ao abrir o megamenu sobre o hero — em ambos os casos
+     a navbar vira um card flutuante com as mesmas margens (topo + laterais). */
+  const floating = isSticky || megaOpen;
 
   useEffect(() => { setMounted(true); }, []);
 
@@ -108,8 +106,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
       className={[
         styles.navbar,
         fullWidthFixed ? styles.navbarFullWidthFixed : '',
-        glassTheme && !fullWidthFixed ? styles.navbarGlassBg : '',
-        fixedInset && !fullWidthFixed ? styles.navbarSticky : '',
+        floating && !fullWidthFixed ? styles.navbarFloating : '',
         megaOpen ? styles.navbarMegaOpen : '',
       ].filter(Boolean).join(' ')}
     >
@@ -128,7 +125,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
                 {item.href ? (
                   <Link
                     href={item.href}
-                    className={`${styles.navButton} ${glassTheme ? styles.navButtonDark : ''}`}
+                    className={`${styles.navButton} ${floating ? styles.navButtonDark : ''}`}
                     onClick={() => events.navClick(item.label)}
                   >
                     <span>{item.label}</span>
@@ -137,7 +134,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
                   <button
                     className={[
                       styles.navButton,
-                      glassTheme ? styles.navButtonDark : '',
+                      floating ? styles.navButtonDark : '',
                       activeDropdown === item.label ? styles.navButtonActive : '',
                     ].filter(Boolean).join(' ')}
                     aria-expanded={activeDropdown === item.label}
@@ -162,7 +159,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
         </div>
 
         <button
-          className={`${styles.ctaButton} ${glassTheme ? styles.ctaButtonDark : ''}`}
+          className={`${styles.ctaButton} ${floating ? styles.ctaButtonDark : ''}`}
           onClick={() => events.navbarCta('Entrar no portal')}
         >
           Entrar no portal
@@ -218,9 +215,9 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
     </nav>
   );
 
-  /* Portal só na geometria fixa (sticky/full-width). Ao abrir sobre o hero a
-     navbar permanece inline → ancorada exatamente onde estava. */
-  if ((fixedInset || fullWidthFixed) && mounted) {
+  /* Portal quando flutuante (sticky OU megamenu aberto) ou full-width fixed —
+     posição fixed precisa escapar de qualquer ancestral transformado. */
+  if ((floating || fullWidthFixed) && mounted) {
     return createPortal(navContent, document.body);
   }
 
