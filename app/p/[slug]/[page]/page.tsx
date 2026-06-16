@@ -1,13 +1,13 @@
 import { createClient } from '@supabase/supabase-js';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { DynamicPage } from '../DynamicPage';
+import { DynamicPage } from '../../DynamicPage';
 
 // Force dynamic rendering — no cache
 export const dynamic = 'force-dynamic';
 
 interface PageProps {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; page: string }>;
   searchParams: Promise<{ edit?: string }>;
 }
 
@@ -19,7 +19,7 @@ function makeSupabase() {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { slug: verticalSlug } = await params;
+  const { slug: verticalSlug, page: pageSlug } = await params;
   const supabase = makeSupabase();
 
   const { data: vertical } = await supabase
@@ -34,7 +34,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .from('pages')
     .select('name, slug, meta_title, meta_description, og_image')
     .eq('vertical_id', vertical.id)
-    .eq('is_home', true)
+    .eq('slug', pageSlug)
     .eq('status', 'published')
     .single();
 
@@ -47,13 +47,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
-    openGraph: { title, description, url: `/p/${verticalSlug}`, type: 'website', ...(images ? { images } : {}) },
+    openGraph: { title, description, url: `/p/${verticalSlug}/${pageSlug}`, type: 'website', ...(images ? { images } : {}) },
     twitter: { card: 'summary_large_image', title, description, ...(images ? { images } : {}) },
   };
 }
 
-export default async function VerticalHomePage({ params, searchParams }: PageProps) {
-  const { slug: verticalSlug } = await params;
+export default async function VerticalSubPage({ params, searchParams }: PageProps) {
+  const { slug: verticalSlug, page: pageSlug } = await params;
   const { edit } = await searchParams;
   const isEditMode = edit === 'true';
   const supabase = makeSupabase();
@@ -70,7 +70,7 @@ export default async function VerticalHomePage({ params, searchParams }: PagePro
     .from('pages')
     .select('*')
     .eq('vertical_id', vertical.id)
-    .eq('is_home', true);
+    .eq('slug', pageSlug);
 
   const { data: page } = await (
     isEditMode ? pageBase : pageBase.eq('status', 'published')
