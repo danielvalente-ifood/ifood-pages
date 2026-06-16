@@ -54,11 +54,13 @@
 }
 
 /* ── Top row ── */
+/* Estado transparente (sobre o hero) = Figma node 129-11782:
+   py 14px · pl 32px · pr 16px · logo→nav gap 60px · itens gap 50px */
 .container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 32px 32px 32px 80px;
+  padding: 14px 16px 14px 32px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -110,7 +112,7 @@
 /* ── Nav items ── */
 .navItems {
   display: flex;
-  gap: 4px;
+  gap: 50px;
   align-items: center;
   list-style: none;
   margin: 0;
@@ -399,7 +401,7 @@
    ============================================================ */
 
 @media (max-width: 1024px) {
-  .navItems { gap: 2px; }
+  .navItems { gap: 24px; }
   .navButton { font-size: 14px; }
   .megapanel { padding: 4px 40px 24px; }
   .megaLeft { width: 260px; }
