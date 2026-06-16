@@ -109,6 +109,17 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
         floating && !fullWidthFixed ? styles.navbarFloating : '',
         megaOpen ? styles.navbarMegaOpen : '',
       ].filter(Boolean).join(' ')}
+      /* O backdrop-filter vem inline porque o Lightning CSS (build do Next)
+         descarta a declaração quando escrita no CSS Module. Inline não passa
+         pelo minificador → o blur "glass" funciona de fato. */
+      style={
+        floating && !fullWidthFixed
+          ? {
+              backdropFilter: 'blur(20px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+            }
+          : undefined
+      }
     >
       {/* ── Top row ── */}
       <div className={styles.container}>
