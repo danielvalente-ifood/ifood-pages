@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { DynamicPage } from '../../DynamicPage';
 import { webPageSchema, breadcrumbListSchema } from '@/lib/schema';
-import { Breadcrumb } from '@/components/Breadcrumb/Breadcrumb';
 
 // Force dynamic rendering — no cache
 export const dynamic = 'force-dynamic';
@@ -140,14 +139,6 @@ export default async function VerticalSubPage({ params, searchParams }: PageProp
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
-      {!isEditMode && (
-        <Breadcrumb
-          items={[
-            { label: vertical.name || verticalSlug, href: `/p/${verticalSlug}` },
-            { label: page.name },
-          ]}
-        />
-      )}
       <DynamicPage
         blocks={content.blocks ?? []}
         experiments={experimentsWithVariants}
