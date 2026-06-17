@@ -265,7 +265,7 @@
 }
 
 .innerSplit .textBlock {
-  flex: 1 1 0;
+  flex: 0 0 40%;
   min-width: 0;
 }
 
@@ -278,9 +278,8 @@
 /* ---- card de imagem (Type4) ---- */
 
 .mediaCard {
-  flex-shrink: 0;
-  width: 555px;
-  max-width: 45%;
+  flex: 1 1 0;
+  min-width: 0;
   border-radius: 20px;
   overflow: hidden;
   background: #f5f5f5;

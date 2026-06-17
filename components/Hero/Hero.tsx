@@ -15,7 +15,7 @@ export type HeroVariant = 'full' | 'slider' | 'centered' | 'split-image' | 'spli
 export interface HeroCTA {
   text: string;
   link: string;
-  style?: 'primary' | 'secondary' | 'empty';
+  style?: 'primary' | 'secondary' | 'empty' | 'red';
 }
 
 export interface HeroSlide {
@@ -83,14 +83,16 @@ interface HeroProps {
  * (fill light = branco preenchido; stroke light = borda branca transparente)
  */
 function Cta({ cta, path }: { cta: HeroCTA; path: string }) {
+  const isRed = cta.style === 'red';
   const variant = cta.style === 'secondary' ? 'stroke' : cta.style === 'empty' ? 'empty' : 'fill';
+  const color = isRed ? 'dark' : 'light';
   return (
     <EditableButton
       path={path}
       href={cta.link || '#'}
       label={cta.text}
       variant={variant}
-      color="light"
+      color={color}
       content="text-icon"
       onClick={() => events.heroCta(cta.text)}
     />
