@@ -332,6 +332,9 @@ export function DynamicPage({
             <div key={block.id} id={`block-${block.id}`} {...mergedProps}>
               {label}
               {content}
+              {!isCurtain && (
+                <div style={{ height: '80px', background: 'var(--page-bg, #fafafc)', position: 'relative', zIndex: 1 }} />
+              )}
             </div>
           );
         })}
@@ -381,6 +384,17 @@ function BlockRenderer({
         editMode
         selectedStatIndex={selectedCardIndex}
         onSelectStat={onSelectCard}
+      />
+    );
+  }
+
+  // ChoiceCards: suporta seleção de card individual no modo edição
+  if (block.type === 'choice-cards' && editMode) {
+    return (
+      <Component
+        data={block.data}
+        selectedCardIndex={selectedCardIndex}
+        onSelectCard={onSelectCard}
       />
     );
   }

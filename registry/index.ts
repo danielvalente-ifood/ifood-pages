@@ -13,6 +13,12 @@ import contentEntry from './content-section';
 import promoEntry from './promo-banner';
 import stackedEntry from './stacked';
 import bigNumbersEntry from './big-numbers';
+import leadformEntry from './leadform';
+import bigNumbersTestimonialEntry from './big-numbers-testimonial';
+import segmentosEntry from './segmentos';
+import sectionTitleEntry from './section-title';
+import choiceCardsEntry from './choice-cards';
+import brandCarouselEntry from './brand-carousel';
 
 /**
  * Fonte única de verdade dos componentes de landing page.
@@ -33,6 +39,12 @@ export const registry: RegistryEntry[] = [
   promoEntry,
   stackedEntry,
   bigNumbersEntry,
+  leadformEntry,
+  bigNumbersTestimonialEntry,
+  segmentosEntry,
+  sectionTitleEntry,
+  choiceCardsEntry,
+  brandCarouselEntry,
   ctaBannerEntry, // Fase 5: componente de teste do registry — manter ou remover
 ];
 

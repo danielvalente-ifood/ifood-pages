@@ -27,17 +27,29 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     .from('verticals')
     .select('id')
     .eq('slug', verticalSlug)
-    .single();
+    .maybeSingle();
 
-  if (!vertical) return { title: 'Página não encontrada' };
-
-  const { data: page } = await supabase
-    .from('pages')
-    .select('name, slug, meta_title, meta_description, og_image')
-    .eq('vertical_id', vertical.id)
-    .eq('is_home', true)
-    .eq('status', 'published')
-    .single();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let page: any = null;
+  if (vertical) {
+    const { data } = await supabase
+      .from('pages')
+      .select('name, slug, meta_title, meta_description, og_image')
+      .eq('vertical_id', vertical.id)
+      .eq('is_home', true)
+      .eq('status', 'published')
+      .single();
+    page = data;
+  } else {
+    const { data } = await supabase
+      .from('pages')
+      .select('name, slug, meta_title, meta_description, og_image')
+      .eq('slug', verticalSlug)
+      .is('vertical_id', null)
+      .eq('status', 'published')
+      .single();
+    page = data;
+  }
 
   if (!page) return { title: 'Página não encontrada' };
 
@@ -65,19 +77,35 @@ export default async function VerticalHomePage({ params, searchParams }: PagePro
     .from('verticals')
     .select('id, slug')
     .eq('slug', verticalSlug)
-    .single();
+    .maybeSingle();
 
-  if (!vertical) notFound();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let page: any = null;
 
-  const pageBase = supabase
-    .from('pages')
-    .select('*')
-    .eq('vertical_id', vertical.id)
-    .eq('is_home', true);
+  if (vertical) {
+    const pageBase = supabase
+      .from('pages')
+      .select('*')
+      .eq('vertical_id', vertical.id)
+      .eq('is_home', true);
 
-  const { data: page } = await (
-    isEditMode ? pageBase : pageBase.eq('status', 'published')
-  ).single();
+    const { data } = await (
+      isEditMode ? pageBase : pageBase.eq('status', 'published')
+    ).single();
+    page = data;
+  } else {
+    // Fallback: slug is a standalone page (no vertical)
+    const pageBase = supabase
+      .from('pages')
+      .select('*')
+      .eq('slug', verticalSlug)
+      .is('vertical_id', null);
+
+    const { data } = await (
+      isEditMode ? pageBase : pageBase.eq('status', 'published')
+    ).single();
+    page = data;
+  }
 
   if (!page) notFound();
 

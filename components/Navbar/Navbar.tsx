@@ -52,14 +52,13 @@ function chipStyle(color = ICON_COLOR, opacity = 6): CSSProperties {
   return { background: `rgba(${r},${g},${b},${opacity / 100})`, color };
 }
 
-type NavItem = { label: string; href?: string; hasDropdown?: boolean };
+type NavItem = { label: string; href?: string; hasDropdown?: boolean; external?: boolean };
 
 const navItems: NavItem[] = [
-  { label: 'iFood Ecossistema', hasDropdown: false, href: '/delivery' },
+  { label: 'iFood Delivery', hasDropdown: false, href: 'https://parceiros.ifood.com.br', external: true },
   { label: 'iFood Salão', hasDropdown: true },
-  { label: 'iFood Pago', hasDropdown: false, href: '/ifood-pago' },
-  { label: 'iFood Logística', hasDropdown: false, href: '/logistica' },
-  { label: 'iFood Ads', hasDropdown: false, href: '/ads' },
+  { label: 'iFood Pago', hasDropdown: false, href: '/ifood-pago', external: true },
+  { label: 'iFood Ads', hasDropdown: false, href: 'https://institucional.ifood.com.br/ifood-ads/', external: true },
 ];
 
 interface NavbarProps {
@@ -142,6 +141,7 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
                     href={item.href}
                     className={`${styles.navButton} ${floating ? styles.navButtonDark : ''}`}
                     onClick={() => events.navClick(item.label)}
+                    {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                   >
                     <span>{item.label}</span>
                   </Link>
@@ -173,12 +173,15 @@ export default function Navbar({ forceSticky = false, fullWidthFixed = false }: 
           </ul>
         </div>
 
-        <button
+        <a
+          href="https://portal.ifood.com.br/"
+          target="_blank"
+          rel="noopener noreferrer"
           className={`${styles.ctaButton} ${floating ? styles.ctaButtonDark : ''}`}
           onClick={() => events.navbarCta('Entrar no portal')}
         >
           Entrar no portal
-        </button>
+        </a>
       </div>
 
       {/* ── Megamenu panel — expande a nav no mesmo lugar ── */}

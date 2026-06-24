@@ -40,6 +40,8 @@ export interface ButtonProps {
   icon?: string;
   /** Tipo HTML do elemento button */
   type?: 'button' | 'submit' | 'reset';
+  /** target do <a> quando href é fornecido */
+  target?: string;
   /** Substitui o <span>{label}</span> interno — útil para conteúdo editável */
   children?: React.ReactNode;
 }
@@ -70,6 +72,7 @@ export function Button({
   disabled,
   icon,
   type = 'button',
+  target,
   children,
 }: ButtonProps) {
   const isIconOnly = content === 'icon';
@@ -101,6 +104,8 @@ export function Button({
         className={classes}
         aria-disabled={disabled}
         onClick={onClick as React.MouseEventHandler<HTMLAnchorElement>}
+        target={target}
+        rel={target === '_blank' ? 'noopener noreferrer' : undefined}
       >
         {inner}
       </a>

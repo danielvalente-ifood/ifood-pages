@@ -1,0 +1,327 @@
+/* ============================================================
+   LeadForm — dark island split layout
+   Figma: node 186-4673
+   Tokens: container #141414 radius-20 pad-60/80 ·
+   badge red #EE073A · título T6 40/white · subtítulo H3 18 white-80%·
+   benefits gap-16 icon-check-circle red ·
+   card white radius-20 pad-40 · grid 2-col gap-20 ·
+   input h-52 pill bg-#F5F5F5 px-24 placeholder #A3A3A3 ·
+   submit full-width red radius-100px
+   ============================================================ */
+
+/* ---- seção externa (espaçamento da página) ---- */
+
+.section {
+  width: 100%;
+  padding: 0 0 80px;
+  box-sizing: border-box;
+  background: #fafafc;
+}
+
+/* ---- container escuro arredondado ---- */
+
+.container {
+  max-width: 1600px;
+  margin: 0 auto;
+  background: #141414;
+  /* border-radius: 20px; */
+  padding: 60px 80px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 82px;
+  align-items: start;
+}
+
+/* ============================================================
+   Coluna esquerda
+   ============================================================ */
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+}
+
+.textGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* badge — pílula vermelha */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 9px;
+  border-radius: 60px;
+  background: #EE073A;
+  color: #fafafc;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;           /* 12px */
+  line-height: 1.667;
+  letter-spacing: -0.374px;
+  white-space: nowrap;
+  width: fit-content;
+}
+
+/* título T6 — 40px Medium branco */
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;            /* 40px */
+  line-height: 1.2;             /* 48px */
+  letter-spacing: 0;
+  color: #ffffff;
+  max-width: 581px;
+}
+
+/* subtítulo H3 — 18px Regular branco 80% */
+.subtitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;          /* 18px */
+  line-height: 1.333;           /* 24px */
+  letter-spacing: 0;
+  color: rgba(255, 255, 255, 0.8);
+  max-width: 534px;
+}
+
+/* lista de benefícios */
+.benefitList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.benefitItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;          /* 18px */
+  line-height: 1.333;
+  color: #ffffff;
+}
+
+/* ============================================================
+   Coluna direita — form card
+   ============================================================ */
+
+.formCard {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 40px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-self: stretch;
+}
+
+/* título do card — H2 20px Medium */
+.formTitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;           /* 20px */
+  line-height: 1.6;             /* 32px */
+  letter-spacing: 0;
+  color: #141414;
+  padding: 0 8px;
+}
+
+/* ---- formulário ---- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* grid 2-col para campos lado a lado */
+.fieldGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* campo full-width (CNPJ, select) */
+.fieldFull {
+  grid-column: span 2;
+}
+
+/* label — H3 18px Medium */
+.fieldLabel {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;          /* 18px */
+  line-height: 1.333;
+  letter-spacing: 0;
+  color: #141414;
+  padding: 0 8px;
+}
+
+/* input base — pill #F5F5F5 h52 */
+.fieldInput {
+  height: 52px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 50px;
+  background: #F5F5F5;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;          /* 18px */
+  line-height: 1.333;
+  color: #141414;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.15s ease, box-shadow 0.15s ease;
+  appearance: none;
+}
+
+.fieldInput::placeholder {
+  color: #A3A3A3;
+}
+
+.fieldInput:focus {
+  background: #ebebeb;
+  box-shadow: 0 0 0 2px rgba(20, 20, 20, 0.12);
+}
+
+/* wrapper do select (posiciona o chevron) */
+.selectWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.selectWrapper .fieldInput {
+  cursor: pointer;
+  padding-right: 52px;
+}
+
+.selectChevron {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  color: #141414;
+}
+
+/* botão de envio */
+.submitFull {
+  width: 100%;
+}
+
+/* estado de sucesso */
+.success {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  padding: 40px 0;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+}
+
+.successText {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  color: #141414;
+}
+
+.errorMsg {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-size: 0.875rem;
+  color: #EE073A;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 1200px) {
+  .container {
+    gap: 56px;
+    padding: 56px 56px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 0;
+  }
+  .container {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 48px 48px;
+  }
+  .left {
+    gap: 48px;
+  }
+  .title {
+    font-size: 2rem;
+    max-width: none;
+  }
+  .subtitle {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 0;
+  }
+  .container {
+    padding: 40px 24px;
+    border-radius: 16px;
+  }
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+  .fieldFull {
+    grid-column: span 1;
+  }
+  .formCard {
+    padding: 28px 20px;
+  }
+  .left {
+    gap: 40px;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+  .benefitItem {
+    font-size: 1rem;
+  }
+  .formTitle {
+    font-size: 1.125rem;
+  }
+}

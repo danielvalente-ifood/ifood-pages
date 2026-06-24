@@ -1,0 +1,240 @@
+/* ============================================================
+   ProductCards — grid de cards de produto com feature list
+   Tokens: badge pílula · título T6 40/Medium · card radius 20
+   label card 12/Medium upper · nome produto T5 28/Medium
+   feature 16/Regular #444 · check accent · padding seção 96 80
+   ============================================================ */
+
+.section {
+  width: 100%;
+  background: var(--page-bg, #fafafc);
+  color: #141414;
+  padding-bottom: 80px;
+}
+
+.inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* ---- cabeçalho ---- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+  max-width: 716px;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 60px;
+  background: rgba(33, 33, 33, 0.05);
+  color: #424245;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.667;
+  letter-spacing: -0.374px;
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  color: #141414;
+}
+
+.subtitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.333;
+  color: #666;
+}
+
+/* ---- grid de cards ---- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--col-count, 3), 1fr);
+  gap: 20px;
+}
+
+/* ---- card individual ---- */
+
+.card {
+  --accent: #EE073A;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  background: #fff;
+  border: 1px solid #ebebeb;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.cardTop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 32px 32px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.cardLabel {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.667;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.cardLogo {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.cardName {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.75rem;
+  line-height: 1.2;
+  color: #141414;
+}
+
+.cardDesc {
+  margin: 4px 0 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.47;
+  color: #666;
+}
+
+/* ---- feature list ---- */
+
+.featureList {
+  list-style: none;
+  margin: 0;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+.check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(238, 7, 58, 0.08);
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+/* ---- CTA do card ---- */
+
+.cardCta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 32px 28px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.cardCta:hover {
+  opacity: 0.75;
+}
+
+.ctaArrow {
+  font-size: 1rem;
+  transition: transform 0.15s ease;
+}
+
+.cardCta:hover .ctaArrow {
+  transform: translateX(3px);
+}
+
+/* ---- responsivo ---- */
+
+@media (max-width: 1024px) {
+  .inner {
+    padding: 0 40px;
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .inner {
+    padding: 0 20px;
+    gap: 40px;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .cardTop {
+    padding: 24px 24px 20px;
+  }
+  .featureList {
+    padding: 20px 24px;
+  }
+  .cardCta {
+    margin: 0 24px 24px;
+  }
+}

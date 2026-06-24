@@ -14,6 +14,7 @@
      cortina pinadas atrás; antes era transparent) */
   background: var(--page-bg, #fafafc);
   color: #141414;
+  padding-bottom: 80px;
 
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
      --cs-scale reduz tudo proporcionalmente nos breakpoints. */
@@ -29,7 +30,7 @@
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  padding: 96px 80px;
+  padding: 0 80px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 100px;
@@ -122,6 +123,10 @@
   overflow-wrap: break-word;
 }
 
+.titleBullets {
+  font-size: calc(2rem * var(--cs-scale)); /* 32px */
+}
+
 .description {
   margin: 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
@@ -129,6 +134,83 @@
   font-size: var(--fs-desc);
   line-height: 1.333;
   letter-spacing: 0;
+  color: #666;
+}
+
+/* ---- lista de features ---- */
+
+.featureList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.featureItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+.featureCheck {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(238, 7, 58, 0.08);
+  color: #EE073A;
+  font-size: 0.7rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ---- bullet list (variante bullets-*) ---- */
+
+.bulletList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.bulletItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.bulletIcon {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #EB0033;
+}
+
+.bulletText {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.333;  /* 24px */
+  color: #666;
+  letter-spacing: 0;
+}
+
+.bulletText strong {
+  font-weight: 700;
   color: #666;
 }
 
@@ -150,7 +232,7 @@
     --cs-scale: 0.9;
   }
   .inner {
-    padding: 72px 40px;
+    padding: 0 40px;
     gap: 56px;
   }
   .mediaCard {
@@ -175,7 +257,7 @@
     --cs-scale: 0.8;
   }
   .inner {
-    padding: 56px 20px;
+    padding: 0 20px;
   }
   .mediaCard {
     height: 320px;

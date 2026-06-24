@@ -18,7 +18,7 @@ const entry: RegistryEntry = {
     title: TITLE,
     description: DESCRIPTION,
     image: '',
-    assetPosition: 'left',
+    assetPosition: 'left' as const,
     ctas: CTAS,
   },
   variants: [
@@ -33,6 +33,18 @@ const entry: RegistryEntry = {
       label: 'Imagem à direita',
       description: 'Texto e CTAs à esquerda, card de imagem à direita.',
       config: { assetPosition: 'right' },
+    },
+    {
+      id: 'bullets-right',
+      label: 'Bullets + imagem à direita',
+      description: 'Lista de bullet points com ícone check à esquerda, imagem à direita.',
+      config: { assetPosition: 'right' },
+    },
+    {
+      id: 'bullets-left',
+      label: 'Bullets + imagem à esquerda',
+      description: 'Imagem à esquerda, lista de bullet points à direita.',
+      config: { assetPosition: 'left' },
     },
   ],
   schema: [

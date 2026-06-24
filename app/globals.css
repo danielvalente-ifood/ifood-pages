@@ -14,14 +14,14 @@ html {
      pinado atrás). Centralizada aqui para futura customização por página. */
   --page-bg: #fafafc;
 
-  /* ---- Frame encapsulado ---- */
-  padding: 6px 6px 0;
-  box-sizing: border-box;
-  background: #fafafc;   /* mesmo fundo da página — frame invisível */
+  /* ---- Frame encapsulado (desativado) ---- */
+  /* padding: 6px 6px 0; */
+  /* box-sizing: border-box; */
+  /* background: #fafafc; */
 }
 
 body {
-  border-radius: 20px 20px 0 0;
+  /* border-radius: 20px 20px 0 0; */
 }
 
 /* ---- Lenis (smooth scroll) ---- */
@@ -49,6 +49,10 @@ body {
   /* containing block da navbar transparente (position:absolute) → alinha ao
      limite do hero (borda do body), descontando o frame de 6px do <html>. */
   position: relative;
+}
+
+main {
+  display: block;
 }
 
 /* Fade in animation */

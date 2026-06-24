@@ -9,12 +9,13 @@
 .section {
   position: relative;
   width: 100%;
+  max-height: 660px;
   overflow: hidden;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   /* fundo definido inline (cor) ou via .bgLayer (imagem) */
 
   --pb-scale: 1;
-  --fs-title: calc(2.5rem * var(--pb-scale));    /* T6 — 40px */
+  --fs-title: calc(3.5rem * var(--pb-scale));    /* T5 — 56px */
   --fs-desc: calc(1.125rem * var(--pb-scale));   /* H3 — 18px */
 }
 
@@ -60,12 +61,12 @@
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  padding: 96px 80px;
+  padding: 0 80px;
 }
 
 .curtain .inner {
-  padding-top: 80px;
-  padding-bottom: 80px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* ---- layout centered ---- */
@@ -180,7 +181,7 @@
     --pb-scale: 0.9;
   }
   .inner {
-    padding: 72px 40px;
+    padding: 0 40px;
   }
   .split {
     gap: 40px;
@@ -206,7 +207,7 @@
     --pb-scale: 0.8;
   }
   .inner {
-    padding: 56px 20px;
+    padding: 0 20px;
   }
   .centered,
   .splitText {

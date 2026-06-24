@@ -1,0 +1,91 @@
+/* ============================================================
+   Section Title — bloco de título isolado (badge + h2 + desc)
+   Figma: node 194-5145
+   Fundo transparente por padrão; variante dark usa #141414
+   ============================================================ */
+
+.section {
+  width: 100%;
+  background: var(--page-bg, #fafafc);
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.section.dark {
+  background: #141414;
+}
+
+.inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.inner.left {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* ---- Título ---- */
+
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem; /* 40px */
+  line-height: 1.2;  /* 48px */
+  letter-spacing: 0;
+  color: #141414;
+  max-width: 720px;
+}
+
+.dark .title {
+  color: #fafafc;
+}
+
+/* ---- Descrição ---- */
+
+.description {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.333;  /* 24px */
+  letter-spacing: 0;
+  color: #666;
+  max-width: 640px;
+}
+
+.dark .description {
+  color: #aaa;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .inner {
+    padding: 0 40px;
+  }
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .inner {
+    padding: 0 20px;
+    gap: 16px;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+}

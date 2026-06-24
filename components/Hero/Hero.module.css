@@ -10,7 +10,8 @@
   background: #272727;
   color: #fff;
   overflow: hidden;
-  border-radius: 20px;
+  padding-bottom: 80px;
+  /* border-radius: 20px; */
 
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
      Tamanhos iguais em TODAS as variantes. --hero-scale reduz tudo

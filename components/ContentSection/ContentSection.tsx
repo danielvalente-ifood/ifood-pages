@@ -13,11 +13,24 @@ export interface ContentSectionCTA {
   style?: 'primary' | 'secondary' | 'empty';
 }
 
+export interface ContentSectionFeature {
+  text: string;
+}
+
+export interface ContentSectionBullet {
+  label?: string;
+  text: string;
+}
+
 export interface ContentSectionData {
   badge?: string;
   /** título multi-linha (uma string por linha) */
   title: string[];
   description?: string;
+  /** lista de features com ícone de check (legado) */
+  features?: ContentSectionFeature[];
+  /** bullet points com ícone check vermelho + prefixo negrito opcional */
+  bullets?: ContentSectionBullet[];
   /** imagem do card; vazio = placeholder */
   image?: string;
   /** posição do card de imagem — única variação de layout */
@@ -86,10 +99,33 @@ export default function ContentSection({ data }: ContentSectionProps) {
           <Editable as="span" className={styles.badge} path="badge" value={d.badge} />
         )}
         {d.title?.length > 0 && (
-          <Editable as="h2" className={styles.title} path="title.0" value={(d.title ?? []).join(' ')} />
+          <Editable as="h2" className={`${styles.title} ${d.bullets ? styles.titleBullets : ''}`} path="title.0" value={(d.title ?? []).join(' ')} />
         )}
         {d.description && (
           <Editable as="p" className={styles.description} path="description" value={d.description} multiline />
+        )}
+        {d.bullets && d.bullets.length > 0 && (
+          <ul className={styles.bulletList} aria-label="Benefícios">
+            {d.bullets.map((b, i) => (
+              <li key={i} className={styles.bulletItem}>
+                <img src="/images/ifood/Check2.svg" width={24} height={24} className={styles.bulletIcon} alt="" aria-hidden="true" />
+                <p className={styles.bulletText}>
+                  {b.label && <strong>{b.label} </strong>}
+                  {b.text}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
+        {!d.bullets && d.features && d.features.length > 0 && (
+          <ul className={styles.featureList} aria-label="Funcionalidades">
+            {d.features.map((f, i) => (
+              <li key={i} className={styles.featureItem}>
+                <span className={styles.featureCheck} aria-hidden="true">✓</span>
+                <span>{f.text}</span>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
 

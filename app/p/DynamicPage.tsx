@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { SectionTracker } from '@/components/SectionTracker';
 import { SkipLink } from '@/components/SkipLink';
@@ -17,6 +17,7 @@ interface Block {
   type: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
+  anchor_id?: string;
   config?: {
     assetPosition?: 'left' | 'right';
     [k: string]: unknown;
@@ -312,15 +313,8 @@ export function DynamicPage({
       <main id="main-content">
         {mainBlocks.map((block) => {
           const { editProps, label, content } = renderBlock(block);
-          // Efeito cortina: o banner promocional fica pinado (sticky no wrapper,
-          // que é filho direto do <main>) e os blocos seguintes — com z-index
-          // acima — sobem por cima cobrindo-o. Requer que o bloco logo abaixo
-          // tenha fundo opaco.
           const isCurtain =
             block.type === 'promo' && (block.data?.curtain ?? true) !== false;
-          // Efeito cortina: o banner fica sticky (z-index 0) e os blocos
-          // seguintes (z-index 1) sobem por cima. A opacidade de cada bloco é
-          // responsabilidade do próprio componente (todos usam var --page-bg).
           const wrapperStyle: React.CSSProperties = isCurtain
             ? { position: 'sticky', top: 0, zIndex: 0 }
             : { position: 'relative', zIndex: 1 };
@@ -329,10 +323,15 @@ export function DynamicPage({
             style: { ...wrapperStyle, ...(editProps as { style?: React.CSSProperties }).style, ...(isCurtain ? { position: 'sticky' as const, top: 0, zIndex: 0 } : {}) },
           };
           return (
-            <div key={block.id} id={`block-${block.id}`} {...mergedProps}>
-              {label}
-              {content}
-            </div>
+            <React.Fragment key={block.id}>
+              {block.anchor_id && (
+                <span id={block.anchor_id} aria-hidden="true" style={{ display: 'block', height: 0 }} />
+              )}
+              <div id={`block-${block.id}`} {...mergedProps}>
+                {label}
+                {content}
+              </div>
+            </React.Fragment>
           );
         })}
       </main>
@@ -381,6 +380,17 @@ function BlockRenderer({
         editMode
         selectedStatIndex={selectedCardIndex}
         onSelectStat={onSelectCard}
+      />
+    );
+  }
+
+  // ChoiceCards: suporta seleção de card individual no modo edição
+  if (block.type === 'choice-cards' && editMode) {
+    return (
+      <Component
+        data={block.data}
+        selectedCardIndex={selectedCardIndex}
+        onSelectCard={onSelectCard}
       />
     );
   }

@@ -11,6 +11,7 @@
      cortina pinadas atrás; antes era transparent) */
   background: var(--page-bg, #fafafc);
   color: #141414;
+  padding-bottom: 80px;
 
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
      Iguais em todos os layouts. --ben-scale reduz tudo proporcionalmente. */
@@ -29,7 +30,7 @@
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
-  padding: 96px 80px;
+  padding: 0 80px;
   display: flex;
   flex-direction: column;
   gap: 48px;
@@ -181,7 +182,7 @@
     --ben-scale: 0.9;
   }
   .inner {
-    padding: 72px 40px;
+    padding: 0 40px;
   }
   /* 2 cards por linha */
   .cards {
@@ -197,7 +198,7 @@
     --ben-scale: 0.8;
   }
   .inner {
-    padding: 56px 20px;
+    padding: 0 20px;
   }
   /* 1 card por linha */
   .card {

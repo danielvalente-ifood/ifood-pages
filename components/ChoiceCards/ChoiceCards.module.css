@@ -1,0 +1,356 @@
+/* ============================================================
+   ChoiceCards — 3 cards verticais lado a lado
+   Figma: node 217-1874
+   Fundo #FAFAFC · cards brancos radius-20 · CTA vermelho
+   ============================================================ */
+
+.section {
+  width: 100%;
+  background: #fafafc;
+  padding-bottom: 80px;
+}
+
+.inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+/* ---- Header ---- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  letter-spacing: 0;
+  color: #141414;
+}
+
+.description {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.333;
+  letter-spacing: 0;
+  color: #666;
+}
+
+/* ---- Grid de cards ---- */
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+/* ---- Card ---- */
+
+.card {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.cardEditable {
+  cursor: pointer;
+  outline: 1px solid transparent;
+  outline-offset: 2px;
+  transition: outline-color 0.15s ease;
+}
+
+.cardEditable:hover {
+  outline-color: rgba(20, 20, 20, 0.08);
+}
+
+.cardSelected {
+  outline-color: rgba(20, 20, 20, 0.18) !important;
+}
+
+/* ---- Topo do card: icon + heading ---- */
+
+.cardTop {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-bottom: 24px;
+  border-bottom: 0;
+}
+
+.iconChip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.cardHeading {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 12px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  letter-spacing: -0.24px;
+  color: #131b2e;
+}
+
+.cardSubtitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.333;
+  color: #666;
+}
+
+/* ---- Corpo do card ---- */
+
+.cardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  flex: 1;
+}
+
+/* ---- Seção de desafios ---- */
+
+.challengesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.challengesLabel {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 14px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.challengeList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.challengeItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.challengeBullet {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.challengeText {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  color: #666;
+}
+
+/* ---- Seção de necessidades ---- */
+
+.needsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.needsTitle {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  letter-spacing: -0.24px;
+  color: #131b2e;
+}
+
+.needsTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.needsTag {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 4px 16px;
+  background: #f5f5f5;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.needsTagText {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: #666;
+}
+
+/* ---- Choicebox ---- */
+
+.choicebox {
+  background: #fafafc;
+  border-radius: 20px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.choiceboxWrap {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.choiceboxText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.choiceboxLabel {
+  font-family: 'iFood RC Títulos', 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.75rem;
+  line-height: 14px;
+  color: #a3a3a3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.choiceboxTitle {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  letter-spacing: -0.24px;
+  color: #141414;
+}
+
+.choiceboxDesc {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5rem;
+  color: #666;
+}
+
+/* ---- Imagem do choicebox ---- */
+
+.choiceboxImage {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 2px solid #fafafc;
+}
+
+.choiceboxImagePlaceholder {
+  width: 56px;
+  height: 56px;
+  min-width: 56px;
+  border-radius: 16px;
+  background: #ebebeb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c4c4c4;
+  flex-shrink: 0;
+}
+
+/* ---- CTA ---- */
+
+.cardCta {
+  display: flex;
+}
+
+.ctaBtn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .inner {
+    padding: 0 40px;
+  }
+  .title {
+    font-size: 2rem;
+  }
+  .cardsGrid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding: 0;
+  }
+  .inner {
+    padding: 0 20px;
+    gap: 32px;
+  }
+  .title {
+    font-size: 1.75rem;
+  }
+  .card {
+    padding: 24px;
+    gap: 24px;
+  }
+}

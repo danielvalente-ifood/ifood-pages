@@ -1,0 +1,224 @@
+/* ============================================================
+   Segmentos — tabs de segmento de restaurante
+   Figma: node 194-5109
+   Fundo escuro (#141414) · card branco · pills com ícone
+   ============================================================ */
+
+.section {
+  width: 100%;
+  background: #fafafc;
+  padding-bottom: 80px;
+}
+
+.inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+/* ---- Header (badge + title) ---- */
+
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 60px;
+  background: rgba(33, 33, 33, 0.05);
+  color: #424245;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.667;
+  letter-spacing: -0.374px;
+  white-space: nowrap;
+}
+
+.title {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;
+  line-height: 1.2;
+  color: #141414;
+  text-align: center;
+}
+
+/* ---- Card branco ---- */
+
+.card {
+  width: 100%;
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 32px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ---- Row de tabs ---- */
+
+.tabsRow {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+/* ---- Tab pill ---- */
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 60px;
+  border-radius: 60px;
+  padding: 3px 20px 3px 3px;
+  background: #fafafc;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s ease, color 0.18s ease;
+}
+
+.tab:focus-visible {
+  outline: 2px solid #EB0033;
+  outline-offset: 2px;
+}
+
+.tabActive {
+  background: #141414;
+}
+
+/* ---- Ícone dentro do pill ---- */
+
+.iconWrap {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.18s ease;
+}
+
+.tabActive .iconWrap {
+  background: #fafafc;
+}
+
+.tabIcon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+}
+
+.iconPlaceholder {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  display: block;
+}
+
+.tabActive .iconPlaceholder {
+  background: #bdbdbd;
+}
+
+/* ---- Label do tab ---- */
+
+.tabLabel {
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.6;
+  color: #141414;
+  transition: color 0.18s ease;
+}
+
+.tabActive .tabLabel {
+  color: #fff;
+}
+
+/* ---- Descrição ---- */
+
+.description {
+  margin: 0;
+  font-family: 'iFood RC Titulos', 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.375rem; /* 22px */
+  line-height: 2rem;   /* 32px */
+  color: #666;
+  text-align: center;
+  max-width: 644px;
+}
+
+/* ============================================================
+   Responsivo
+   ============================================================ */
+
+@media (max-width: 1024px) {
+  .inner {
+    padding: 0 40px;
+  }
+  .title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .inner {
+    padding: 0 24px;
+    gap: 40px;
+  }
+  .tabsRow {
+    gap: 8px;
+  }
+  .tab {
+    padding: 3px 14px 3px 3px;
+  }
+  .tabLabel {
+    font-size: 1rem;
+  }
+  .description {
+    font-size: 1.125rem;
+    line-height: 1.667rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .inner {
+    padding: 0 16px;
+  }
+  .card {
+    padding: 24px 16px 32px;
+    gap: 32px;
+  }
+  .iconWrap {
+    width: 44px;
+    height: 44px;
+  }
+  .tab {
+    height: 50px;
+  }
+}

@@ -12,7 +12,7 @@
   width: 100%;
   box-sizing: border-box;
   background: var(--page-bg, #fafafc);
-  padding: 100px 80px;
+  padding: 0 80px 80px;
 }
 
 .inner {
@@ -178,7 +178,7 @@
    ============================================================ */
 @media (max-width: 1024px) {
   .section {
-    padding: 80px 48px;
+    padding: 0 48px;
   }
   .inner {
     gap: 80px;
@@ -196,7 +196,7 @@
 
 @media (max-width: 768px) {
   .section {
-    padding: 60px 20px;
+    padding: 0 20px;
   }
   .inner {
     flex-direction: column;

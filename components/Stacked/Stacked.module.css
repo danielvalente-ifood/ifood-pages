@@ -12,6 +12,7 @@
   width: 100%;
   background: var(--page-bg, #fafafc);
   color: #141414;
+  padding-bottom: 80px;
 
   /* escala tipográfica (REM, tokens do Figma) */
   --st-scale: 1;
@@ -46,7 +47,7 @@
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
-  padding: 64px 80px;
+  padding: 0 80px;
   display: flex;
   flex-direction: column;
   gap: 40px;
@@ -240,7 +241,7 @@
     --st-scale: 0.85;
   }
   .inner {
-    padding: 48px 40px;
+    padding: 0 40px;
   }
   .grid {
     gap: 40px;
@@ -253,7 +254,7 @@
     --step: 60vh;
   }
   .inner {
-    padding: 40px 20px;
+    padding: 0 20px;
   }
   .grid {
     grid-template-columns: 1fr;

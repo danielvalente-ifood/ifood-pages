@@ -9,7 +9,7 @@ import styles from './PromoBanner.module.css';
 export interface PromoBannerCTA {
   text: string;
   link: string;
-  style?: 'primary' | 'secondary' | 'empty';
+  style?: 'primary' | 'secondary' | 'empty' | 'red';
 }
 
 export interface PromoBannerData {
@@ -55,6 +55,7 @@ interface PromoBannerProps {
 }
 
 function PromoCta({ cta, color, path }: { cta: PromoBannerCTA; color: 'light' | 'dark'; path: string }) {
+  const isRed = cta.style === 'red';
   const variant = cta.style === 'secondary' ? 'stroke' : cta.style === 'empty' ? 'empty' : 'fill';
   return (
     <EditableButton
@@ -62,7 +63,7 @@ function PromoCta({ cta, color, path }: { cta: PromoBannerCTA; color: 'light' | 
       href={cta.link || '#'}
       label={cta.text}
       variant={variant}
-      color={color}
+      color={isRed ? 'dark' : color}
       content="text-icon"
     />
   );
