@@ -149,7 +149,7 @@ export default function LeadForm({ data }: LeadFormProps) {
           {submitted ? (
             <div className={styles.success} role="alert" aria-live="assertive">
               <img
-                src="/images/ifood/Check.svg"
+                src="/images/ifood/Check_3.svg"
                 alt=""
                 aria-hidden="true"
                 className={styles.successIcon}

@@ -203,8 +203,8 @@
 .bulletText {
   margin: 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
-  font-size: 1.125rem; /* 18px */
-  line-height: 1.333;  /* 24px */
+  font-size: 1rem; /* 16px */
+  line-height: 1.5;
   color: #666;
   letter-spacing: 0;
 }
