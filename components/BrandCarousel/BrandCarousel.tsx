@@ -30,7 +30,8 @@ export default function BrandCarousel({ data }: { data?: BrandCarouselData }) {
       <div className={styles.inner}>
         <div className={styles.header}>
           {d.badge && <div className={styles.badge}>{d.badge}</div>}
-          <h2 className={styles.title}>{d.title}</h2>
+          {/* title oculto intencionalmente — mantido no data para SEO/acessibilidade */}
+          <h2 className={styles.title} aria-hidden="true" style={{ display: 'none' }}>{d.title}</h2>
         </div>
 
         <div className={styles.logosRow} role="list" aria-label="Logos de parceiros">

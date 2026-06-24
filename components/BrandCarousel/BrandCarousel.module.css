@@ -1,7 +1,7 @@
 .section {
   width: 100%;
   background: #fafafc;
-  padding: 0 0 80px;
+  padding: 20px 0 100px;
   box-sizing: border-box;
 }
 
@@ -67,16 +67,16 @@
 }
 
 .logoSlot {
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   border-radius: 15px;
   overflow: hidden;
   flex-shrink: 0;
 }
 
 .logoImg {
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   object-fit: contain;
   border-radius: 15px;
   display: block;
@@ -84,8 +84,8 @@
 
 .logoPlaceholder {
   display: block;
-  width: 80px;
-  height: 80px;
+  width: 64px;
+  height: 64px;
   background: #d9d9d9;
   border-radius: 15px;
 }
