@@ -11,6 +11,7 @@ export interface ContentSectionCTA {
   text: string;
   link: string;
   style?: 'primary' | 'secondary' | 'empty';
+  target?: '_blank' | '_self';
 }
 
 export interface ContentSectionFeature {
@@ -70,6 +71,7 @@ function ContentCta({ cta, path }: { cta: ContentSectionCTA; path: string }) {
       variant={variant}
       color="dark"
       content="text-icon"
+      target={cta.target}
     />
   );
 }
