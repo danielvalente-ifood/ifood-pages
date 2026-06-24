@@ -57,7 +57,7 @@ type NavItem = { label: string; href?: string; hasDropdown?: boolean; external?:
 const navItems: NavItem[] = [
   { label: 'iFood Delivery', hasDropdown: false, href: 'https://parceiros.ifood.com.br', external: true },
   { label: 'iFood Salão', hasDropdown: true },
-  { label: 'iFood Pago', hasDropdown: false, href: '/ifood-pago', external: true },
+  { label: 'iFood Pago', hasDropdown: false, href: 'https://www.ifoodpago.com.br', external: true },
   { label: 'iFood Ads', hasDropdown: false, href: 'https://institucional.ifood.com.br/ifood-ads/', external: true },
 ];
 
