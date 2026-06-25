@@ -151,7 +151,7 @@
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
   font-size: 1.25rem;
-  line-height: 32px;
+  line-height: 0.5;
   color: #141414;
 }
 
@@ -206,9 +206,9 @@
 .quoteTriple {
   margin: 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
-  font-weight: 500;
-  font-size: 1.5rem;   /* 24px */
-  line-height: 32px;
+  font-weight: 400;
+  font-size: 1.2rem;   /* 24px */
+  line-height: 1.5;
   letter-spacing: 0;
   color: #141414;
 }

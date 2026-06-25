@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useEdit } from './EditContext';
 import { Button, type ButtonProps } from '@/components/Button/Button';
 
@@ -12,7 +12,9 @@ interface EditableButtonProps extends ButtonProps {
 /**
  * Botão com texto editável inline no iframe do editor.
  * - Fora de edit mode: renderiza <Button> normalmente.
- * - Em edit mode: duplo-clique no texto ativa contentEditable; confirma no blur/Enter.
+ * - Em edit mode: duplo-clique no texto ativa contentEditable; o texto do DOM é gerido
+ *   imperativamente (não reconciliado pelo React) pra não resetar o caret durante a digitação.
+ *   Confirma no blur/Enter.
  */
 export function EditableButton({ path, label = '', href, ...rest }: EditableButtonProps) {
   const { editMode, emit } = useEdit();
@@ -21,6 +23,15 @@ export function EditableButton({ path, label = '', href, ...rest }: EditableButt
   const [editing, setEditing] = useState(false);
   const [hovered, setHovered] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Mantém o texto do DOM em sync com o label enquanto NÃO está editando.
+  useEffect(() => {
+    if (!editMode) return;
+    const el = spanRef.current;
+    if (el && !editingRef.current && el.innerText !== label) {
+      el.innerText = label ?? '';
+    }
+  }, [label, editMode]);
 
   if (!editMode) {
     return <Button label={label} href={href} {...rest} />;
@@ -42,7 +53,7 @@ export function EditableButton({ path, label = '', href, ...rest }: EditableButt
   };
 
   const commit = () => {
-    if (spanRef.current) emit(path, spanRef.current.innerText.trim() || label);
+    if (spanRef.current) emit(path, spanRef.current.innerText);
   };
 
   return (
@@ -103,9 +114,7 @@ export function EditableButton({ path, label = '', href, ...rest }: EditableButt
           setEditing(false);
           commit();
         }}
-      >
-        {label}
-      </span>
+      />
     </Button>
   );
 }
