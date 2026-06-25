@@ -10,7 +10,7 @@
   width: 100%;
   background: var(--page-bg, #fafafc);
   color: #141414;
-  padding-bottom: 80px;
+  padding: 80px 0;
 }
 
 .inner {
@@ -47,7 +47,8 @@
   color: #424245;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
-  font-size: 0.75rem;   /* 12px */
+  font-size: 0.75rem;
+  /* 12px */
   line-height: 1.667;
   letter-spacing: -0.374px;
   white-space: nowrap;
@@ -57,8 +58,10 @@
   margin: 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
-  font-size: 2.5rem;    /* 40px */
-  line-height: 3rem;    /* 48px — lineHeight/Title/T6 */
+  font-size: 2.5rem;
+  /* 40px */
+  line-height: 3rem;
+  /* 48px — lineHeight/Title/T6 */
   letter-spacing: 0;
   color: #141414;
   text-align: center;
@@ -90,16 +93,25 @@
   padding: 8px;
   margin: -8px;
 }
-.statEditable:hover { outline-color: rgba(127,127,127,0.35); }
-.statSelected { outline-color: rgba(127,127,127,0.6) !important; background: rgba(127,127,127,0.05); }
+
+.statEditable:hover {
+  outline-color: rgba(127, 127, 127, 0.35);
+}
+
+.statSelected {
+  outline-color: rgba(127, 127, 127, 0.6) !important;
+  background: rgba(127, 127, 127, 0.05);
+}
 
 /* Número grande */
 .statValue {
   margin: 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
-  font-size: 2.625rem;  /* 42px */
-  line-height: 3rem;    /* 48px */
+  font-size: 2.625rem;
+  /* 42px */
+  line-height: 3rem;
+  /* 48px */
   letter-spacing: 0;
   color: #141414;
   white-space: nowrap;
@@ -120,7 +132,8 @@
   width: 36px;
   height: 36px;
   border-radius: 10px;
-  background: rgba(20, 20, 20, 0.10);  /* Figma: bg #141414 opacity-10 */
+  background: rgba(20, 20, 20, 0.10);
+  /* Figma: bg #141414 opacity-10 */
   color: #141414;
   flex-shrink: 0;
 }
@@ -128,7 +141,8 @@
 .statLabel {
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
-  font-size: 1rem;      /* 16px */
+  font-size: 1rem;
+  /* 16px */
   line-height: 1.5;
   letter-spacing: 0;
   color: #666;
@@ -144,6 +158,7 @@
     padding: 0 40px;
     gap: 48px;
   }
+
   .statValue {
     font-size: 2.5rem;
     line-height: 3rem;
@@ -155,13 +170,16 @@
     padding: 0 24px;
     gap: 40px;
   }
+
   /* 2 colunas em tablet médio */
   .grid {
     flex-wrap: wrap;
   }
+
   .stat {
     flex: 1 1 calc(50% - 16px);
   }
+
   .statLabel {
     white-space: normal;
   }
@@ -171,10 +189,12 @@
   .inner {
     padding: 0 20px;
   }
+
   /* 1 coluna em mobile */
   .stat {
     flex: 1 1 100%;
   }
+
   .statValue {
     font-size: 2rem;
     line-height: 2.5rem;
