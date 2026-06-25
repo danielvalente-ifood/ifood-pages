@@ -14,14 +14,17 @@
      cortina pinadas atrás; antes era transparent) */
   background: var(--page-bg, #fafafc);
   color: #141414;
-  padding-bottom: 80px;
+  padding: 80px 0;
 
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
      --cs-scale reduz tudo proporcionalmente nos breakpoints. */
   --cs-scale: 1;
-  --fs-title: calc(2.5rem * var(--cs-scale));    /* T6 — 40px */
-  --fs-desc: calc(1.125rem * var(--cs-scale));   /* H3 — 18px */
-  --fs-badge: calc(0.75rem * var(--cs-scale));   /* P3 — 12px */
+  --fs-title: calc(2.5rem * var(--cs-scale));
+  /* T6 — 40px */
+  --fs-desc: calc(1.125rem * var(--cs-scale));
+  /* H3 — 18px */
+  --fs-badge: calc(0.75rem * var(--cs-scale));
+  /* P3 — 12px */
 }
 
 .inner {
@@ -41,6 +44,7 @@
 .innerReverse .mediaCard {
   order: 2;
 }
+
 .innerReverse .textColumn {
   order: 1;
 }
@@ -124,7 +128,8 @@
 }
 
 .titleBullets {
-  font-size: calc(2rem * var(--cs-scale)); /* 32px */
+  font-size: calc(2rem * var(--cs-scale));
+  /* 32px */
 }
 
 .description {
@@ -203,7 +208,8 @@
 .bulletText {
   margin: 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
-  font-size: 1rem; /* 16px */
+  font-size: 1rem;
+  /* 16px */
   line-height: 1.5;
   color: #666;
   letter-spacing: 0;
@@ -231,10 +237,12 @@
   .section {
     --cs-scale: 0.9;
   }
+
   .inner {
     padding: 0 40px;
     gap: 56px;
   }
+
   .mediaCard {
     height: 420px;
   }
@@ -245,6 +253,7 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
+
   /* numa coluna, a imagem sempre vem primeiro */
   .innerReverse .mediaCard,
   .innerReverse .textColumn {
@@ -256,12 +265,15 @@
   .section {
     --cs-scale: 0.8;
   }
+
   .inner {
     padding: 0 20px;
   }
+
   .mediaCard {
     height: 320px;
   }
+
   .ctaRow {
     flex-direction: column;
     align-items: stretch;
