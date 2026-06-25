@@ -93,6 +93,10 @@ export default function BigNumbersTestimonial({ data }: { data?: BigNumbersTesti
     return (
       <section ref={ref} className={`${styles.section} ${styles.sectionTriple} scroll-reveal ${isVisible ? 'visible' : ''}`}>
         <div className={styles.inner}>
+          <div className={styles.headerTriple}>
+            {d.badge && <div className={styles.badge}>{d.badge}</div>}
+            <h2 className={styles.titleTriple}>{d.title}</h2>
+          </div>
           <div className={styles.cardsTriple}>
             {d.testimonials.slice(0, 3).map((t, i) => (
               <TestimonialCard key={i} t={t} quoteClass={styles.quoteTriple} />
