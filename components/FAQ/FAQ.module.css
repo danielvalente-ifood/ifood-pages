@@ -12,7 +12,7 @@
   width: 100%;
   box-sizing: border-box;
   background: var(--page-bg, #fafafc);
-  padding: 0 80px 80px;
+  padding: 80px 0;
 }
 
 .inner {
@@ -21,6 +21,7 @@
   align-items: stretch;
   width: 100%;
   max-width: 1600px;
+  padding: 0 80px;
 }
 
 /* ---- Coluna esquerda ---- */
@@ -164,13 +165,31 @@
 }
 
 @keyframes slideDown {
-  from { opacity: 0; max-height: 0; padding-top: 0; }
-  to { opacity: 1; max-height: 500px; padding-top: 4px; }
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+  }
+
+  to {
+    opacity: 1;
+    max-height: 500px;
+    padding-top: 4px;
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 1; max-height: 500px; padding-top: 4px; }
-  to { opacity: 0; max-height: 0; padding-top: 0; }
+  from {
+    opacity: 1;
+    max-height: 500px;
+    padding-top: 4px;
+  }
+
+  to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+  }
 }
 
 /* ============================================================
@@ -180,15 +199,19 @@
   .section {
     padding: 0 48px;
   }
+
   .inner {
     gap: 80px;
   }
+
   .left {
     width: 350px;
   }
+
   .title {
     font-size: 32px;
   }
+
   .description {
     width: 280px;
   }
@@ -198,22 +221,27 @@
   .section {
     padding: 0 20px;
   }
+
   .inner {
     flex-direction: column;
     gap: 40px;
     align-items: stretch;
   }
+
   .left {
     width: 100%;
     gap: 24px;
   }
+
   .title {
     font-size: 28px;
     max-width: 100%;
   }
+
   .description {
     width: 100%;
   }
+
   .faqButton {
     min-height: 60px;
     padding: 18px 20px;

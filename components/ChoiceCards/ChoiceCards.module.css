@@ -7,7 +7,7 @@
 .section {
   width: 100%;
   background: #fafafc;
-  padding-bottom: 80px;
+  padding: 80px 0;
 }
 
 .inner {
@@ -329,9 +329,11 @@
   .inner {
     padding: 0 40px;
   }
+
   .title {
     font-size: 2rem;
   }
+
   .cardsGrid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -342,13 +344,16 @@
   .section {
     padding: 0;
   }
+
   .inner {
     padding: 0 20px;
     gap: 32px;
   }
+
   .title {
     font-size: 1.75rem;
   }
+
   .card {
     padding: 24px;
     gap: 24px;

@@ -8,7 +8,7 @@
   width: 100%;
   background: var(--page-bg, #fafafc);
   color: #141414;
-  padding-bottom: 80px;
+  padding: 80px 0;
 }
 
 .inner {
@@ -111,8 +111,15 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .panelText {
@@ -131,6 +138,7 @@
   .inner {
     padding: 0 40px;
   }
+
   .title {
     font-size: 2rem;
   }
@@ -141,13 +149,16 @@
     padding: 0 20px;
     gap: 32px;
   }
+
   .title {
     font-size: 1.75rem;
   }
+
   .tab {
     font-size: 0.875rem;
     padding: 8px 16px;
   }
+
   .panel {
     padding: 28px 24px;
   }
