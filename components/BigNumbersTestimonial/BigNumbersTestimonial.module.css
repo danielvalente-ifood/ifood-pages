@@ -164,6 +164,30 @@
   opacity: 0.7;
 }
 
+/* ---- variante triple (3 cards sem header/stats) ---- */
+
+.sectionTriple {
+  background: var(--page-bg, #fafafc);
+}
+
+.cardsTriple {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.quoteTriple {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 1.5rem;   /* 24px */
+  line-height: 32px;
+  letter-spacing: 0;
+  color: #141414;
+}
+
 /* ---- responsivo ---- */
 
 @media (max-width: 1024px) {
@@ -184,6 +208,11 @@
   .cards {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .cardsTriple {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 
   .card {

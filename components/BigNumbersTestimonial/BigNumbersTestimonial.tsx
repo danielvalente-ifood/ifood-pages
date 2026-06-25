@@ -20,6 +20,8 @@ export interface BigNumbersTestimonialData {
   title: string;
   stats: BigNumbersTestimonialStat[];
   testimonials: BigNumbersTestimonialCard[];
+  /** 'default' = big numbers + depoimentos · 'triple' = apenas 3 cards lado a lado */
+  variant?: 'default' | 'triple';
 }
 
 function Stars({ count = 5 }: { count?: number }) {
@@ -67,12 +69,42 @@ const DEFAULTS: BigNumbersTestimonialData = {
   ],
 };
 
+function TestimonialCard({ t, quoteClass }: { t: BigNumbersTestimonialCard; quoteClass: string }) {
+  return (
+    <article className={styles.card}>
+      <div className={styles.cardTop}>
+        <Stars count={t.rating} />
+        <p className={quoteClass}>{t.quote}</p>
+      </div>
+      <div className={styles.author}>
+        <span className={styles.authorName}>{t.author}</span>
+        <span className={styles.company}>{t.company}</span>
+      </div>
+    </article>
+  );
+}
+
 export default function BigNumbersTestimonial({ data }: { data?: BigNumbersTestimonialData }) {
   const { ref, isVisible } = useScrollReveal();
   const d = data ?? DEFAULTS;
+  const isTriple = d.variant === 'triple';
+
+  if (isTriple) {
+    return (
+      <section ref={ref} className={`${styles.section} ${styles.sectionTriple} scroll-reveal ${isVisible ? 'visible' : ''}`}>
+        <div className={styles.inner}>
+          <div className={styles.cardsTriple}>
+            {d.testimonials.slice(0, 3).map((t, i) => (
+              <TestimonialCard key={i} t={t} quoteClass={styles.quoteTriple} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <section ref={ref} className={styles.section}>
+    <section ref={ref} className={`${styles.section} scroll-reveal ${isVisible ? 'visible' : ''}`}>
       <div className={styles.inner}>
         <div className={styles.header}>
           {d.badge && <div className={styles.badge}>{d.badge}</div>}
@@ -94,16 +126,7 @@ export default function BigNumbersTestimonial({ data }: { data?: BigNumbersTesti
 
         <div className={styles.cards}>
           {d.testimonials.map((t, i) => (
-            <article key={i} className={styles.card}>
-              <div className={styles.cardTop}>
-                <Stars count={t.rating} />
-                <p className={styles.quote}>{t.quote}</p>
-              </div>
-              <div className={styles.author}>
-                <span className={styles.authorName}>{t.author}</span>
-                <span className={styles.company}>{t.company}</span>
-              </div>
-            </article>
+            <TestimonialCard key={i} t={t} quoteClass={styles.quote} />
           ))}
         </div>
       </div>
