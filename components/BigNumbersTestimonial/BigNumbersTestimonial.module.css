@@ -151,7 +151,7 @@
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
   font-size: 1.25rem;
-  line-height: 32px;
+  line-height: 0.5;
   color: #141414;
 }
 
@@ -162,6 +162,55 @@
   line-height: 16px;
   color: #666;
   opacity: 0.7;
+}
+
+/* ---- variante triple (header esquerda + 3 cards) ---- */
+
+.sectionTriple {
+  background: var(--page-bg, #fafafc);
+}
+
+/* Sobrescreve o align-items: center do .inner para alinhar à esquerda */
+.sectionTriple .inner {
+  align-items: flex-start;
+}
+
+.headerTriple {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 24px;
+  max-width: 714px;
+  width: 100%;
+}
+
+.titleTriple {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 2.5rem;   /* 40px */
+  line-height: 48px;
+  letter-spacing: 0;
+  color: #141414;
+  text-align: left;
+}
+
+.cardsTriple {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 100%;
+  align-items: stretch;
+}
+
+.quoteTriple {
+  margin: 0;
+  font-family: 'iFood RC Textos', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 1.2rem;   /* 24px */
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #141414;
 }
 
 /* ---- responsivo ---- */
@@ -184,6 +233,11 @@
   .cards {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .cardsTriple {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 
   .card {

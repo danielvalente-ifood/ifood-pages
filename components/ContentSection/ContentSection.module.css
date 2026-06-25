@@ -19,12 +19,9 @@
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
      --cs-scale reduz tudo proporcionalmente nos breakpoints. */
   --cs-scale: 1;
-  --fs-title: calc(2.5rem * var(--cs-scale));
-  /* T6 — 40px */
-  --fs-desc: calc(1.125rem * var(--cs-scale));
-  /* H3 — 18px */
-  --fs-badge: calc(0.75rem * var(--cs-scale));
-  /* P3 — 12px */
+  --fs-title: calc(1.8rem * var(--cs-scale));    /* T6 — 40px */
+  --fs-desc: calc(1.05rem * var(--cs-scale));   /* H3 — 18px */
+  --fs-badge: calc(0.75rem * var(--cs-scale));   /* P3 — 12px */
 }
 
 .inner {
@@ -117,7 +114,7 @@
 .title {
   margin: 0;
   font-family: 'iFood RC Textos', system-ui, sans-serif;
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--fs-title);
   line-height: 1.2;
   letter-spacing: 0;
@@ -137,7 +134,7 @@
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 400;
   font-size: var(--fs-desc);
-  line-height: 1.333;
+  line-height: 1.5;
   letter-spacing: 0;
   color: #666;
 }
