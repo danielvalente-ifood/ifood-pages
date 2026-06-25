@@ -10,14 +10,13 @@
   background: #272727;
   color: #fff;
   overflow: hidden;
-  padding-bottom: 80px;
   /* border-radius: 20px; */
 
   /* ---- Escala tipográfica (REM, tokens do Figma) ----
      Tamanhos iguais em TODAS as variantes. --hero-scale reduz tudo
      proporcionalmente nos breakpoints (1 = tamanho do Figma). */
   --hero-scale: 1;
-  --fs-title: calc(3.5rem * var(--hero-scale));      /* 56px */
+  --fs-title: calc(3rem * var(--hero-scale));      /* 56px */
   --fs-desc: calc(1.125rem * var(--hero-scale));     /* H3 — 18px */
   --fs-cta: calc(1rem * var(--hero-scale));          /* P1 — 16px */
   --fs-form-title: calc(1.25rem * var(--hero-scale));    /* H2 — 20px */
@@ -46,7 +45,7 @@
   flex-direction: column;
   gap: 50px;
   width: 100%;
-  max-width: 829px;
+  max-width: 650px;
 }
 
 .textGroup {
@@ -111,12 +110,14 @@
    ============================================================ */
 
 .heroFull {
-  min-height: 90vh;
+  aspect-ratio: 16 / 9;
+  min-height: 560px;
 }
 
 .heroFull .inner {
   justify-content: flex-end;
-  min-height: 90vh;
+  height: 100%;
+  min-height: 560px;
 }
 
 /* ============================================================

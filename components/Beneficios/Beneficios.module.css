@@ -19,7 +19,7 @@
   --fs-title: calc(2.5rem * var(--ben-scale));        /* T6 — 40px */
   --fs-desc: calc(1.125rem * var(--ben-scale));       /* H3 — 18px */
   --fs-badge: calc(0.75rem * var(--ben-scale));       /* P3 — 12px */
-  --fs-card-title: calc(1.25rem * var(--ben-scale));  /* 20px */
+  --fs-card-title: calc(1.1rem * var(--ben-scale));  /* 20px */
   --fs-card-desc: calc(1rem * var(--ben-scale));      /* P1 — 16px */
   --fs-cta: calc(1rem * var(--ben-scale));            /* P1 — 16px */
 }
@@ -86,7 +86,7 @@
 
 .cards {
   display: flex;
-  gap: 8px;
+  gap: 4px;
   align-items: stretch;
   width: 100%;
 }
@@ -131,12 +131,19 @@
   flex-shrink: 0;
 }
 
+.iconImage {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
 .cardTitle {
   margin: 10px 0 0;
   font-family: 'iFood RC Títulos', 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 500;
   font-size: var(--fs-card-title);
-  line-height: 1.1;
+  line-height: 1.5;
   letter-spacing: -0.5px;
   color: #141414;
 }
@@ -154,7 +161,7 @@
   font-family: 'iFood RC Textos', system-ui, sans-serif;
   font-weight: 400;
   font-size: var(--fs-card-desc);
-  line-height: 1.4375;
+  line-height: 1.5;
   letter-spacing: -0.2px;
   color: #666;
   opacity: 0.7;

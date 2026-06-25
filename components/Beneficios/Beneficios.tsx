@@ -23,6 +23,8 @@ export interface BeneficioCard {
   iconColor?: string;
   /** Opacidade do fundo do chip (0–100) — default 5 */
   iconBgOpacity?: number;
+  /** URL de imagem personalizada (50×50) — substitui o chip de ícone */
+  image?: string;
 }
 
 export interface BeneficiosData {
@@ -152,13 +154,24 @@ export default function Beneficios({
               : { className: styles.card };
             return (
               <article key={i} {...editProps}>
-                <div
-                  className={styles.iconChip}
-                  aria-hidden="true"
-                  style={chipStyle(card.iconColor, card.iconBgOpacity)}
-                >
-                  <Icon name={card.icon || 'grid-dashboard-bento'} size={24} />
-                </div>
+                {card.image ? (
+                  <img
+                    src={card.image}
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.iconImage}
+                    width={50}
+                    height={50}
+                  />
+                ) : (
+                  <div
+                    className={styles.iconChip}
+                    aria-hidden="true"
+                    style={chipStyle(card.iconColor, card.iconBgOpacity)}
+                  >
+                    <Icon name={card.icon || 'grid-dashboard-bento'} size={24} />
+                  </div>
+                )}
                 {card.title && (
                   <Editable
                     as="h3"
