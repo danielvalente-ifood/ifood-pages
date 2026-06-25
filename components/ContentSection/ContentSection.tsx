@@ -42,7 +42,7 @@ export interface ContentSectionData {
 
 const defaultData: ContentSectionData = {
   badge: 'Comer fora',
-  title: ['Atraia clientes do delivery', 'para o salão'],
+  title: ['Atraia clientes do delivery para o salão'],
   description: 'Ative sua base de clientes delivery para visitarem seu restaurante.',
   image: '',
   assetPosition: 'left',
@@ -101,7 +101,7 @@ export default function ContentSection({ data }: ContentSectionProps) {
           <Editable as="span" className={styles.badge} path="badge" value={d.badge} />
         )}
         {d.title?.length > 0 && (
-          <Editable as="h2" className={`${styles.title} ${d.bullets ? styles.titleBullets : ''}`} path="title.0" value={(d.title ?? []).join(' ')} />
+          <Editable as="h2" className={`${styles.title} ${d.bullets ? styles.titleBullets : ''}`} path="title.0" value={Array.isArray(d.title) ? d.title[0] : d.title} />
         )}
         {d.description && (
           <Editable as="p" className={styles.description} path="description" value={d.description} multiline />
