@@ -122,9 +122,9 @@ function YoutubeEmbed({
   const readyRef = useRef(false);
   const playingRef = useRef(false);
 
-  const send = (func: 'playVideo' | 'pauseVideo') => {
+  const send = (func: 'playVideo' | 'pauseVideo' | 'seekTo', args: unknown = '') => {
     iframeRef.current?.contentWindow?.postMessage(
-      JSON.stringify({ event: 'command', func, args: '' }),
+      JSON.stringify({ event: 'command', func, args }),
       '*'
     );
   };
@@ -136,6 +136,7 @@ function YoutubeEmbed({
       if (!readyRef.current || !sectionRef.current) return;
       const visible = isSectionVisible(sectionRef.current);
       if (visible && !playingRef.current) {
+        send('seekTo', [0, true]);
         send('playVideo');
         playingRef.current = true;
       } else if (!visible && playingRef.current) {
@@ -160,7 +161,7 @@ function YoutubeEmbed({
     }
   };
 
-  const src = `https://www.youtube.com/embed/${ytId}?loop=1&playlist=${ytId}&controls=1&rel=0&playsinline=1&enablejsapi=1`;
+  const src = `https://www.youtube.com/embed/${ytId}?controls=1&rel=0&playsinline=1&enablejsapi=1`;
 
   return (
     <iframe
@@ -194,6 +195,7 @@ function UploadedVideo({
     const check = () => {
       if (!sectionRef.current) return;
       if (isSectionVisible(sectionRef.current)) {
+        video.currentTime = 0;
         video.play().catch(() => {});
       } else {
         video.pause();
@@ -214,7 +216,6 @@ function UploadedVideo({
       ref={videoRef}
       className={styles.videoEl}
       src={src}
-      loop
       playsInline
       controls
     />
