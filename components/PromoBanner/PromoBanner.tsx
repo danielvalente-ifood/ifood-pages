@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
 import { EditableButton } from '@/components/edit/EditableButton';
@@ -86,6 +87,88 @@ function parseYouTubeId(url: string): string | null {
   return null;
 }
 
+function YoutubeEmbed({ ytId, autoplay }: { ytId: string; autoplay: boolean }) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const visibleRef = useRef(false);
+  const [ready, setReady] = useState(false);
+
+  const send = (func: 'playVideo' | 'pauseVideo') => {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func, args: '' }),
+      '*'
+    );
+  };
+
+  // IntersectionObserver: play na entrada, pause na saída
+  useEffect(() => {
+    if (!autoplay) return;
+    const iframe = iframeRef.current;
+    if (!iframe) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visibleRef.current = entry.isIntersecting;
+        if (ready) send(entry.isIntersecting ? 'playVideo' : 'pauseVideo');
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(iframe);
+    return () => observer.disconnect();
+  }, [autoplay, ready]);
+
+  const handleLoad = () => {
+    setReady(true);
+    if (autoplay && visibleRef.current) send('playVideo');
+  };
+
+  // URL sem autoplay nem mute — controle via postMessage
+  const src = `https://www.youtube.com/embed/${ytId}?loop=1&playlist=${ytId}&controls=1&rel=0&playsinline=1&enablejsapi=1`;
+
+  return (
+    <iframe
+      ref={iframeRef}
+      className={styles.videoFrame}
+      src={src}
+      title="Banner vídeo"
+      allow="autoplay; encrypted-media"
+      allowFullScreen
+      onLoad={handleLoad}
+    />
+  );
+}
+
+function UploadedVideo({ src, autoplay }: { src: string; autoplay: boolean }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!autoplay) return;
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, [autoplay]);
+
+  return (
+    <video
+      ref={videoRef}
+      className={styles.videoEl}
+      src={src}
+      loop
+      playsInline
+      controls
+    />
+  );
+}
+
 export default function PromoBanner({ data }: PromoBannerProps) {
   const { ref, isVisible } = useScrollReveal();
   const d = data ?? defaultData;
@@ -138,35 +221,18 @@ export default function PromoBanner({ data }: PromoBannerProps) {
     const autoplay = d.autoplay !== false;
     const isYT = d.videoType === 'youtube';
     const ytId = isYT ? parseYouTubeId(d.videoUrl || '') : null;
-    const ytSrc = ytId
-      ? `https://www.youtube.com/embed/${ytId}?autoplay=${autoplay ? 1 : 0}&mute=1&loop=1&playlist=${ytId}&controls=1&rel=0&playsinline=1`
-      : null;
 
     return (
       <section ref={ref} aria-label="Banner de vídeo" className={`${styles.videoSection} scroll-reveal ${isVisible ? 'visible' : ''}`}>
         <div className={styles.videoWrap}>
           {isYT ? (
-            ytSrc ? (
-              <iframe
-                className={styles.videoFrame}
-                src={ytSrc}
-                title="Banner vídeo"
-                allow="autoplay; encrypted-media"
-                allowFullScreen
-              />
+            ytId ? (
+              <YoutubeEmbed ytId={ytId} autoplay={autoplay} />
             ) : (
               <div className={styles.videoPlaceholder}>URL do YouTube inválida ou não informada</div>
             )
           ) : d.videoSrc ? (
-            <video
-              className={styles.videoEl}
-              src={d.videoSrc}
-              autoPlay={autoplay}
-              muted
-              loop
-              playsInline
-              controls={!autoplay}
-            />
+            <UploadedVideo src={d.videoSrc} autoplay={autoplay} />
           ) : (
             <div className={styles.videoPlaceholder}>Nenhum vídeo configurado</div>
           )}
