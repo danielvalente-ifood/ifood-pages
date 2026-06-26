@@ -26,7 +26,21 @@ export function SmoothScroll() {
     }
     rafId = requestAnimationFrame(raf);
 
+    // Intercepta cliques em âncoras (#id) para o Lenis animar o scroll
+    function handleAnchorClick(e: MouseEvent) {
+      const target = (e.target as HTMLElement).closest('a[href^="#"]') as HTMLAnchorElement | null;
+      if (!target) return;
+      const hash = target.getAttribute('href');
+      if (!hash || hash === '#') return;
+      const el = document.querySelector(hash);
+      if (!el) return;
+      e.preventDefault();
+      lenis.scrollTo(el as HTMLElement, { duration: 1.2 });
+    }
+    document.addEventListener('click', handleAnchorClick);
+
     return () => {
+      document.removeEventListener('click', handleAnchorClick);
       cancelAnimationFrame(rafId);
       lenis.destroy();
     };

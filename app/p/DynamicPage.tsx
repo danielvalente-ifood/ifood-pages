@@ -63,6 +63,7 @@ const typeLabels: Record<string, string> = {
   faq: 'FAQ',
   footer: 'Footer',
   'big-numbers': 'Big Numbers',
+  'big-numbers-ecossistema': 'Big Numbers Ecossistema',
 };
 
 export function DynamicPage({

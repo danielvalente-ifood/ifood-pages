@@ -162,6 +162,7 @@
   line-height: 1.643;
   letter-spacing: -0.2px;
   color: #6b6f7a;
+  white-space: pre-wrap;
 }
 
 @keyframes slideDown {
