@@ -5,6 +5,7 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
 import { EditableButton } from '@/components/edit/EditableButton';
 import { Editable } from '@/components/edit/Editable';
+import { useEdit } from '@/components/edit/EditContext';
 import styles from './PromoBanner.module.css';
 
 export interface PromoBannerCTA {
@@ -223,6 +224,7 @@ function UploadedVideo({
 export default function PromoBanner({ data }: PromoBannerProps) {
   const { ref, isVisible } = useScrollReveal();
   const videoSectionRef = useRef<HTMLElement | null>(null);
+  const { editMode } = useEdit();
   const d = data ?? defaultData;
   const layout = d.layout || 'centered';
   const contentColor = d.contentColor || 'light';
@@ -294,6 +296,15 @@ export default function PromoBanner({ data }: PromoBannerProps) {
             <UploadedVideo src={d.videoSrc} autoplay={autoplay} sectionRef={videoSectionRef} />
           ) : (
             <div className={styles.videoPlaceholder}>Nenhum vídeo configurado</div>
+          )}
+          {/* Em edit mode, overlay transparente sobre o vídeo para que o
+              clique suba até o wrapper de seleção do DynamicPage. Sem isso,
+              o <iframe> captura o evento e o bloco nunca é selecionado. */}
+          {editMode && (
+            <div
+              aria-hidden="true"
+              style={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'pointer' }}
+            />
           )}
         </div>
       </section>
