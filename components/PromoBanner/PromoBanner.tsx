@@ -13,8 +13,8 @@ export interface PromoBannerCTA {
 }
 
 export interface PromoBannerData {
-  /** centered = texto centralizado · split = texto + card de imagem */
-  layout?: 'centered' | 'split';
+  /** centered = texto centralizado · split = texto + card de imagem · video = vídeo full-width */
+  layout?: 'centered' | 'split' | 'video';
   title: string[];
   description?: string;
   /** fundo: cor hex única ou imagem */
@@ -30,6 +30,11 @@ export interface PromoBannerData {
   curtain?: boolean;
   /** 0, 1 ou 2 CTAs */
   ctas?: PromoBannerCTA[];
+  /** video variant */
+  videoType?: 'upload' | 'youtube';
+  videoSrc?: string;
+  videoUrl?: string;
+  autoplay?: boolean;
 }
 
 const defaultData: PromoBannerData = {
@@ -67,6 +72,18 @@ function PromoCta({ cta, color, path }: { cta: PromoBannerCTA; color: 'light' | 
       content="text-icon"
     />
   );
+}
+
+function parseYouTubeId(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0];
+    if (u.hostname.includes('youtube.com')) {
+      if (u.pathname.startsWith('/embed/')) return u.pathname.split('/')[2];
+      return u.searchParams.get('v');
+    }
+  } catch { /* invalid url */ }
+  return null;
 }
 
 export default function PromoBanner({ data }: PromoBannerProps) {
@@ -115,6 +132,48 @@ export default function PromoBanner({ data }: PromoBannerProps) {
       )}
     </div>
   );
+
+  // ---- layout video ----
+  if (layout === 'video') {
+    const autoplay = d.autoplay !== false;
+    const isYT = d.videoType === 'youtube';
+    const ytId = isYT ? parseYouTubeId(d.videoUrl || '') : null;
+    const ytSrc = ytId
+      ? `https://www.youtube.com/embed/${ytId}?autoplay=${autoplay ? 1 : 0}&mute=1&loop=1&playlist=${ytId}&controls=1&rel=0&playsinline=1`
+      : null;
+
+    return (
+      <section ref={ref} aria-label="Banner de vídeo" className={`${styles.videoSection} scroll-reveal ${isVisible ? 'visible' : ''}`}>
+        <div className={styles.videoWrap}>
+          {isYT ? (
+            ytSrc ? (
+              <iframe
+                className={styles.videoFrame}
+                src={ytSrc}
+                title="Banner vídeo"
+                allow="autoplay; encrypted-media"
+                allowFullScreen
+              />
+            ) : (
+              <div className={styles.videoPlaceholder}>URL do YouTube inválida ou não informada</div>
+            )
+          ) : d.videoSrc ? (
+            <video
+              className={styles.videoEl}
+              src={d.videoSrc}
+              autoPlay={autoplay}
+              muted
+              loop
+              playsInline
+              controls={!autoplay}
+            />
+          ) : (
+            <div className={styles.videoPlaceholder}>Nenhum vídeo configurado</div>
+          )}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
