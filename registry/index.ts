@@ -19,6 +19,7 @@ import segmentosEntry from './segmentos';
 import sectionTitleEntry from './section-title';
 import choiceCardsEntry from './choice-cards';
 import brandCarouselEntry from './brand-carousel';
+import bigNumbersEcossistemaEntry from './big-numbers-ecossistema';
 
 /**
  * Fonte única de verdade dos componentes de landing page.
@@ -45,6 +46,7 @@ export const registry: RegistryEntry[] = [
   sectionTitleEntry,
   choiceCardsEntry,
   brandCarouselEntry,
+  bigNumbersEcossistemaEntry,
   ctaBannerEntry, // Fase 5: componente de teste do registry — manter ou remover
 ];
 
