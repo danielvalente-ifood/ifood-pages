@@ -44,6 +44,12 @@ const entry: RegistryEntry = {
       description: 'Texto e CTAs à esquerda, card de imagem à direita.',
       config: { layout: 'split' },
     },
+    {
+      id: 'video',
+      label: 'Vídeo',
+      description: 'Vídeo full-width (upload ou YouTube). Sem texto sobreposto.',
+      config: { layout: 'video', videoType: 'youtube', autoplay: true },
+    },
   ],
   schema: [
     { key: 'title', label: 'Título (uma linha por campo)', type: 'list' },

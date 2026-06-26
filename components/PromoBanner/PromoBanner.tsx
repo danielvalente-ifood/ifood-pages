@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect, useRef, useState } from 'react';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 import { Icon } from '@/components/Icon/Icon';
 import { EditableButton } from '@/components/edit/EditableButton';
 import { Editable } from '@/components/edit/Editable';
+import { useEdit } from '@/components/edit/EditContext';
 import styles from './PromoBanner.module.css';
 
 export interface PromoBannerCTA {
@@ -13,8 +15,8 @@ export interface PromoBannerCTA {
 }
 
 export interface PromoBannerData {
-  /** centered = texto centralizado · split = texto + card de imagem */
-  layout?: 'centered' | 'split';
+  /** centered = texto centralizado · split = texto + card de imagem · video = vídeo full-width */
+  layout?: 'centered' | 'split' | 'video';
   title: string[];
   description?: string;
   /** fundo: cor hex única ou imagem */
@@ -30,6 +32,11 @@ export interface PromoBannerData {
   curtain?: boolean;
   /** 0, 1 ou 2 CTAs */
   ctas?: PromoBannerCTA[];
+  /** video variant */
+  videoType?: 'upload' | 'youtube';
+  videoSrc?: string;
+  videoUrl?: string;
+  autoplay?: boolean;
 }
 
 const defaultData: PromoBannerData = {
@@ -69,8 +76,155 @@ function PromoCta({ cta, color, path }: { cta: PromoBannerCTA; color: 'light' | 
   );
 }
 
+function parseYouTubeId(url: string): string | null {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('youtu.be')) return u.pathname.slice(1).split('?')[0];
+    if (u.hostname.includes('youtube.com')) {
+      if (u.pathname.startsWith('/embed/')) return u.pathname.split('/')[2];
+      return u.searchParams.get('v');
+    }
+  } catch { /* invalid url */ }
+  return null;
+}
+
+/**
+ * Retorna true se a seção está suficientemente visível E não está coberta
+ * pelo próximo bloco (efeito curtain: seção seguinte entra por cima).
+ */
+function isSectionVisible(section: HTMLElement): boolean {
+  const rect = section.getBoundingClientRect();
+  const vh = window.innerHeight;
+
+  // Fora do viewport (acima ou abaixo)
+  if (rect.bottom <= 0 || rect.top >= vh) return false;
+
+  // Próximo irmão cobre mais de 30% do viewport → considera coberto
+  const next = section.nextElementSibling as HTMLElement | null;
+  if (next) {
+    const nextRect = next.getBoundingClientRect();
+    if (nextRect.top <= vh * 0.3) return false;
+  }
+
+  return true;
+}
+
+function YoutubeEmbed({
+  ytId,
+  autoplay,
+  sectionRef,
+}: {
+  ytId: string;
+  autoplay: boolean;
+  sectionRef: React.RefObject<HTMLElement | null>;
+}) {
+  const iframeRef = useRef<HTMLIFrameElement>(null);
+  const readyRef = useRef(false);
+  const playingRef = useRef(false);
+
+  const send = (func: 'playVideo' | 'pauseVideo') => {
+    iframeRef.current?.contentWindow?.postMessage(
+      JSON.stringify({ event: 'command', func, args: '' }),
+      '*'
+    );
+  };
+
+  useEffect(() => {
+    if (!autoplay) return;
+
+    const check = () => {
+      if (!readyRef.current || !sectionRef.current) return;
+      const visible = isSectionVisible(sectionRef.current);
+      if (visible && !playingRef.current) {
+        send('playVideo');
+        playingRef.current = true;
+      } else if (!visible && playingRef.current) {
+        send('pauseVideo');
+        playingRef.current = false;
+      }
+    };
+
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, [autoplay, sectionRef]);
+
+  const handleLoad = () => {
+    readyRef.current = true;
+    if (autoplay && sectionRef.current && isSectionVisible(sectionRef.current)) {
+      send('playVideo');
+      playingRef.current = true;
+    }
+  };
+
+  const src = `https://www.youtube.com/embed/${ytId}?loop=1&playlist=${ytId}&controls=1&rel=0&playsinline=1&enablejsapi=1`;
+
+  return (
+    <iframe
+      ref={iframeRef}
+      className={styles.videoFrame}
+      src={src}
+      title="Banner vídeo"
+      allow="autoplay; encrypted-media"
+      allowFullScreen
+      onLoad={handleLoad}
+    />
+  );
+}
+
+function UploadedVideo({
+  src,
+  autoplay,
+  sectionRef,
+}: {
+  src: string;
+  autoplay: boolean;
+  sectionRef: React.RefObject<HTMLElement | null>;
+}) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (!autoplay) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    const check = () => {
+      if (!sectionRef.current) return;
+      if (isSectionVisible(sectionRef.current)) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    check(); // disparo inicial
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, [autoplay, sectionRef]);
+
+  return (
+    <video
+      ref={videoRef}
+      className={styles.videoEl}
+      src={src}
+      loop
+      playsInline
+      controls
+    />
+  );
+}
+
 export default function PromoBanner({ data }: PromoBannerProps) {
   const { ref, isVisible } = useScrollReveal();
+  const videoSectionRef = useRef<HTMLElement | null>(null);
+  const { editMode } = useEdit();
   const d = data ?? defaultData;
   const layout = d.layout || 'centered';
   const contentColor = d.contentColor || 'light';
@@ -115,6 +269,47 @@ export default function PromoBanner({ data }: PromoBannerProps) {
       )}
     </div>
   );
+
+  // ---- layout video ----
+  if (layout === 'video') {
+    const autoplay = d.autoplay !== false;
+    const isYT = d.videoType === 'youtube';
+    const ytId = isYT ? parseYouTubeId(d.videoUrl || '') : null;
+
+    return (
+      <section
+        ref={(node) => {
+          videoSectionRef.current = node;
+          (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+        }}
+        aria-label="Banner de vídeo"
+        className={`${styles.videoSection} scroll-reveal ${isVisible ? 'visible' : ''}`}
+      >
+        <div className={styles.videoWrap}>
+          {isYT ? (
+            ytId ? (
+              <YoutubeEmbed ytId={ytId} autoplay={autoplay} sectionRef={videoSectionRef} />
+            ) : (
+              <div className={styles.videoPlaceholder}>URL do YouTube inválida ou não informada</div>
+            )
+          ) : d.videoSrc ? (
+            <UploadedVideo src={d.videoSrc} autoplay={autoplay} sectionRef={videoSectionRef} />
+          ) : (
+            <div className={styles.videoPlaceholder}>Nenhum vídeo configurado</div>
+          )}
+          {/* Em edit mode, overlay transparente sobre o vídeo para que o
+              clique suba até o wrapper de seleção do DynamicPage. Sem isso,
+              o <iframe> captura o evento e o bloco nunca é selecionado. */}
+          {editMode && (
+            <div
+              aria-hidden="true"
+              style={{ position: 'absolute', inset: 0, zIndex: 10, cursor: 'pointer' }}
+            />
+          )}
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section
