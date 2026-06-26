@@ -87,10 +87,39 @@ function parseYouTubeId(url: string): string | null {
   return null;
 }
 
-function YoutubeEmbed({ ytId, autoplay }: { ytId: string; autoplay: boolean }) {
+/**
+ * Retorna true se a seção está suficientemente visível E não está coberta
+ * pelo próximo bloco (efeito curtain: seção seguinte entra por cima).
+ */
+function isSectionVisible(section: HTMLElement): boolean {
+  const rect = section.getBoundingClientRect();
+  const vh = window.innerHeight;
+
+  // Fora do viewport (acima ou abaixo)
+  if (rect.bottom <= 0 || rect.top >= vh) return false;
+
+  // Próximo irmão cobre mais de 30% do viewport → considera coberto
+  const next = section.nextElementSibling as HTMLElement | null;
+  if (next) {
+    const nextRect = next.getBoundingClientRect();
+    if (nextRect.top <= vh * 0.3) return false;
+  }
+
+  return true;
+}
+
+function YoutubeEmbed({
+  ytId,
+  autoplay,
+  sectionRef,
+}: {
+  ytId: string;
+  autoplay: boolean;
+  sectionRef: React.RefObject<HTMLElement | null>;
+}) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
-  const visibleRef = useRef(false);
-  const [ready, setReady] = useState(false);
+  const readyRef = useRef(false);
+  const playingRef = useRef(false);
 
   const send = (func: 'playVideo' | 'pauseVideo') => {
     iframeRef.current?.contentWindow?.postMessage(
@@ -99,28 +128,37 @@ function YoutubeEmbed({ ytId, autoplay }: { ytId: string; autoplay: boolean }) {
     );
   };
 
-  // IntersectionObserver: play na entrada, pause na saída
   useEffect(() => {
     if (!autoplay) return;
-    const iframe = iframeRef.current;
-    if (!iframe) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        visibleRef.current = entry.isIntersecting;
-        if (ready) send(entry.isIntersecting ? 'playVideo' : 'pauseVideo');
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(iframe);
-    return () => observer.disconnect();
-  }, [autoplay, ready]);
+
+    const check = () => {
+      if (!readyRef.current || !sectionRef.current) return;
+      const visible = isSectionVisible(sectionRef.current);
+      if (visible && !playingRef.current) {
+        send('playVideo');
+        playingRef.current = true;
+      } else if (!visible && playingRef.current) {
+        send('pauseVideo');
+        playingRef.current = false;
+      }
+    };
+
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, [autoplay, sectionRef]);
 
   const handleLoad = () => {
-    setReady(true);
-    if (autoplay && visibleRef.current) send('playVideo');
+    readyRef.current = true;
+    if (autoplay && sectionRef.current && isSectionVisible(sectionRef.current)) {
+      send('playVideo');
+      playingRef.current = true;
+    }
   };
 
-  // URL sem autoplay nem mute — controle via postMessage
   const src = `https://www.youtube.com/embed/${ytId}?loop=1&playlist=${ytId}&controls=1&rel=0&playsinline=1&enablejsapi=1`;
 
   return (
@@ -136,26 +174,39 @@ function YoutubeEmbed({ ytId, autoplay }: { ytId: string; autoplay: boolean }) {
   );
 }
 
-function UploadedVideo({ src, autoplay }: { src: string; autoplay: boolean }) {
+function UploadedVideo({
+  src,
+  autoplay,
+  sectionRef,
+}: {
+  src: string;
+  autoplay: boolean;
+  sectionRef: React.RefObject<HTMLElement | null>;
+}) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!autoplay) return;
     const video = videoRef.current;
     if (!video) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          video.play().catch(() => {});
-        } else {
-          video.pause();
-        }
-      },
-      { threshold: 0.3 }
-    );
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, [autoplay]);
+
+    const check = () => {
+      if (!sectionRef.current) return;
+      if (isSectionVisible(sectionRef.current)) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+
+    window.addEventListener('scroll', check, { passive: true });
+    window.addEventListener('resize', check, { passive: true });
+    check(); // disparo inicial
+    return () => {
+      window.removeEventListener('scroll', check);
+      window.removeEventListener('resize', check);
+    };
+  }, [autoplay, sectionRef]);
 
   return (
     <video
@@ -171,6 +222,7 @@ function UploadedVideo({ src, autoplay }: { src: string; autoplay: boolean }) {
 
 export default function PromoBanner({ data }: PromoBannerProps) {
   const { ref, isVisible } = useScrollReveal();
+  const videoSectionRef = useRef<HTMLElement | null>(null);
   const d = data ?? defaultData;
   const layout = d.layout || 'centered';
   const contentColor = d.contentColor || 'light';
@@ -223,16 +275,23 @@ export default function PromoBanner({ data }: PromoBannerProps) {
     const ytId = isYT ? parseYouTubeId(d.videoUrl || '') : null;
 
     return (
-      <section ref={ref} aria-label="Banner de vídeo" className={`${styles.videoSection} scroll-reveal ${isVisible ? 'visible' : ''}`}>
+      <section
+        ref={(node) => {
+          videoSectionRef.current = node;
+          (ref as React.MutableRefObject<HTMLElement | null>).current = node;
+        }}
+        aria-label="Banner de vídeo"
+        className={`${styles.videoSection} scroll-reveal ${isVisible ? 'visible' : ''}`}
+      >
         <div className={styles.videoWrap}>
           {isYT ? (
             ytId ? (
-              <YoutubeEmbed ytId={ytId} autoplay={autoplay} />
+              <YoutubeEmbed ytId={ytId} autoplay={autoplay} sectionRef={videoSectionRef} />
             ) : (
               <div className={styles.videoPlaceholder}>URL do YouTube inválida ou não informada</div>
             )
           ) : d.videoSrc ? (
-            <UploadedVideo src={d.videoSrc} autoplay={autoplay} />
+            <UploadedVideo src={d.videoSrc} autoplay={autoplay} sectionRef={videoSectionRef} />
           ) : (
             <div className={styles.videoPlaceholder}>Nenhum vídeo configurado</div>
           )}
