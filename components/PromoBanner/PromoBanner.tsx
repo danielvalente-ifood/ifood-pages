@@ -99,11 +99,11 @@ function isSectionVisible(section: HTMLElement): boolean {
   // Fora do viewport (acima ou abaixo)
   if (rect.bottom <= 0 || rect.top >= vh) return false;
 
-  // Próximo irmão cobre mais de 30% do viewport → considera coberto
+  // Próximo irmão entrou na viewport → pausa
   const next = section.nextElementSibling as HTMLElement | null;
   if (next) {
     const nextRect = next.getBoundingClientRect();
-    if (nextRect.top <= vh * 0.3) return false;
+    if (nextRect.top < vh) return false;
   }
 
   return true;
